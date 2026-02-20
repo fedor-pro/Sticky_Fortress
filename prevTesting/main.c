@@ -47,12 +47,10 @@ void drawResource(Resource res, int rectSizeX, int rectSizeY)
 int main()
 {
     //------------------------------------------------------------------------------------------
-    printf("aaaaa\n");
     int timer = 0;
     int fps = 0;
 
     char *stringFPS = malloc(TEXT_BUFFER_SIZE);
-                        printf("aaaaa[\n");
 
     srand(time(NULL));
 
@@ -66,14 +64,12 @@ int main()
 
     initializeLogFile(sourceLogFilePath, &sourceLogFile, tm);
 
-                                printf("%s", sourceLogFilePath);
     if (sourceLogFile == NULL)
     {
         printf("Not found %s\n", sourceLogFilePath);
         free(sourceLogFilePath);
         return 1;
     }
-                            printf("aaaaa[s\n");
 
     rawLogToFile(sourceLogFile, "------------------------------------------------\n");
     logToFile(sourceLogFile, tm, "PROGRAM STARTED\n");
@@ -91,8 +87,6 @@ int main()
     printf("%s %d,%d\n\n", "Defined cell size", rectSizeX, rectSizeY);
 
     //------------------------------------------------------------------------------------------
-
-                    printf("aaaaa[\n");
     // Define landscape types
     LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){26, 119, 67, 225}};
 
@@ -113,7 +107,6 @@ int main()
 
     rawLogToFile(sourceLogFile, "\n");
 
-                printf("aaaaa[\n");
     // Initializing window
     char *windowName = malloc(124);
     sprintf(windowName, "Sticky Fortress %s", VERSION);
@@ -131,7 +124,6 @@ int main()
     SetWindowIcon(windowIcon);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WINDOW\n");
-            printf("aaaaax\n");
 
     // Initializing GUI
 
@@ -157,7 +149,6 @@ int main()
     logToFile(sourceLogFile, tm, "STARTED APP\n");
     rawLogToFile(sourceLogFile, "------------------------------------------------\n");
 
-        printf("aaaaa2\n");
     while (!WindowShouldClose()) // main
     {
         time(&rawTime);

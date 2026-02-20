@@ -105,6 +105,7 @@ bool findNearestFood(World * world, Entity *e, int foodOnMap)
 void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnMap, FILE *sourceLogFile, struct tm *tm) // updating entity
 {
     int randomForMove = rand();
+    // printf("%d\n",randomForMove);
 
     // bool isReachedTargetFood = (e->coords.x == foodList[e->targetFoodId].coords.x && e->coords.y == foodList[e->targetFoodId].coords.y && foodList[e->targetFoodId].number > 0);
     bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.40);
