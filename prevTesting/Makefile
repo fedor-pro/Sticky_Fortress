@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -O2
 LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
-TARGET = bouncing_balls
+TARGET = ./apps/sticky_fortress
 
 all: $(TARGET)
 
