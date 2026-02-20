@@ -1,11 +1,14 @@
 CC = gcc
-CFLAGS = -O2
+CFLAGS = -O2 -I./modules
 LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 TARGET = ./apps/sticky_fortress
 
+# Поиск всех заголовочных файлов в папке modules
+HEADERS = $(wildcard ./modules/*.h)
+
 all: $(TARGET)
 
-$(TARGET): main.c
+$(TARGET): main.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $(TARGET) main.c $(LDFLAGS)
 
 clean:
@@ -14,3 +17,4 @@ clean:
 run: $(TARGET)
 	./$(TARGET)
 
+.PHONY: all clean run

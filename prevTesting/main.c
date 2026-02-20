@@ -11,8 +11,8 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 15
-#define CELL_HEIGHT 16
+#define CELL_WIDTH 5
+#define CELL_HEIGHT 6
 #define TARGET_FPS 60
 #define TIMER_RESET 50
 #define TEXT_BUFFER_SIZE 500
@@ -21,7 +21,7 @@
 #define DEFAULT_FOOD_CHAR "o"
 #define DEFAULT_HUMAN_CHAR "&"
 
-#define ENTITIES_LIST_SIZE 25
+#define ENTITIES_LIST_SIZE 5
 #define FOOD_ON_MAP 5
 
 void drawGuiPannel(GuiPannel guip) // draws pannel

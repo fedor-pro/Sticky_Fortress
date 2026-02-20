@@ -104,8 +104,7 @@ bool findNearestFood(World * world, Entity *e, int foodOnMap)
 
 void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnMap, FILE *sourceLogFile, struct tm *tm) // updating entity
 {
-    int randomForMove = rand();
-    // printf("%d\n",randomForMove);
+    int randomForMove = rand() % 5;
 
     // bool isReachedTargetFood = (e->coords.x == foodList[e->targetFoodId].coords.x && e->coords.y == foodList[e->targetFoodId].coords.y && foodList[e->targetFoodId].number > 0);
     bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.40);
@@ -136,23 +135,38 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         {
             if (e->movingState == UNTARGET_MOVING) // boring
             {
-                if (randomForMove < (RAND_MAX / 5))
-                {
-                    moveEntity(RIGHT, e, mapSize, world->map);
+                printf("%d\n", RAND_MAX);
+                switch (randomForMove) {
+                    case 1:
+                                        moveEntity(RIGHT, e, mapSize, world->map);
+                    break;
+                    case 2:
+                                        moveEntity(LEFT, e, mapSize, world->map);
+                    break;
+                    case 3:
+                                        moveEntity(DOWN, e, mapSize, world->map);
+                    break;
+                    case 4:
+                                        moveEntity(UP, e, mapSize, world->map);
+                    break;
                 }
-                else if (randomForMove < (2 * RAND_MAX / 5))
-                {
-                    moveEntity(LEFT, e, mapSize, world->map);
-                }
+                // if (randomForMove < (RAND_MAX / 5))
+                // {
+                //     moveEntity(RIGHT, e, mapSize, world->map);
+                // }
+                // else if (randomForMove < (2 * RAND_MAX / 5))
+                // {
+                //     moveEntity(LEFT, e, mapSize, world->map);
+                // }
 
-                else if (randomForMove < (3 * RAND_MAX / 5))
-                {
-                    moveEntity(DOWN, e, mapSize, world->map);
-                }
-                else if (randomForMove < (4 * RAND_MAX / 5))
-                {
-                    moveEntity(UP, e, mapSize, world->map);
-                }
+                // else if (randomForMove < (3 * RAND_MAX / 5))
+                // {
+                //     moveEntity(DOWN, e, mapSize, world->map);
+                // }
+                // else if (randomForMove < (4 * RAND_MAX / 5))
+                // {
+                //     moveEntity(UP, e, mapSize, world->map);
+                // }
             }
             else if (e->movingState == TARGETING) // go to target
             {
