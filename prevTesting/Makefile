@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -O2
+CFLAGS = -O2
 LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 TARGET = ./apps/sticky_fortress
 
@@ -13,3 +13,4 @@ clean:
 
 run: $(TARGET)
 	./$(TARGET)
+
