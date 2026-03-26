@@ -12,7 +12,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     switch (direct)
     {
     case RIGHT:
-        if (e->coords.x + 1 < mapSize.x && map[e->coords.x + 1 + mapSize.x * e->coords.y].landType.canBeOccupied)
+        if (e->coords.x + 1 < mapSize.x && map[(e->coords.x + 1) + mapSize.x * e->coords.y].landType.canBeOccupied)
         {
             map[e->coords.x + mapSize.x * e->coords.y].isOccupied = false;
 
@@ -23,7 +23,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 
         break;
     case LEFT:
-        if (e->coords.x - 1 >= 0 && map[e->coords.x + mapSize.x - 1 * e->coords.y].landType.canBeOccupied)
+        if (e->coords.x - 1 >= 0 && map[e->coords.x + (mapSize.x - 1) * e->coords.y].landType.canBeOccupied)
         {
             map[e->coords.x + mapSize.x * e->coords.y].isOccupied = false;
 
@@ -34,7 +34,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 
         break;
     case DOWN:
-        if (e->coords.y + 1 < mapSize.y && map[e->coords.x + mapSize.x * e->coords.y + 1].landType.canBeOccupied)
+        if (e->coords.y + 1 < mapSize.y && map[e->coords.x + mapSize.x * (e->coords.y + 1)].landType.canBeOccupied)
         {
             map[e->coords.x + mapSize.x * e->coords.y].isOccupied = false;
 
@@ -45,7 +45,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 
         break;
     case UP:
-        if (e->coords.y - 1 >= 0 && map[e->coords.x + mapSize.x * e->coords.y - 1].landType.canBeOccupied)
+        if (e->coords.y - 1 >= 0 && map[e->coords.x + mapSize.x * (e->coords.y - 1)].landType.canBeOccupied)
         {
             map[e->coords.x + mapSize.x * e->coords.y].isOccupied = false;
             e->coords.y--;
@@ -201,6 +201,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
                 logToFile(sourceLogFile, tm, "Entity with id |");
                 rawLogToFile(sourceLogFile, e->gameId);
                 rawLogToFile(sourceLogFile, "| died from hunger\n");
+                printf("%s\n", e->gameId);
             }
         }
 

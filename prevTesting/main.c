@@ -21,13 +21,14 @@
 #define DEFAULT_FOOD_CHAR "o"
 #define DEFAULT_HUMAN_CHAR "&"
 
-#define ENTITIES_LIST_SIZE 20
+#define ENTITIES_LIST_SIZE 100
 #define FOOD_ON_MAP 5
 
 
 int main()
 {
     //------------------------------------------------------------------------------------------
+    bool isPaused = false;
     int timer = 0;
     int fps = 0;
 
@@ -93,7 +94,7 @@ int main()
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Generating world map
-    generateWorldStructures(10, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(40, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     rawLogToFile(sourceLogFile, "\n");
 
@@ -104,7 +105,7 @@ int main()
     InitWindow(windowSizeX, windowSizeY, windowName);
     SetTargetFPS(TARGET_FPS);
 
-    Image windowIcon = LoadImage("../images/windowIcon.png");
+    Image windowIcon = LoadImage("./images/windowIcon.png");
 
     if (windowIcon.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) // formatting image
     {
@@ -148,9 +149,22 @@ int main()
 
         fps = GetFPS();
 
+        if (IsKeyPressed(KEY_SPACE)) isPaused = !isPaused;
+
         if (!IsKeyDown(KEY_SPACE))
         {
             timer++; // updating timer
+
+            for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // update entities
+            {
+                if (world->entities[x].isAlive == true)
+                {
+                    updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
+                }
+
+            drawEntity(world->entities[x], rectSizeX, rectSizeY);
+            }
+
             if (timer >= TIMER_RESET)
             {
                 timer = 0;
@@ -213,11 +227,6 @@ int main()
 
         for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // update and draw entities
         {
-            if (world->entities[x].isAlive == true)
-            {
-                updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
-            }
-
             drawEntity(world->entities[x], rectSizeX, rectSizeY);
         }
 
@@ -237,8 +246,10 @@ int main()
         drawGuiText(selectedCellsString);
 
         drawGuiPannel(entitiesInfo);
-        sprintf(entitiesNumberString.text, "Entities on map: %d", ENTITIES_LIST_SIZE);
+        sprintf(entitiesNumberString.text, "Timer: %d", timer);
         drawGuiText(entitiesNumberString);
+
+
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {

@@ -14,9 +14,11 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
     LandscapeStructure structure;
     structure.incomingCellsCoords = malloc(2048);
 
-    float pond = 0.70;
+    float pond = 0.1;
+    float pondIncrementStep = 3;
+    int pondBorder = 200;
 
-    if (rand() % 10 > 2)
+    if (rand() % 10 > 6)
     {
         structure.landscape = waterLandscape;
     }
@@ -53,7 +55,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
             }
             else
             {
-                if ((rand() % 100) > pond)
+                if ((rand() % pondBorder) > pond)
                 {
                     structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                     structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
@@ -64,7 +66,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
                 }
             }
 
-            pond += 2;
+            pond += pondIncrementStep;
         }
     }
 
