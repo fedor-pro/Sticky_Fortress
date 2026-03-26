@@ -24,25 +24,7 @@
 #define ENTITIES_LIST_SIZE 5
 #define FOOD_ON_MAP 5
 
-void drawGuiPannel(GuiPannel guip) // draws pannel
-{
-    DrawRectangle(guip.startCoords.x, guip.startCoords.y, guip.canvSizeCoords.x, guip.canvSizeCoords.y, guip.backgroundColor);
-}
 
-void drawGuiText(GuiText guitx) // draws text
-{
-    DrawText(guitx.text, guitx.startCoords.x, guitx.startCoords.y, guitx.fontSize, guitx.fontColor);
-}
-
-void drawEntity(Entity ent, int rectSizeX, int rectSizeY) // draw entity(ASCII)
-{
-    DrawText(ent.charValue, ent.coords.x * rectSizeX + 1.8, ent.coords.y * rectSizeY - 2.5, rectSizeX * 1.5, ent.drawingColor);
-}
-
-void drawResource(Resource res, int rectSizeX, int rectSizeY)
-{
-    DrawText(res.charValue, res.coords.x * rectSizeX + 1.5, res.coords.y * rectSizeY - 7, rectSizeX * 1.8, YELLOW);
-}
 
 int main()
 {
@@ -58,11 +40,20 @@ int main()
     time_t rawTime = time(NULL);
     struct tm *tm = localtime(&rawTime);
 
+    // for (int i = 0; i < ENTITIES_LIST_SIZE; i++)
+    // {
+    //     if (world->entities[i].gameName != NULL)
+    //     {
+    //         free(world->entities[i].gameName);
+    //     }
+    // }
+
     // Initializing log file
     char *sourceLogFilePath = malloc(1024);
     FILE *sourceLogFile;
 
     initializeLogFile(sourceLogFilePath, &sourceLogFile, tm);
+    
 
     if (sourceLogFile == NULL)
     {
@@ -81,7 +72,7 @@ int main()
     int rectSizeX = CELL_WIDTH;
     int rectSizeY = CELL_HEIGHT;
 
-    Coord mapSize = {WINDOW_WIDTH / CELL_WIDTH, WINDOW_HEIGHT / CELL_HEIGHT};
+    Coord ms = {WINDOW_WIDTH / CELL_WIDTH, WINDOW_HEIGHT / CELL_HEIGHT};
 
     printf("%s %d,%d\n\n", "Defined window size", windowSizeX, windowSizeY);
     printf("%s %d,%d\n\n", "Defined cell size", rectSizeX, rectSizeY);
@@ -98,12 +89,12 @@ int main()
 
     LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
 
-    World *world = initializeWorld(TEXT_BUFFER_SIZE, mapSize, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape);
+    World *world = initializeWorld(TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Generating world map
-    generateWorldStructures(10, mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(10, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     rawLogToFile(sourceLogFile, "\n");
 
@@ -143,7 +134,7 @@ int main()
 
     GuiText entitiesNumberString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
 
-    // GuiText fpsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = 180, .startCoords.y = 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
+    GuiText fpsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = 180, .startCoords.y = 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
 
     rawLogToFile(sourceLogFile, "------------------------------------------------\n");
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -179,41 +170,41 @@ int main()
             selectedCells[u] = 0;
         }
 
-        for (int x = 0; x < mapSize.x; x++) // drawing map and update info about selected cells
+        for (int x = 0; x < world->mapSize.x; x++) // drawing map and update info about selected cells
         {
-            for (int y = 0; y < mapSize.y; y++)
+            for (int y = 0; y < world->mapSize.y; y++)
             {
-                if (world->map[x+mapSize.x*y].isSelected == 1)
+                if (world->map[x+world->mapSize.x*y].isSelected == 1)
                 {
-                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD);
+                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD); // в draw.h
 
-                    if (world->map[x+mapSize.x*y].landType.gameId == LAND_BASIC)
+                    if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC) // в updateWorld() в world.h
                     {
                         selectedCells[0]++;
                     }
-                    else if (world->map[x+mapSize.x*y].landType.gameId == LAND_WATER)
+                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_WATER)
                     {
                         selectedCells[1]++;
                     }
-                    else if (world->map[x+mapSize.x*y].landType.gameId == LAND_MOUNTAINS)
+                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_MOUNTAINS)
                     {
                         selectedCells[2]++;
                     }
-                    else if (world->map[x+mapSize.x*y].landType.gameId == LAND_ROCK)
+                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_ROCK)
                     {
                         selectedCells[3]++;
                     }
-                    else if (world->map[x+mapSize.x*y].landType.gameId == LAND_DEEP_WATER)
+                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_DEEP_WATER)
                     {
                         selectedCells[4]++;
                     }
                 }
 
-                DrawRectangle(x * rectSizeX + 1, y * rectSizeY + 1, rectSizeX - 1, rectSizeY - 1, world->map[x+mapSize.x*y].landType.drawColor);
+                DrawRectangle(x * rectSizeX + 1, y * rectSizeY + 1, rectSizeX - 1, rectSizeY - 1, world->map[x+world->mapSize.x*y].landType.drawColor);
             }
         }
 
-        for (int x = 0; x < FOOD_ON_MAP; x++) // update(uhhh...) and draw resources
+        for (int x = 0; x < FOOD_ON_MAP; x++) // update and draw resources
         {
             if (world->resources[x].number > 0)
             {
@@ -225,7 +216,7 @@ int main()
         {
             if (world->entities[x].isAlive == true)
             {
-                updateEntity(world, mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
+                updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
             }
 
             drawEntity(world->entities[x], rectSizeX, rectSizeY);
@@ -254,9 +245,9 @@ int main()
         {
             int cellX = mouseCoordX / rectSizeX;
             int cellY = mouseCoordY / rectSizeY;
-            if (cellX >= 0 && cellX < mapSize.x && cellY >= 0 && cellY < mapSize.y)
+            if (cellX >= 0 && cellX < world->mapSize.x && cellY >= 0 && cellY < world->mapSize.y)
             {
-                world->map[cellX+mapSize.x*cellY].isSelected = 1;
+                world->map[cellX+world->mapSize.x*cellY].isSelected = 1;
             }
         }
 
@@ -269,7 +260,7 @@ int main()
             {
                 for (int y = cellY - 1; y <= cellY + 1; y++)
                 {
-                    world->map[x+mapSize.x*y].isSelected = 0;
+                    world->map[x+world->mapSize.x*y].isSelected = 0;
                 }
             }
         }
@@ -279,13 +270,7 @@ int main()
 
     CloseWindow();
 
-    for (int i = 0; i < ENTITIES_LIST_SIZE; i++)
-    {
-        if (world->entities[i].gameName != NULL)
-        {
-            free(world->entities[i].gameName);
-        }
-    }
+
 
     rawLogToFile(sourceLogFile, "------------------------------------------------\n");
     logToFile(sourceLogFile, tm, "APP CORRECTLY CLOSED\n");

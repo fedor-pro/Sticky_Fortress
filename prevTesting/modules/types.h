@@ -129,4 +129,6 @@ typedef struct
     LandscapeCell *map;
     Resource *resources;
     Entity *entities;
+
+    Coord mapSize;
 } World;

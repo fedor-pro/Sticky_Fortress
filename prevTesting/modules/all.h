@@ -7,3 +7,4 @@
 #include "logging.h"
 #include "entities.h"
 #include "world.h"
+#include "draw.h"

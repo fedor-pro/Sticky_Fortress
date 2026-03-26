@@ -135,38 +135,21 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         {
             if (e->movingState == UNTARGET_MOVING) // boring
             {
-                printf("%d\n", RAND_MAX);
                 switch (randomForMove) {
                     case 1:
-                                        moveEntity(RIGHT, e, mapSize, world->map);
+                        moveEntity(RIGHT, e, mapSize, world->map);
                     break;
                     case 2:
-                                        moveEntity(LEFT, e, mapSize, world->map);
+                        moveEntity(LEFT, e, mapSize, world->map);
                     break;
                     case 3:
-                                        moveEntity(DOWN, e, mapSize, world->map);
+                        moveEntity(DOWN, e, mapSize, world->map);
                     break;
                     case 4:
-                                        moveEntity(UP, e, mapSize, world->map);
+                        moveEntity(UP, e, mapSize, world->map);
                     break;
                 }
-                // if (randomForMove < (RAND_MAX / 5))
-                // {
-                //     moveEntity(RIGHT, e, mapSize, world->map);
-                // }
-                // else if (randomForMove < (2 * RAND_MAX / 5))
-                // {
-                //     moveEntity(LEFT, e, mapSize, world->map);
-                // }
 
-                // else if (randomForMove < (3 * RAND_MAX / 5))
-                // {
-                //     moveEntity(DOWN, e, mapSize, world->map);
-                // }
-                // else if (randomForMove < (4 * RAND_MAX / 5))
-                // {
-                //     moveEntity(UP, e, mapSize, world->map);
-                // }
             }
             else if (e->movingState == TARGETING) // go to target
             {

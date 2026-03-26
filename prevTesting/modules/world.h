@@ -6,7 +6,7 @@
 
 #pragma once
 #include "types.h"
-// #include "generate.h"
+#include "entities.h"
 
 void createWorldMap(World *world, Coord mapSize, LandscapeType basicLandscape)
 {
@@ -80,10 +80,24 @@ void deleteWorld(World *world)
     free(world);
 }
 
+// void updateWorld(World *world, int entities_list_size) {
+
+//     for (int x = 0; x < entities_list_size; x++) // update and draw entities
+//         {
+//             if (world->entities[x].isAlive == true)
+//             {
+//                 updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
+//             }
+
+//             drawEntity(world->entities[x], rectSizeX, rectSizeY);
+//         }  
+// }
+
 World *initializeWorld(int textBufferSize, Coord mapSize, int resourcesNumber, int entitiesNumber, LandscapeType basicLandscape)
 {
     World *world = malloc(sizeof(World));
-    world->map = malloc(sizeof(LandscapeCell) * (mapSize.x * mapSize.y)); // creating map
+    world->mapSize = mapSize;
+    world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
 
     createWorldMap(world, mapSize, basicLandscape);
 
