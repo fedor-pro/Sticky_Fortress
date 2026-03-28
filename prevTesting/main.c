@@ -21,7 +21,7 @@
 #define DEFAULT_FOOD_CHAR "o"
 #define DEFAULT_HUMAN_CHAR "&"
 
-#define ENTITIES_LIST_SIZE 100
+#define ENTITIES_LIST_SIZE 10
 #define FOOD_ON_MAP 5
 
 
@@ -161,8 +161,6 @@ int main()
                 {
                     updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
                 }
-
-            drawEntity(world->entities[x], rectSizeX, rectSizeY);
             }
 
             if (timer >= TIMER_RESET)
@@ -225,7 +223,7 @@ int main()
             }
         }
 
-        for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // update and draw entities
+        for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // draw entities
         {
             drawEntity(world->entities[x], rectSizeX, rectSizeY);
         }

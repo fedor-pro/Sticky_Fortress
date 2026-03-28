@@ -23,7 +23,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 
         break;
     case LEFT:
-        if (e->coords.x - 1 >= 0 && map[e->coords.x + (mapSize.x - 1) * e->coords.y].landType.canBeOccupied)
+        if (e->coords.x - 1 >= 0 && map[(e->coords.x - 1) + mapSize.x  * e->coords.y].landType.canBeOccupied)
         {
             map[e->coords.x + mapSize.x * e->coords.y].isOccupied = false;
 
@@ -65,39 +65,39 @@ void restoreHungerEntity(World  *world, Entity *e, int foodOnMap)
     }
     world->resources[e->targetFoodId].number--;
 
-    if (e->hunger - 1 > 0)
+    if (e->hunger - 5 > 0)
     {
-        e->hunger--;
+        e->hunger -= 5;
     }
 }
 
 bool findNearestFood(World * world, Entity *e, int foodOnMap)
 {
-    // int minDistance = 1000;
-    // bool isExistAnyFood = false;
+    int minDistance = 1000;
+    bool isExistAnyFood = false;
 
-    // for (int z = 0; z < foodOnMap; z++) // finding nearest food
-    // {
-    //     if (foodList[z].number > 0 && (abs(e->coords.x - [z].coords.x) + abs(e->coords.y - foodList[z].coords.y)) < minDistance)
-    //     {
-    //         e->targetFoodId = z;
-    //         minDistance = abs(e->coords.x - foodList[z].coords.x) + abs(e->coords.y - foodList[z].coords.y);
+    for (int z = 0; z < foodOnMap; z++) // finding nearest food
+    {
+        if (world->resources[z].number > 0 && (abs(e->coords.x - world->resources[z].coords.x) + abs(e->coords.y - world->resources[z].coords.y)) < minDistance)
+        {
+            e->targetFoodId = z;
+            minDistance = abs(e->coords.x - world->resources[z].coords.x) + abs(e->coords.y - world->resources[z].coords.y);
 
-    //         e->targetCellCoords.x = foodList[z].coords.x;
-    //         e->targetCellCoords.y = foodList[z].coords.y;
+            e->targetCellCoords.x = world->resources[z].coords.x;
+            e->targetCellCoords.y = world->resources[z].coords.y;
 
-    //         isExistAnyFood = true;
-    //     }
-    // }
+            isExistAnyFood = true;
+        }
+    }
 
-    // if (isExistAnyFood)
-    // {
-    //     return true;
-    // }
-    // else
-    // {
-    //     return false;
-    // }
+    if (isExistAnyFood)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 
     return false;
 }
@@ -106,26 +106,26 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
 {
     int randomForMove = rand() % 5;
 
-    // bool isReachedTargetFood = (e->coords.x == foodList[e->targetFoodId].coords.x && e->coords.y == foodList[e->targetFoodId].coords.y && foodList[e->targetFoodId].number > 0);
+    bool isReachedTargetFood = (e->coords.x == world->resources[e->targetFoodId].coords.x && e->coords.y == world->resources[e->targetFoodId].coords.y && world->resources[e->targetFoodId].number > 0);
     bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.40);
 
     if (e->humanity == true)
     {
-        // if (IsEnoughHungerReached && !isReachedTargetFood) // select moving state
-        // {
-        //     e->movingState = TARGETING;
+        if (IsEnoughHungerReached && !isReachedTargetFood) // select moving state
+        {
+            e->movingState = TARGETING;
 
-        //     if (!findNearestFood(e, foodOnMap, foodList))
-        //     {
-        //         e->movingState = UNTARGET_MOVING;
-        //         e->targetFoodId = -1;
-        //     }
-        // }
-        // else if (IsEnoughHungerReached && isReachedTargetFood)
-        // {
+            if (!findNearestFood(world, e, foodOnMap))
+            {
+                e->movingState = UNTARGET_MOVING;
+                e->targetFoodId = -1;
+            }
+        }
+        else if (IsEnoughHungerReached && isReachedTargetFood)
+        {
 
-        //     e->movingState = EATING;
-        // }
+            e->movingState = EATING;
+        }
         if (!IsEnoughHungerReached)
         {
             e->movingState = UNTARGET_MOVING;
@@ -192,7 +192,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
 
         if (timer % 1 == 0) // updating hunger
         {
-            e->hunger += 0.1;
+            e->hunger += 0.01;
             e->sleepiness += 0.1;
 
             if (e->hunger >= e->dieLevelHunger) // die from hunger
@@ -201,7 +201,6 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
                 logToFile(sourceLogFile, tm, "Entity with id |");
                 rawLogToFile(sourceLogFile, e->gameId);
                 rawLogToFile(sourceLogFile, "| died from hunger\n");
-                printf("%s\n", e->gameId);
             }
         }
 
