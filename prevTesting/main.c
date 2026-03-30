@@ -94,7 +94,7 @@ int main()
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Generating world map
-    generateWorldStructures(40, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(100, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     rawLogToFile(sourceLogFile, "\n");
 

@@ -14,7 +14,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
     LandscapeStructure structure;
     structure.incomingCellsCoords = malloc(2048);
 
-    float pond = 0.1;
+    float pond = 1;
     float pondIncrementStep = 3;
     int pondBorder = 200;
 
