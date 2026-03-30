@@ -40,14 +40,6 @@ int main()
     time_t rawTime = time(NULL);
     struct tm *tm = localtime(&rawTime);
 
-    // for (int i = 0; i < ENTITIES_LIST_SIZE; i++)
-    // {
-    //     if (world->entities[i].gameName != NULL)
-    //     {
-    //         free(world->entities[i].gameName);
-    //     }
-    // }
-
     // Initializing log file
     char *sourceLogFilePath = malloc(1024);
     FILE *sourceLogFile;
@@ -278,13 +270,11 @@ int main()
 
     CloseWindow();
 
-
-
     rawLogToFile(sourceLogFile, "------------------------------------------------\n");
     logToFile(sourceLogFile, tm, "APP CORRECTLY CLOSED\n");
     rawLogToFile(sourceLogFile, "------------------------------------------------\n");
 
-    deleteWorld(world);
+    deleteWorld(world, ENTITIES_LIST_SIZE);
 
     free(entitiesNumberString.text);
     free(stringFPS);

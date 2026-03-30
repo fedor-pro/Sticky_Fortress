@@ -75,8 +75,16 @@ void createWorldResources(World *world, int resourcesNumber, Coord mapSize)
     }
 }
 
-void deleteWorld(World *world)
+void deleteWorld(World *world, int entities_number)
 {
+    for (int i = 0; i < entities_number; i++)
+    {
+        if (world->entities[i].gameId != NULL)
+        {
+            free(world->entities[i].gameId);
+        }
+    }
+
     free(world->map);
     free(world->entities);
     free(world->resources);
