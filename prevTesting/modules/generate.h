@@ -12,11 +12,10 @@
 void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
 {
     LandscapeStructure structure;
-    structure.incomingCellsCoords = malloc(2048);
 
-    float pond = 1;
-    float pondIncrementStep = 3;
-    int pondBorder = 200;
+    float pond = 74;
+    float pondIncrementStep = 2;
+    int pondBorder = 200 + rand() % 100;
 
     if (rand() % 10 > 6)
     {
@@ -29,8 +28,10 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
 
     Coord zoneStartCoord = (Coord){rand() % mapSize.x, rand() % mapSize.y};
 
-    int zoneMaxLongX = 3 + rand() % 5;
-    int zoneMaxLongY = 3 + rand() % 5;
+    int zoneMaxLongX = 3 + rand() % 20;
+    int zoneMaxLongY = 3 + rand() % 10;
+
+    structure.incomingCellsCoords = malloc(sizeof(LandscapeCell) * zoneMaxLongX * zoneMaxLongY);
 
     int j = 0;
 

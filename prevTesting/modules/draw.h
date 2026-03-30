@@ -20,7 +20,7 @@ void drawEntity(Entity ent, int rectSizeX, int rectSizeY) // draw entity(ASCII)
     DrawText(ent.charValue, ent.coords.x * rectSizeX + 1.8, ent.coords.y * rectSizeY - 2.5, 1, ent.drawingColor);
 }
 
-void drawResource(Resource res, int rectSizeX, int rectSizeY)
+void drawResource(Item i, int rectSizeX, int rectSizeY)
 {
-    DrawText(res.charValue, res.coords.x * rectSizeX + 1.5, res.coords.y * rectSizeY - 7, rectSizeX * 1.8, YELLOW);
+    DrawText(i.charValue, i.coords.x * rectSizeX + 1.5, i.coords.y * rectSizeY - 7, rectSizeX * 1.8, YELLOW);
 }

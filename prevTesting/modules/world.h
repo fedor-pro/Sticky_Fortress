@@ -56,9 +56,9 @@ void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBuf
     }
 }
 
-void createWorldResources(World *world, int resourcesNumber, Coord mapSize)
+void createWorldFood(World *world, int foodNumber, Coord mapSize)
 {
-    for (int x = 0; x < resourcesNumber; x++)
+    for (int x = 0; x < foodNumber; x++)
     {
         int resX = rand() % mapSize.x;
         int resY = rand() % mapSize.y;
@@ -69,9 +69,9 @@ void createWorldResources(World *world, int resourcesNumber, Coord mapSize)
             resY = rand() % mapSize.y;
         }
 
-        Resource f = {FOOD, "o", 30 + rand() % 20, true, resX, resY};
+        Item f = {FOOD, "o", 30 + rand() % 20, true, resX, resY};
 
-        world->resources[x] = f;
+        world->items[x] = f;
     }
 }
 
@@ -87,7 +87,7 @@ void deleteWorld(World *world, int entities_number)
 
     free(world->map);
     free(world->entities);
-    free(world->resources);
+    free(world->items);
     free(world);
 }
 
@@ -104,7 +104,7 @@ void deleteWorld(World *world, int entities_number)
 //         }  
 // }
 
-World *initializeWorld(int textBufferSize, Coord mapSize, int resourcesNumber, int entitiesNumber, LandscapeType basicLandscape)
+World *initializeWorld(int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, LandscapeType basicLandscape)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
@@ -116,9 +116,9 @@ World *initializeWorld(int textBufferSize, Coord mapSize, int resourcesNumber, i
 
     createEntities(world, entitiesNumber, mapSize, textBufferSize);
 
-    world->resources = malloc(sizeof(LandscapeCell) * (resourcesNumber + 5)); // creating resources
+    world->items = malloc(sizeof(LandscapeCell) * (foodOnMap + 5)); // creating resources
 
-    createWorldResources(world, resourcesNumber, mapSize);
+    createWorldFood(world, foodOnMap, mapSize);
 
     return world;
 }

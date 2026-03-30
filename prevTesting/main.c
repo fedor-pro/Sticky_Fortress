@@ -21,7 +21,7 @@
 #define DEFAULT_FOOD_CHAR "o"
 #define DEFAULT_HUMAN_CHAR "&"
 
-#define ENTITIES_LIST_SIZE 10
+#define ENTITIES_LIST_SIZE 100
 #define FOOD_ON_MAP 5
 
 
@@ -86,7 +86,7 @@ int main()
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Generating world map
-    generateWorldStructures(100, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(30, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     rawLogToFile(sourceLogFile, "\n");
 
@@ -209,9 +209,9 @@ int main()
 
         for (int x = 0; x < FOOD_ON_MAP; x++) // update and draw resources
         {
-            if (world->resources[x].number > 0)
+            if (world->items[x].number > 0)
             {
-                drawResource(world->resources[x], rectSizeX, rectSizeY);
+                drawResource(world->items[x], rectSizeX, rectSizeY);
             }
         }
 
@@ -232,14 +232,12 @@ int main()
 
         drawGuiPannel(selectedCellsInfo);
 
-        sprintf(selectedCellsString.text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nro\ncks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
+        sprintf(selectedCellsString.text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
         drawGuiText(selectedCellsString);
 
         drawGuiPannel(entitiesInfo);
         sprintf(entitiesNumberString.text, "Timer: %d", timer);
         drawGuiText(entitiesNumberString);
-
-
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {

@@ -104,18 +104,18 @@ typedef struct
 typedef enum
 {
     FOOD
-} ResourceType;
+} ItemType;
 
 typedef struct
 {
-    ResourceType resType;
+    ItemType imType;
     char *charValue;
 
     float number;
     bool isExist;
 
     Coord coords;
-} Resource;
+} Item;
 
 typedef struct
 {
@@ -127,7 +127,7 @@ typedef struct
 typedef struct
 {
     LandscapeCell *map;
-    Resource *resources;
+    Item *items;
     Entity *entities;
 
     Coord mapSize;
