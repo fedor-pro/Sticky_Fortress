@@ -57,6 +57,8 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     }
 }
 
+// There are so many comments because I added a new item system and haven't had time to embed it here yet.
+
 // void restoreHungerEntity(World  *world, Entity *e, int foodOnMap)
 // {
 //     if (world->items[e->targetFoodId].number <= 0)
@@ -192,7 +194,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
 
         if (timer % 1 == 0) // updating hunger
         {
-            e->hunger += 0.01;
+            e->hunger += 0.1;
             e->sleepiness += 0.1;
 
             if (e->hunger >= e->dieLevelHunger) // die from hunger
