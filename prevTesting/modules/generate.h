@@ -17,7 +17,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
     float pondIncrementStep = 2;
     int pondBorder = 200 + rand() % 100;
 
-    if (rand() % 10 > 6)
+    if (rand() % 10 > 1)
     {
         structure.landscape = waterLandscape;
     }

@@ -1,122 +1,117 @@
 ------------------------------------------------
-[2026-04-05 18:19:45] PROGRAM STARTED
+[2026-04-05 19:55:38] PROGRAM STARTED
 ------------------------------------------------
-[2026-04-05 18:19:45] Created Human with id: entities:human0
-[2026-04-05 18:19:45] Created Human with id: entities:human1
-[2026-04-05 18:19:45] Created Human with id: entities:human2
-[2026-04-05 18:19:45] Created Human with id: entities:human3
-[2026-04-05 18:19:45] Created Human with id: entities:human4
-[2026-04-05 18:19:45] Created Human with id: entities:human5
-[2026-04-05 18:19:45] Created Human with id: entities:human6
-[2026-04-05 18:19:45] Created Human with id: entities:human7
-[2026-04-05 18:19:45] Created Human with id: entities:human8
-[2026-04-05 18:19:45] Created Human with id: entities:human9
-[2026-04-05 18:19:45] Created Human with id: entities:human10
-[2026-04-05 18:19:45] Created Human with id: entities:human11
-[2026-04-05 18:19:45] Created Human with id: entities:human12
-[2026-04-05 18:19:45] Created Human with id: entities:human13
-[2026-04-05 18:19:45] Created Human with id: entities:human14
-[2026-04-05 18:19:45] Created Human with id: entities:human15
-[2026-04-05 18:19:45] Created Human with id: entities:human16
-[2026-04-05 18:19:45] Created Human with id: entities:human17
-[2026-04-05 18:19:45] Created Human with id: entities:human18
-[2026-04-05 18:19:45] Created Human with id: entities:human19
-[2026-04-05 18:19:45] Created Human with id: entities:human20
-[2026-04-05 18:19:45] Created Human with id: entities:human21
-[2026-04-05 18:19:45] Created Human with id: entities:human22
-[2026-04-05 18:19:45] Created Human with id: entities:human23
-[2026-04-05 18:19:45] Created Human with id: entities:human24
-[2026-04-05 18:19:45] Created Human with id: entities:human25
-[2026-04-05 18:19:45] Created Human with id: entities:human26
-[2026-04-05 18:19:45] Created Human with id: entities:human27
-[2026-04-05 18:19:45] Created Human with id: entities:human28
-[2026-04-05 18:19:45] Created Human with id: entities:human29
-[2026-04-05 18:19:45] Created Human with id: entities:human30
-[2026-04-05 18:19:45] Created Human with id: entities:human31
-[2026-04-05 18:19:45] Created Human with id: entities:human32
-[2026-04-05 18:19:45] Created Human with id: entities:human33
-[2026-04-05 18:19:45] Created Human with id: entities:human34
-[2026-04-05 18:19:45] Created Human with id: entities:human35
-[2026-04-05 18:19:45] Created Human with id: entities:human36
-[2026-04-05 18:19:45] Created Human with id: entities:human37
-[2026-04-05 18:19:45] Created Human with id: entities:human38
-[2026-04-05 18:19:45] Created Human with id: entities:human39
-[2026-04-05 18:19:45] Created Human with id: entities:human40
-[2026-04-05 18:19:45] Created Human with id: entities:human41
-[2026-04-05 18:19:45] Created Human with id: entities:human42
-[2026-04-05 18:19:45] Created Human with id: entities:human43
-[2026-04-05 18:19:45] Created Human with id: entities:human44
-[2026-04-05 18:19:45] Created Human with id: entities:human45
-[2026-04-05 18:19:45] Created Human with id: entities:human46
-[2026-04-05 18:19:45] Created Human with id: entities:human47
-[2026-04-05 18:19:45] Created Human with id: entities:human48
-[2026-04-05 18:19:45] Created Human with id: entities:human49
-[2026-04-05 18:19:45] Created Human with id: entities:human50
-[2026-04-05 18:19:45] Created Human with id: entities:human51
-[2026-04-05 18:19:45] Created Human with id: entities:human52
-[2026-04-05 18:19:45] Created Human with id: entities:human53
-[2026-04-05 18:19:45] Created Human with id: entities:human54
-[2026-04-05 18:19:45] Created Human with id: entities:human55
-[2026-04-05 18:19:45] Created Human with id: entities:human56
-[2026-04-05 18:19:45] Created Human with id: entities:human57
-[2026-04-05 18:19:45] Created Human with id: entities:human58
-[2026-04-05 18:19:45] Created Human with id: entities:human59
-[2026-04-05 18:19:45] Created Human with id: entities:human60
-[2026-04-05 18:19:45] Created Human with id: entities:human61
-[2026-04-05 18:19:45] Created Human with id: entities:human62
-[2026-04-05 18:19:45] Created Human with id: entities:human63
-[2026-04-05 18:19:45] Created Human with id: entities:human64
-[2026-04-05 18:19:45] Created Human with id: entities:human65
-[2026-04-05 18:19:45] Created Human with id: entities:human66
-[2026-04-05 18:19:45] Created Human with id: entities:human67
-[2026-04-05 18:19:45] Created Human with id: entities:human68
-[2026-04-05 18:19:45] Created Human with id: entities:human69
-[2026-04-05 18:19:45] Created Human with id: entities:human70
-[2026-04-05 18:19:45] Created Human with id: entities:human71
-[2026-04-05 18:19:45] Created Human with id: entities:human72
-[2026-04-05 18:19:45] Created Human with id: entities:human73
-[2026-04-05 18:19:45] Created Human with id: entities:human74
-[2026-04-05 18:19:45] Created Human with id: entities:human75
-[2026-04-05 18:19:45] Created Human with id: entities:human76
-[2026-04-05 18:19:45] Created Human with id: entities:human77
-[2026-04-05 18:19:45] Created Human with id: entities:human78
-[2026-04-05 18:19:45] Created Human with id: entities:human79
-[2026-04-05 18:19:45] Created Human with id: entities:human80
-[2026-04-05 18:19:45] Created Human with id: entities:human81
-[2026-04-05 18:19:45] Created Human with id: entities:human82
-[2026-04-05 18:19:45] Created Human with id: entities:human83
-[2026-04-05 18:19:45] Created Human with id: entities:human84
-[2026-04-05 18:19:45] Created Human with id: entities:human85
-[2026-04-05 18:19:45] Created Human with id: entities:human86
-[2026-04-05 18:19:45] Created Human with id: entities:human87
-[2026-04-05 18:19:45] Created Human with id: entities:human88
-[2026-04-05 18:19:45] Created Human with id: entities:human89
-[2026-04-05 18:19:45] Created Human with id: entities:human90
-[2026-04-05 18:19:45] Created Human with id: entities:human91
-[2026-04-05 18:19:45] Created Human with id: entities:human92
-[2026-04-05 18:19:45] Created Human with id: entities:human93
-[2026-04-05 18:19:45] Created Human with id: entities:human94
-[2026-04-05 18:19:45] Created Human with id: entities:human95
-[2026-04-05 18:19:45] Created Human with id: entities:human96
-[2026-04-05 18:19:45] Created Human with id: entities:human97
-[2026-04-05 18:19:45] Created Human with id: entities:human98
-[2026-04-05 18:19:45] Created Human with id: entities:human99
-[2026-04-05 18:19:45] INITIALIZED WORLD MAP
+[2026-04-05 19:55:38] Created Human with id: entities:human0
+[2026-04-05 19:55:38] Created Human with id: entities:human1
+[2026-04-05 19:55:38] Created Human with id: entities:human2
+[2026-04-05 19:55:38] Created Human with id: entities:human3
+[2026-04-05 19:55:38] Created Human with id: entities:human4
+[2026-04-05 19:55:38] Created Human with id: entities:human5
+[2026-04-05 19:55:38] Created Human with id: entities:human6
+[2026-04-05 19:55:38] Created Human with id: entities:human7
+[2026-04-05 19:55:38] Created Human with id: entities:human8
+[2026-04-05 19:55:38] Created Human with id: entities:human9
+[2026-04-05 19:55:38] Created Human with id: entities:human10
+[2026-04-05 19:55:38] Created Human with id: entities:human11
+[2026-04-05 19:55:38] Created Human with id: entities:human12
+[2026-04-05 19:55:38] Created Human with id: entities:human13
+[2026-04-05 19:55:38] Created Human with id: entities:human14
+[2026-04-05 19:55:38] Created Human with id: entities:human15
+[2026-04-05 19:55:38] Created Human with id: entities:human16
+[2026-04-05 19:55:38] Created Human with id: entities:human17
+[2026-04-05 19:55:38] Created Human with id: entities:human18
+[2026-04-05 19:55:38] Created Human with id: entities:human19
+[2026-04-05 19:55:38] Created Human with id: entities:human20
+[2026-04-05 19:55:38] Created Human with id: entities:human21
+[2026-04-05 19:55:38] Created Human with id: entities:human22
+[2026-04-05 19:55:38] Created Human with id: entities:human23
+[2026-04-05 19:55:38] Created Human with id: entities:human24
+[2026-04-05 19:55:38] Created Human with id: entities:human25
+[2026-04-05 19:55:38] Created Human with id: entities:human26
+[2026-04-05 19:55:38] Created Human with id: entities:human27
+[2026-04-05 19:55:38] Created Human with id: entities:human28
+[2026-04-05 19:55:38] Created Human with id: entities:human29
+[2026-04-05 19:55:38] Created Human with id: entities:human30
+[2026-04-05 19:55:38] Created Human with id: entities:human31
+[2026-04-05 19:55:38] Created Human with id: entities:human32
+[2026-04-05 19:55:38] Created Human with id: entities:human33
+[2026-04-05 19:55:38] Created Human with id: entities:human34
+[2026-04-05 19:55:38] Created Human with id: entities:human35
+[2026-04-05 19:55:38] Created Human with id: entities:human36
+[2026-04-05 19:55:38] Created Human with id: entities:human37
+[2026-04-05 19:55:38] Created Human with id: entities:human38
+[2026-04-05 19:55:38] Created Human with id: entities:human39
+[2026-04-05 19:55:38] Created Human with id: entities:human40
+[2026-04-05 19:55:38] Created Human with id: entities:human41
+[2026-04-05 19:55:38] Created Human with id: entities:human42
+[2026-04-05 19:55:38] Created Human with id: entities:human43
+[2026-04-05 19:55:38] Created Human with id: entities:human44
+[2026-04-05 19:55:38] Created Human with id: entities:human45
+[2026-04-05 19:55:38] Created Human with id: entities:human46
+[2026-04-05 19:55:38] Created Human with id: entities:human47
+[2026-04-05 19:55:38] Created Human with id: entities:human48
+[2026-04-05 19:55:38] Created Human with id: entities:human49
+[2026-04-05 19:55:38] Created Human with id: entities:human50
+[2026-04-05 19:55:38] Created Human with id: entities:human51
+[2026-04-05 19:55:38] Created Human with id: entities:human52
+[2026-04-05 19:55:38] Created Human with id: entities:human53
+[2026-04-05 19:55:38] Created Human with id: entities:human54
+[2026-04-05 19:55:38] Created Human with id: entities:human55
+[2026-04-05 19:55:38] Created Human with id: entities:human56
+[2026-04-05 19:55:38] Created Human with id: entities:human57
+[2026-04-05 19:55:38] Created Human with id: entities:human58
+[2026-04-05 19:55:38] Created Human with id: entities:human59
+[2026-04-05 19:55:38] Created Human with id: entities:human60
+[2026-04-05 19:55:38] Created Human with id: entities:human61
+[2026-04-05 19:55:38] Created Human with id: entities:human62
+[2026-04-05 19:55:38] Created Human with id: entities:human63
+[2026-04-05 19:55:38] Created Human with id: entities:human64
+[2026-04-05 19:55:38] Created Human with id: entities:human65
+[2026-04-05 19:55:38] Created Human with id: entities:human66
+[2026-04-05 19:55:38] Created Human with id: entities:human67
+[2026-04-05 19:55:38] Created Human with id: entities:human68
+[2026-04-05 19:55:38] Created Human with id: entities:human69
+[2026-04-05 19:55:38] Created Human with id: entities:human70
+[2026-04-05 19:55:38] Created Human with id: entities:human71
+[2026-04-05 19:55:38] Created Human with id: entities:human72
+[2026-04-05 19:55:38] Created Human with id: entities:human73
+[2026-04-05 19:55:38] Created Human with id: entities:human74
+[2026-04-05 19:55:38] Created Human with id: entities:human75
+[2026-04-05 19:55:38] Created Human with id: entities:human76
+[2026-04-05 19:55:38] Created Human with id: entities:human77
+[2026-04-05 19:55:38] Created Human with id: entities:human78
+[2026-04-05 19:55:38] Created Human with id: entities:human79
+[2026-04-05 19:55:38] Created Human with id: entities:human80
+[2026-04-05 19:55:38] Created Human with id: entities:human81
+[2026-04-05 19:55:38] Created Human with id: entities:human82
+[2026-04-05 19:55:38] Created Human with id: entities:human83
+[2026-04-05 19:55:38] Created Human with id: entities:human84
+[2026-04-05 19:55:38] Created Human with id: entities:human85
+[2026-04-05 19:55:38] Created Human with id: entities:human86
+[2026-04-05 19:55:38] Created Human with id: entities:human87
+[2026-04-05 19:55:38] Created Human with id: entities:human88
+[2026-04-05 19:55:38] Created Human with id: entities:human89
+[2026-04-05 19:55:38] Created Human with id: entities:human90
+[2026-04-05 19:55:38] Created Human with id: entities:human91
+[2026-04-05 19:55:38] Created Human with id: entities:human92
+[2026-04-05 19:55:38] Created Human with id: entities:human93
+[2026-04-05 19:55:38] Created Human with id: entities:human94
+[2026-04-05 19:55:38] Created Human with id: entities:human95
+[2026-04-05 19:55:38] Created Human with id: entities:human96
+[2026-04-05 19:55:38] Created Human with id: entities:human97
+[2026-04-05 19:55:38] Created Human with id: entities:human98
+[2026-04-05 19:55:38] Created Human with id: entities:human99
+[2026-04-05 19:55:38] INITIALIZED WORLD MAP
 
-[2026-04-05 18:19:45] INITIALIZED WINDOW
+[2026-04-05 19:55:38] INITIALIZED WINDOW
 ------------------------------------------------
-[2026-04-05 18:19:45] STARTED APP
+[2026-04-05 19:55:38] STARTED APP
 ------------------------------------------------
-[2026-04-05 18:19:46] Current FPS: 60
-[2026-04-05 18:19:47] Current FPS: 60
-[2026-04-05 18:19:48] Current FPS: 60
-[2026-04-05 18:19:49] Current FPS: 60
-[2026-04-05 18:19:50] Current FPS: 60
-[2026-04-05 18:19:51] Current FPS: 60
-[2026-04-05 18:19:52] Current FPS: 60
-[2026-04-05 18:19:53] Current FPS: 60
-[2026-04-05 18:19:54] Current FPS: 60
-[2026-04-05 18:19:55] Current FPS: 60
+[2026-04-05 19:55:39] Current FPS: 60
+[2026-04-05 19:55:40] Current FPS: 60
+[2026-04-05 19:55:41] Current FPS: 60
+[2026-04-05 19:55:42] Current FPS: 60
+[2026-04-05 19:55:43] Current FPS: 60
 ------------------------------------------------
-[2026-04-05 18:19:56] APP CORRECTLY CLOSED
+[2026-04-05 19:55:44] APP CORRECTLY CLOSED
 ------------------------------------------------

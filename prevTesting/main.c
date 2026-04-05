@@ -11,14 +11,14 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 5
-#define CELL_HEIGHT 6
+#define CELL_WIDTH 10
+#define CELL_HEIGHT 11
 #define TARGET_FPS 60
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500
 
 #define DEFAULT_FONT_SIZE 23
-#define DEFAULT_FOOD_CHAR "o"
+#define DEFAULT_FOOD_CHAR "*"
 #define DEFAULT_HUMAN_CHAR "&"
 
 #define ENTITIES_LIST_SIZE 100
@@ -86,7 +86,7 @@ int main()
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Generating world map
-    generateWorldStructures(30, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(15, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     rawLogToFile(sourceLogFile, "\n");
 
@@ -128,9 +128,9 @@ int main()
 
     GuiText fpsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = 180, .startCoords.y = 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
 
-    rawLogToFile(sourceLogFile, "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile,  "------------------------------------------------\n");
     logToFile(sourceLogFile, tm, "STARTED APP\n");
-    rawLogToFile(sourceLogFile, "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile,  "------------------------------------------------\n");
 
     while (!WindowShouldClose()) // main
     {
@@ -207,11 +207,11 @@ int main()
             }
         }
 
-        for (int x = 0; x < FOOD_ON_MAP; x++) // update and draw resources
+        for (int x = 0; x < FOOD_ON_MAP; x++) // update and draw items
         {
             if (world->items[x].number > 0)
             {
-                drawResource(world->items[x], rectSizeX, rectSizeY);
+                drawItem(world->items[x], rectSizeX, rectSizeY);
             }
         }
 

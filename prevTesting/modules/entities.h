@@ -123,7 +123,6 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         }
         else if (IsEnoughHungerReached && isReachedTargetFood)
         {
-
             e->movingState = EATING;
         }
         if (!IsEnoughHungerReached)

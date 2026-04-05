@@ -38,8 +38,17 @@ void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBuf
         int entX = rand() % mapSize.x;
         int entY = rand() % mapSize.y;
 
+        if (world->map[entX + mapSize.x * entY].landType.canBeOccupied) {
+            printf("can\n");
+        } else {
+            printf("false\n");
+        }
+
         while (!world->map[entX + mapSize.x * entY].landType.canBeOccupied)
         {
+            printf("selected for spawning entity cell is not can be occupied, finding new cell...");
+            // printf("%d;%d\n", entX, entY);
+
             entX = rand() % mapSize.x;
             entY = rand() % mapSize.y;
         }
@@ -79,7 +88,7 @@ void createWorldFood(World *world, int foodNumber, Coord mapSize)
             resY = rand() % mapSize.y;
         }
 
-        Item f = {FOOD, "o", 30 + rand() % 20, true, resX, resY};
+        Item f = {FOOD, "*", 30 + rand() % 20, true, resX, resY};
 
         world->items[x] = f;
     }
