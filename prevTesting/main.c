@@ -81,12 +81,11 @@ int main()
 
     LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
 
-    World *world = initializeWorld(TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape, tm, sourceLogFile, rawTime);
+    World *world = initializeWorld(50, TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape, tm, sourceLogFile, rawTime);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Generating world map
-    generateWorldStructures(15, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     rawLogToFile(sourceLogFile, "\n");
 

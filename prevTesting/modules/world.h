@@ -8,6 +8,7 @@
 #include "types.h"
 #include "entities.h"
 #include "logging.h"
+#include "generate.h"
 
 void createWorldMap(World *world, Coord mapSize, LandscapeType basicLandscape)
 {
@@ -123,13 +124,15 @@ void deleteWorld(World *world, int entities_number)
 //         }  
 // }
 
-World *initializeWorld(int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, LandscapeType basicLandscape, struct tm *tm, FILE *source_log_file, time_t rawTime)
+World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape, struct tm *tm, FILE *source_log_file, time_t rawTime)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
     world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
 
     createWorldMap(world, mapSize, basicLandscape);
+
+    generateWorldStructures(15, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 
