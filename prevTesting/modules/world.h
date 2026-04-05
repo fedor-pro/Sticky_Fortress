@@ -7,6 +7,7 @@
 #pragma once
 #include "types.h"
 #include "entities.h"
+#include "logging.h"
 
 void createWorldMap(World *world, Coord mapSize, LandscapeType basicLandscape)
 {
@@ -30,7 +31,7 @@ void createWorldMap(World *world, Coord mapSize, LandscapeType basicLandscape)
     }
 }
 
-void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBufferSize)
+void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBufferSize, struct tm *tm, FILE  *sourceLogFile, time_t rawTime)
 {
     for (int x = 0; x < entitiesNumber; x++)
     {
@@ -48,7 +49,16 @@ void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBuf
 
         Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand() % 10, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
-        //                                       alive                           food id   cell coords    hunger                    
+        //                                       alive                           food id   cell coords    hunger   
+        
+        logToFile(sourceLogFile, tm, "Created ");
+        rawLogToFile(sourceLogFile, ent.gameName);
+        rawLogToFile(sourceLogFile, " with id: ");
+        rawLogToFile(sourceLogFile, ent.gameId);
+        rawLogToFile(sourceLogFile ,"\n");
+
+        time(&rawTime);
+        tm = localtime(&rawTime); // updating time
 
         world->map[entX + mapSize.x * entY].isOccupied = true;
 
@@ -104,7 +114,7 @@ void deleteWorld(World *world, int entities_number)
 //         }  
 // }
 
-World *initializeWorld(int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, LandscapeType basicLandscape)
+World *initializeWorld(int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, LandscapeType basicLandscape, struct tm *tm, FILE *source_log_file, time_t rawTime)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
@@ -114,7 +124,7 @@ World *initializeWorld(int textBufferSize, Coord mapSize, int foodOnMap, int ent
 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 
-    createEntities(world, entitiesNumber, mapSize, textBufferSize);
+    createEntities(world, entitiesNumber, mapSize, textBufferSize, tm, source_log_file, rawTime);
 
     world->items = malloc(sizeof(LandscapeCell) * (foodOnMap + 5)); // creating resources
 

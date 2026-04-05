@@ -57,77 +57,75 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     }
 }
 
-// There are so many comments because I added a new item system and haven't had time to embed it here yet.
+void restoreHungerEntity(World  *world, Entity *e, int foodOnMap)
+{
+    if (world->items[e->targetFoodId].number <= 0)
+    {
+        return;
+    }
+    world->items[e->targetFoodId].number--;
 
-// void restoreHungerEntity(World  *world, Entity *e, int foodOnMap)
-// {
-//     if (world->items[e->targetFoodId].number <= 0)
-//     {
-//         return;
-//     }
-//     world->items[e->targetFoodId].number--;
+    e->hunger -= 20 + rand() % 10;
+    if (e->hunger < 0) {
+        e->hunger = 0;
+    }
+}
 
-//     if (e->hunger - 5 > 0)
-//     {
-//         e->hunger -= 5;
-//     }
-// }
+bool findNearestFood(World * world, Entity *e, int foodOnMap)
+{
+    int minDistance = 1000;
+    bool isExistAnyFood = false;
 
-// bool findNearestFood(World * world, Entity *e, int foodOnMap)
-// {
-//     int minDistance = 1000;
-//     bool isExistAnyFood = false;
+    for (int z = 0; z < foodOnMap; z++) // finding nearest food
+    {
+        if (world->items[z].number > 0 && (abs(e->coords.x - world->items[z].coords.x) + abs(e->coords.y - world->items[z].coords.y)) < minDistance)
+        {
+            e->targetFoodId = z;
+            minDistance = abs(e->coords.x - world->items[z].coords.x) + abs(e->coords.y - world->items[z].coords.y);
 
-//     for (int z = 0; z < foodOnMap; z++) // finding nearest food
-//     {
-//         if (world->resources[z].number > 0 && (abs(e->coords.x - world->resources[z].coords.x) + abs(e->coords.y - world->resources[z].coords.y)) < minDistance)
-//         {
-//             e->targetFoodId = z;
-//             minDistance = abs(e->coords.x - world->resources[z].coords.x) + abs(e->coords.y - world->resources[z].coords.y);
+            e->targetCellCoords.x = world->items[z].coords.x;
+            e->targetCellCoords.y = world->items[z].coords.y;
 
-//             e->targetCellCoords.x = world->resources[z].coords.x;
-//             e->targetCellCoords.y = world->resources[z].coords.y;
+            isExistAnyFood = true;
+        }
+    }
 
-//             isExistAnyFood = true;
-//         }
-//     }
+    if (isExistAnyFood)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 
-//     if (isExistAnyFood)
-//     {
-//         return true;
-//     }
-//     else
-//     {
-//         return false;
-//     }
-
-//     return false;
-// }
+    return false;
+}
 
 void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnMap, FILE *sourceLogFile, struct tm *tm) // updating entity
 {
     int randomForMove = rand() % 5;
 
-    // bool isReachedTargetFood = (e->coords.x == world->resources[e->targetFoodId].coords.x && e->coords.y == world->resources[e->targetFoodId].coords.y && world->resources[e->targetFoodId].number > 0);
+    bool isReachedTargetFood = (e->coords.x == world->items[e->targetFoodId].coords.x && e->coords.y == world->items[e->targetFoodId].coords.y && world->items[e->targetFoodId].number > 0);
     bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.40);
 
     if (e->humanity == true)
     {
-        // if (IsEnoughHungerReached && !isReachedTargetFood) // select moving state
-        // {
-        //     e->movingState = TARGETING;
+        if (IsEnoughHungerReached && !isReachedTargetFood) // select moving state
+        {
+            e->movingState = TARGETING;
 
-        //     if (!findNearestFood(world, e, foodOnMap))
-        //     {
-        //         e->movingState = UNTARGET_MOVING;
-        //         e->targetFoodId = -1;
-        //     }
-        // }
-        // else if (IsEnoughHungerReached && isReachedTargetFood)
-        // {
+            if (!findNearestFood(world, e, foodOnMap))
+            {
+                e->movingState = UNTARGET_MOVING;
+                e->targetFoodId = -1;
+            }
+        }
+        else if (IsEnoughHungerReached && isReachedTargetFood)
+        {
 
-        //     e->movingState = EATING;
-        // }
+            e->movingState = EATING;
+        }
         if (!IsEnoughHungerReached)
         {
             e->movingState = UNTARGET_MOVING;
@@ -153,48 +151,48 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
                 }
 
             }
-            // else if (e->movingState == TARGETING) // go to target
-            // {
-            //     if (e->coords.x < e->targetCellCoords.x)
-            //     {
-            //         moveEntity(RIGHT, e, mapSize, world->map);
-            //     }
-            //     else if (e->coords.x > e->targetCellCoords.x)
-            //     {
-            //         moveEntity(LEFT, e, mapSize, world->map);
-            //     }
+            else if (e->movingState == TARGETING) // go to target
+            {
+                if (e->coords.x < e->targetCellCoords.x)
+                {
+                    moveEntity(RIGHT, e, mapSize, world->map);
+                }
+                else if (e->coords.x > e->targetCellCoords.x)
+                {
+                    moveEntity(LEFT, e, mapSize, world->map);
+                }
 
-            //     else if (e->coords.y < e->targetCellCoords.y)
-            //     {
-            //         moveEntity(DOWN, e, mapSize, world->map);
-            //     }
-            //     else if (e->coords.y > e->targetCellCoords.y)
-            //     {
-            //         moveEntity(UP, e, mapSize, world->map);
-            //     }
-            // }
-            // else if (e->movingState == EATING) // eating
-            // {
-            //     if (world->resources[e->targetFoodId].number <= 0)
-            //     {
-            //         e->movingState = TARGETING;
+                else if (e->coords.y < e->targetCellCoords.y)
+                {
+                    moveEntity(DOWN, e, mapSize, world->map);
+                }
+                else if (e->coords.y > e->targetCellCoords.y)
+                {
+                    moveEntity(UP, e, mapSize, world->map);
+                }
+            }
+            else if (e->movingState == EATING) // eating
+            {
+                if (world->items[e->targetFoodId].number <= 0)
+                {
+                    e->movingState = TARGETING;
 
-            //         if (!findNearestFood(world, e, foodOnMap))
-            //         {
-            //             e->movingState = UNTARGET_MOVING;
-            //             e->targetFoodId = -1;
-            //         }
-            //     }
-            //     else
-            //     {
-            //         restoreHungerEntity(world, e, foodOnMap);
-            //     }
-            // }
+                    if (!findNearestFood(world, e, foodOnMap))
+                    {
+                        e->movingState = UNTARGET_MOVING;
+                        e->targetFoodId = -1;
+                    }
+                }
+                else
+                {
+                    restoreHungerEntity(world, e, foodOnMap);
+                }
+            }
         }
 
         if (timer % 1 == 0) // updating hunger
         {
-            e->hunger += 0.1;
+            e->hunger += 0.01;
             e->sleepiness += 0.1;
 
             if (e->hunger >= e->dieLevelHunger) // die from hunger

@@ -22,7 +22,7 @@
 #define DEFAULT_HUMAN_CHAR "&"
 
 #define ENTITIES_LIST_SIZE 100
-#define FOOD_ON_MAP 5
+#define FOOD_ON_MAP 10
 
 
 int main()
@@ -81,7 +81,7 @@ int main()
 
     LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
 
-    World *world = initializeWorld(TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape);
+    World *world = initializeWorld(TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape, tm, sourceLogFile, rawTime);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
@@ -277,7 +277,7 @@ int main()
     free(entitiesNumberString.text);
     free(stringFPS);
     free(mouseCoordsString.text);
-    free(selectedCellsString.text);
+    free(selectedCellsString.text); 
     free(windowName);
 
     free(sourceLogFilePath);
