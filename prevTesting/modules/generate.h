@@ -9,7 +9,16 @@
 #pragma once
 #include "types.h"
 
-void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
+bool structuresOverlayCheck(World *world, LandscapeStructure structure, Coord zoneStartCoord, int ZoneMaxLongX, int zoneMaxLongY, int l, int g, LandscapeType basicLandscape) {
+    if (world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType.gameId != basicLandscape.gameId) { // Overlay check
+        free(structure.incomingCellsCoords);
+        return true;
+    }
+
+    return false;
+}
+
+void generateStructure(World *world, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
 {
     LandscapeStructure structure;
 
@@ -26,7 +35,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
         structure.landscape = mountainsLandscape;
     }
 
-    Coord zoneStartCoord = (Coord){rand() % mapSize.x, rand() % mapSize.y};
+    Coord zoneStartCoord = (Coord){rand() % world->mapSize.x, rand() % world->mapSize.y};
 
     int zoneMaxLongX = 3 + rand() % 20;
     int zoneMaxLongY = 3 + rand() % 10;
@@ -35,7 +44,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
 
     int j = 0;
 
-    while (!((zoneStartCoord.x + zoneMaxLongX) < mapSize.x && (zoneStartCoord.y + zoneMaxLongY) < mapSize.y))
+    while (!((zoneStartCoord.x + zoneMaxLongX) < world->mapSize.x && (zoneStartCoord.y + zoneMaxLongY) < world->mapSize.y))
     {
         zoneStartCoord.x = 2 + rand() % 5;
         zoneStartCoord.y = 2 + rand() % 5;
@@ -50,11 +59,11 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
                 structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                 structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
 
-                if (map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType.gameId != basicLandscape.gameId) {
-                    free(structure.incomingCellsCoords);
+                if (structuresOverlayCheck(world, structure, zoneStartCoord, zoneMaxLongX, zoneMaxLongY, l, g, basicLandscape)) {
                     return;
                 }
-                map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
+
+                world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
 
                 j++;
             }
@@ -65,12 +74,11 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
                     structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                     structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
 
-                    if (map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType.gameId != basicLandscape.gameId) {
-                        free(structure.incomingCellsCoords);
+                    if (structuresOverlayCheck(world, structure, zoneStartCoord, zoneMaxLongX, zoneMaxLongY, l, g, basicLandscape)) {
                         return;
                     }
 
-                    map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
+                    world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
 
                     j++;
                 }
@@ -83,11 +91,11 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
     free(structure.incomingCellsCoords);
 }
 
-void generateWorldStructures(int numberOfStructures, Coord mapSize, LandscapeCell * map, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
+void generateWorldStructures(World *world, int numberOfStructures, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
 {
     for (int x = 0; x < numberOfStructures; x++)
     {
-        generateStructure(mapSize, map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+        generateStructure(world, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
     }
 
     return;

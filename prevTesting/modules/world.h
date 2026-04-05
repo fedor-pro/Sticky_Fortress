@@ -10,13 +10,13 @@
 #include "logging.h"
 #include "generate.h"
 
-void createWorldMap(World *world, Coord mapSize, LandscapeType basicLandscape)
+void createWorldMap(World *world, LandscapeType basicLandscape)
 {
     int i = 0;
 
-    for (int x = 0; x < mapSize.x; x++)
+    for (int x = 0; x < world->mapSize.x; x++)
     {
-        for (int y = 0; y < mapSize.y; y++)
+        for (int y = 0; y < world->mapSize.y; y++)
         {
             LandscapeCell ld;
 
@@ -27,22 +27,22 @@ void createWorldMap(World *world, Coord mapSize, LandscapeType basicLandscape)
 
             ld.landType = basicLandscape;
 
-            world->map[x + mapSize.x * y] = ld;
+            world->map[x + world->mapSize.x * y] = ld;
         }
     }
 }
 
-void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBufferSize, struct tm *tm, FILE  *sourceLogFile, time_t rawTime)
+void createEntities(World *world, int entitiesNumber, int textBufferSize, struct tm *tm, FILE  *sourceLogFile, time_t rawTime)
 {
     for (int x = 0; x < entitiesNumber; x++)
     {
-        int entX = rand() % mapSize.x;
-        int entY = rand() % mapSize.y;
+        int entX = rand() % world->mapSize.x;
+        int entY = rand() % world->mapSize.y;
 
-        while (!world->map[entX + mapSize.x * entY].landType.canBeOccupied)
+        while (!world->map[entX + world->mapSize.x * entY].landType.canBeOccupied)
         {
-            entX = rand() % mapSize.x;
-            entY = rand() % mapSize.y;
+            entX = rand() % world->mapSize.x;
+            entY = rand() % world->mapSize.y;
         }
 
         char *entityGameId = malloc(textBufferSize);
@@ -61,23 +61,23 @@ void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBuf
         time(&rawTime);
         tm = localtime(&rawTime); // updating time
 
-        world->map[entX + mapSize.x * entY].isOccupied = true;
+        world->map[entX + world->mapSize.x * entY].isOccupied = true;
 
         world->entities[x] = ent;
     }
 }
 
-void createWorldFood(World *world, int foodNumber, Coord mapSize)
+void createWorldFood(World *world, int foodNumber)
 {
     for (int x = 0; x < foodNumber; x++)
     {
-        int resX = rand() % mapSize.x;
-        int resY = rand() % mapSize.y;
+        int resX = rand() % world->mapSize.x;
+        int resY = rand() % world->mapSize.y;
 
-        while (!world->map[resX + mapSize.x * resY].landType.canBeOccupied)
+        while (!world->map[resX + world->mapSize.x * resY].landType.canBeOccupied)
         {
-            resX = rand() % mapSize.x;
-            resY = rand() % mapSize.y;
+            resX = rand() % world->mapSize.x;
+            resY = rand() % world->mapSize.y;
         }
 
         Item f = {FOOD, "*", 30 + rand() % 20, true, resX, resY};
@@ -121,17 +121,17 @@ World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, 
     world->mapSize = mapSize;
     world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
 
-    createWorldMap(world, mapSize, basicLandscape);
+    createWorldMap(world, basicLandscape);
 
-    generateWorldStructures(structuresNumber, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(world, structuresNumber, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 
-    createEntities(world, entitiesNumber, mapSize, textBufferSize, tm, source_log_file, rawTime);
+    createEntities(world, entitiesNumber, textBufferSize, tm, source_log_file, rawTime);
 
     world->items = malloc(sizeof(LandscapeCell) * (foodOnMap + 5)); // creating resources
 
-    createWorldFood(world, foodOnMap, mapSize);
+    createWorldFood(world, foodOnMap);
 
     return world;
 }
