@@ -11,8 +11,8 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 10
-#define CELL_HEIGHT 11
+#define CELL_WIDTH 8
+#define CELL_HEIGHT 9
 #define TARGET_FPS 60
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500
@@ -81,7 +81,7 @@ int main()
 
     LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
 
-    World *world = initializeWorld(50, TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape, tm, sourceLogFile, rawTime);
+    World *world = initializeWorld(30, TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape, tm, sourceLogFile, rawTime);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 

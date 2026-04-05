@@ -17,7 +17,7 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
     float pondIncrementStep = 2;
     int pondBorder = 200 + rand() % 100;
 
-    if (rand() % 10 > 1)
+    if (rand() % 10 > 5)
     {
         structure.landscape = waterLandscape;
     }
@@ -50,6 +50,10 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
                 structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                 structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
 
+                if (map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType.gameId != basicLandscape.gameId) {
+                    free(structure.incomingCellsCoords);
+                    return;
+                }
                 map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
 
                 j++;
@@ -60,6 +64,11 @@ void generateStructure(Coord mapSize, LandscapeCell * map, LandscapeType basicLa
                 {
                     structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                     structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
+
+                    if (map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType.gameId != basicLandscape.gameId) {
+                        free(structure.incomingCellsCoords);
+                        return;
+                    }
 
                     map[(zoneStartCoord.x + l) + mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
 

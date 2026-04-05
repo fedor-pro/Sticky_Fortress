@@ -39,17 +39,8 @@ void createEntities(World *world, int entitiesNumber, Coord mapSize, int textBuf
         int entX = rand() % mapSize.x;
         int entY = rand() % mapSize.y;
 
-        if (world->map[entX + mapSize.x * entY].landType.canBeOccupied) {
-            printf("can\n");
-        } else {
-            printf("false\n");
-        }
-
         while (!world->map[entX + mapSize.x * entY].landType.canBeOccupied)
         {
-            printf("selected for spawning entity cell is not can be occupied, finding new cell...");
-            // printf("%d;%d\n", entX, entY);
-
             entX = rand() % mapSize.x;
             entY = rand() % mapSize.y;
         }
@@ -132,7 +123,7 @@ World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, 
 
     createWorldMap(world, mapSize, basicLandscape);
 
-    generateWorldStructures(15, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    generateWorldStructures(structuresNumber, world->mapSize, world->map, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 
