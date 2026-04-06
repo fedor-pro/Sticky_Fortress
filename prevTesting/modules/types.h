@@ -127,8 +127,10 @@ typedef struct
 typedef struct
 {
     LandscapeCell *map;
+    Coord mapSize;
+
     Item *items;
     Entity *entities;
 
-    Coord mapSize;
+    LandscapeType *worldLandscapes;
 } World;

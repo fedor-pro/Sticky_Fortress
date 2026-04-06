@@ -10,7 +10,21 @@
 #include "logging.h"
 #include "generate.h"
 
-void createWorldMap(World *world, LandscapeType basicLandscape)
+void initializeWorldLandscapes(World *world) {
+    LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){26, 119, 67, 225}};
+    LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){15, 20, 65, 255}};
+    LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){5, 200, 45, 255}};
+    LandscapeType mountainsLandscape = {LAND_MOUNTAINS, "Mountains and hills", true, (Color){128, 124, 123, 255}};
+    LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
+
+    world->worldLandscapes[0] = basicLandscape;
+    world->worldLandscapes[1] = waterLandscape;
+    world->worldLandscapes[2] = deepWaterLandscape;
+    world->worldLandscapes[3] = mountainsLandscape;
+    world->worldLandscapes[4] = rockLandscape;
+}
+
+void createWorldMap(World *world)
 {
     int i = 0;
 
@@ -25,7 +39,7 @@ void createWorldMap(World *world, LandscapeType basicLandscape)
             ld.isSelected = false;
             ld.isOccupied = false;
 
-            ld.landType = basicLandscape;
+            ld.landType = world->worldLandscapes[0];
 
             world->map[x + world->mapSize.x * y] = ld;
         }
@@ -115,15 +129,18 @@ void deleteWorld(World *world, int entities_number)
 //         }  
 // }
 
-World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape, struct tm *tm, FILE *source_log_file, time_t rawTime)
+World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *source_log_file, time_t rawTime)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
     world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
 
-    createWorldMap(world, basicLandscape);
+    world->worldLandscapes = malloc(sizeof(LandscapeType)*10);
+    initializeWorldLandscapes(world);
 
-    generateWorldStructures(world, structuresNumber, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
+    createWorldMap(world);
+
+    generateWorldStructures(world, structuresNumber);
 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 

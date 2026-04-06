@@ -71,17 +71,7 @@ int main()
 
     //------------------------------------------------------------------------------------------
     // Define landscape types
-    LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){26, 119, 67, 225}};
-
-    LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){15, 20, 65, 255}};
-
-    LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){5, 200, 45, 255}};
-
-    LandscapeType mountainsLandscape = {LAND_MOUNTAINS, "Mountains and hills", true, (Color){128, 124, 123, 255}};
-
-    LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
-
-    World *world = initializeWorld(30, TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape, tm, sourceLogFile, rawTime);
+    World *world = initializeWorld(30, TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, tm, sourceLogFile, rawTime);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
