@@ -11,9 +11,9 @@
 #include "generate.h"
 
 void initializeWorldLandscapes(World *world) {
-    LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){26, 119, 67, 225}};
+    LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){3, 130, 0, 225}};
     LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){15, 20, 65, 255}};
-    LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){5, 200, 45, 255}};
+    LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){0, 0, 139, 255}};
     LandscapeType mountainsLandscape = {LAND_MOUNTAINS, "Mountains and hills", true, (Color){128, 124, 123, 255}};
     LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
 

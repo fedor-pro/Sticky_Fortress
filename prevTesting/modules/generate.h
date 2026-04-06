@@ -29,10 +29,12 @@ void generateStructure(World *world)
     if (rand() % 10 > 5)
     {
         structure.landscape = world->worldLandscapes[1];
+        structure.secondLandscape = world->worldLandscapes[2];
     }
     else
     {
         structure.landscape = world->worldLandscapes[3];
+        structure.secondLandscape = world->worldLandscapes[4];
     }
 
     Coord zoneStartCoord = (Coord){rand() % world->mapSize.x, rand() % world->mapSize.y};
@@ -63,6 +65,12 @@ void generateStructure(World *world)
                     return;
                 }
 
+                if ((rand() % pondBorder)/2 >= pond) {
+                    world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
+                } else {
+                    world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
+                }
+
                 world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
 
                 j++;
@@ -78,7 +86,11 @@ void generateStructure(World *world)
                         return;
                     }
 
-                    world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
+                    if ((rand() % pondBorder)/2 >= pond) {
+                        world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
+                    } else {
+                        world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
+                    }
 
                     j++;
                 }

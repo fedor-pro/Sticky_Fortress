@@ -122,6 +122,7 @@ typedef struct
     Coord *incomingCellsCoords;
 
     LandscapeType landscape;
+    LandscapeType secondLandscape;
 } LandscapeStructure;
 
 typedef struct
