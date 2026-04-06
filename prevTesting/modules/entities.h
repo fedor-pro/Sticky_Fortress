@@ -6,7 +6,6 @@
 
 #pragma once
 #include "types.h"
-#include "generate.h"
 
 void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 {

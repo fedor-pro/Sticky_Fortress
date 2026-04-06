@@ -9,8 +9,8 @@
 #pragma once
 #include "types.h"
 
-bool structuresOverlayCheck(World *world, LandscapeStructure structure, Coord zoneStartCoord, int ZoneMaxLongX, int zoneMaxLongY, int l, int g) {
-    if (world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType.gameId != world->worldLandscapes[0].gameId) { // Overlay check
+bool structuresOverlayCheck(World *world, LandscapeStructure structure, Coord zoneStartCoord, int ZoneMaxLongX, int zoneMaxLongY, int l, int g, LandscapeType basicLandscape) {
+    if (world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType.gameId != basicLandscape.gameId) { // Overlay check
         free(structure.incomingCellsCoords);
         return true;
     }
@@ -18,7 +18,7 @@ bool structuresOverlayCheck(World *world, LandscapeStructure structure, Coord zo
     return false;
 }
 
-void generateStructure(World *world)
+void generateStructure(World *world, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
 {
     LandscapeStructure structure;
 
@@ -28,11 +28,11 @@ void generateStructure(World *world)
 
     if (rand() % 10 > 5)
     {
-        structure.landscape = world->worldLandscapes[1];
+        structure.landscape = waterLandscape;
     }
     else
     {
-        structure.landscape = world->worldLandscapes[3];
+        structure.landscape = mountainsLandscape;
     }
 
     Coord zoneStartCoord = (Coord){rand() % world->mapSize.x, rand() % world->mapSize.y};
@@ -59,7 +59,7 @@ void generateStructure(World *world)
                 structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                 structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
 
-                if (structuresOverlayCheck(world, structure, zoneStartCoord, zoneMaxLongX, zoneMaxLongY, l, g)) {
+                if (structuresOverlayCheck(world, structure, zoneStartCoord, zoneMaxLongX, zoneMaxLongY, l, g, basicLandscape)) {
                     return;
                 }
 
@@ -74,7 +74,7 @@ void generateStructure(World *world)
                     structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                     structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
 
-                    if (structuresOverlayCheck(world, structure, zoneStartCoord, zoneMaxLongX, zoneMaxLongY, l, g)) {
+                    if (structuresOverlayCheck(world, structure, zoneStartCoord, zoneMaxLongX, zoneMaxLongY, l, g, basicLandscape)) {
                         return;
                     }
 
@@ -91,11 +91,11 @@ void generateStructure(World *world)
     free(structure.incomingCellsCoords);
 }
 
-void generateWorldStructures(World *world, int numberOfStructures)
+void generateWorldStructures(World *world, int numberOfStructures, LandscapeType basicLandscape, LandscapeType waterLandscape, LandscapeType deepWaterLandscape, LandscapeType mountainsLandscape, LandscapeType rockLandscape)
 {
     for (int x = 0; x < numberOfStructures; x++)
     {
-        generateStructure(world);
+        generateStructure(world, basicLandscape, waterLandscape, deepWaterLandscape, mountainsLandscape, rockLandscape);
     }
 
     return;
