@@ -217,7 +217,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         }
         else
         {
-            e->drawingColor = GREEN;
+            e->drawingColor = GREEN;//das
         }
     }
 }
