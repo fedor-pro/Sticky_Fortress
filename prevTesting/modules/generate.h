@@ -22,7 +22,7 @@ void generateStructure(World *world)
 {
     LandscapeStructure structure;
 
-    float pond = 74;
+    float pond = 65 + rand() % 15;
     float pondIncrementStep = 2;
     int pondBorder = 200 + rand() % 100;
 
@@ -65,11 +65,11 @@ void generateStructure(World *world)
                     return;
                 }
 
-                if ((rand() % pondBorder)/2 >= pond) {
-                    world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
-                } else {
-                    world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
-                }
+                // if (20 + (rand() % pondBorder)/2 >= pond) {
+                //     world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
+                // } else {
+                //     world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
+                // } so ugly generation
 
                 world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
 
@@ -86,7 +86,7 @@ void generateStructure(World *world)
                         return;
                     }
 
-                    if ((rand() % pondBorder)/2 >= pond) {
+                    if (20 + (rand() % pondBorder)/2 >= pond) {
                         world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
                     } else {
                         world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;

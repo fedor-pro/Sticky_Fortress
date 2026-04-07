@@ -9,6 +9,7 @@
 #include "entities.h"
 #include "logging.h"
 #include "generate.h"
+#include "spawn.h"
 
 void initializeWorldLandscapes(World *world) {
     LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){3, 130, 0, 225}};
@@ -75,9 +76,7 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
         time(&rawTime);
         tm = localtime(&rawTime); // updating time
 
-        world->map[entX + world->mapSize.x * entY].isOccupied = true;
-
-        world->entities[x] = ent;
+        spawnEntity(world, (Coord) {entX, entY}, ent, x);
     }
 }
 
@@ -102,6 +101,8 @@ void createWorldFood(World *world, int foodNumber)
 
 void deleteWorld(World *world, int entities_number)
 {
+    printf("Deleted world: %zu bytes\n", sizeof(world));
+
     for (int i = 0; i < entities_number; i++)
     {
         if (world->entities[i].gameId != NULL)
