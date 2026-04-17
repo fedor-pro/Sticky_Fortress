@@ -1,9 +1,0 @@
-{
-    "files.associations": {
-        "typeinfo": "c",
-        "stdio.h": "c",
-        "stdlib.h": "c",
-        "raylib.h": "c"
-    },
-    "C_Cpp.errorSquiggles": "enabled"
-}

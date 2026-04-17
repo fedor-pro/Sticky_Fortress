@@ -3,7 +3,6 @@ CFLAGS = -O2 -I./modules
 LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 TARGET = ./apps/sticky_fortress
 
-# Поиск всех заголовочных файлов в папке modules
 HEADERS = $(wildcard ./modules/*.h)
 
 all: $(TARGET)

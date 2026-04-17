@@ -2,7 +2,7 @@
 #include <stdio.h>  // for printf
 #include <raylib.h> // for graphics
 #include <stdlib.h> // for rand() func
-#include <time.h>   // for initialise MAX_RAND for rand() func
+#include <time.h>   // for timestamp and rand() initialize
 
 // MODULES:
 #include "./modules/all.h"

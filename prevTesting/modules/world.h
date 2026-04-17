@@ -101,7 +101,7 @@ void createWorldFood(World *world, int foodNumber)
 
 void deleteWorld(World *world, int entities_number)
 {
-    printf("Deleted world: %zu bytes\n", sizeof(world));
+    printf("Deleted world: %zu ̶b̶y̶t̶e̶s\n", sizeof(world));
 
     for (int i = 0; i < entities_number; i++)
     {

@@ -77,7 +77,7 @@ void generateStructure(World *world)
             }
             else
             {
-                if ((rand() % pondBorder) > pond)
+                if (((rand() % pondBorder) - 20) > pond)
                 {
                     structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                     structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
@@ -86,7 +86,7 @@ void generateStructure(World *world)
                         return;
                     }
 
-                    if (20 + (rand() % pondBorder)/2 >= pond) {
+                    if (((rand() % pondBorder + pond/2))/2 >= pond) {
                         world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
                     } else {
                         world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
