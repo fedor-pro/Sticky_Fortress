@@ -3,6 +3,7 @@ A clone of dwarf fortress on C with using Raylib. Right now in prototype stage.
 # How to run:
 
 If you have linux, you need to install raylib in your system directories. 
+
 Debian: 
 ------------------------------
 sudo apt update
