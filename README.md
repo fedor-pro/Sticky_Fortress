@@ -17,4 +17,4 @@ Fedora:
 ------------------------------
 sudo dnf install raylib-devel
 
-Then, you need to go prevTesting folder and write this command in console: "make". Then write "./apps/sticky_fortress"
+Then, you need to go prevTesting folder and write this command in console: "make clean". Then write "make run". Game will start.
