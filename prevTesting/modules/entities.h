@@ -111,28 +111,35 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
 
     if (e->humanity == true)
     {
-        if (IsEnoughHungerReached && !isReachedTargetFood) // select moving state
+        // Select moving state
+        // -------------------------------------------------------------------
+
+        if (!IsEnoughHungerReached)
+        {
+            e->movingState = UNTARGET_MOVING; // boring
+        }
+
+        if (IsEnoughHungerReached && !isReachedTargetFood)
         {
             e->movingState = TARGETING;
 
-            if (!findNearestFood(world, e, foodOnMap))
+            if (!findNearestFood(world, e, foodOnMap)) // find nearest food, if wasn't finded - boring
             {
                 e->movingState = UNTARGET_MOVING;
                 e->targetFoodId = -1;
             }
         }
-        else if (IsEnoughHungerReached && isReachedTargetFood)
+        else if (IsEnoughHungerReached && isReachedTargetFood) // eating
         {
             e->movingState = EATING;
         }
-        if (!IsEnoughHungerReached)
-        {
-            e->movingState = UNTARGET_MOVING;
-        }
+
+        // Doing
+        // -------------------------------------------------------------------
 
         if (timer % 5 == 0) // moving and eating
         {
-            if (e->movingState == UNTARGET_MOVING) // boring
+            if (e->movingState == UNTARGET_MOVING) // random moving
             {
                 switch (randomForMove) {
                     case 1:
@@ -189,7 +196,10 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
             }
         }
 
-        if (timer % 1 == 0) // updating hunger
+        // Updating hunger
+        // -------------------------------------------------------------------
+
+        if (timer % 1 == 0)
         {
             e->hunger += 0.01;
             e->sleepiness += 0.1;
@@ -203,7 +213,12 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
             }
         }
 
-        if (world->map[e->coords.x + mapSize.x * e->coords.y].isSelected) // color
+        // Changing color
+        // -------------------------------------------------------------------
+
+        e->drawingColor = GREEN;
+
+        if (world->map[e->coords.x + mapSize.x * e->coords.y].isSelected)
         {
             e->drawingColor = RED;
         }
@@ -214,10 +229,13 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         else if (e->movingState == EATING)
         {
             e->drawingColor = ORANGE;
-        }
-        else
+        } else if (IsEnoughHungerReached)
         {
-            e->drawingColor = GREEN;
+            if (timer > 20) {
+                e->drawingColor = BLUE;
+            } else {
+                e->drawingColor = GREEN;
+            }
         }
     }
 }

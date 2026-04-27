@@ -11,7 +11,8 @@
 #include "generate.h"
 #include "spawn.h"
 
-void initializeWorldLandscapes(World *world) {
+void initializeWorldLandscapes(World *world) 
+{
     LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){3, 130, 0, 225}};
     LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){15, 20, 65, 255}};
     LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){0, 0, 139, 255}};
@@ -63,7 +64,7 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
         char *entityGameId = malloc(textBufferSize);
         sprintf(entityGameId, "%s%d", "entities:human", x);
 
-        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 1, 50 + rand() % 10, 0, RED};
+        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 50, 50 + rand() % 10, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
         
