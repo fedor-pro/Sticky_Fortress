@@ -102,7 +102,7 @@ void createWorldFood(World *world, int foodNumber)
 
 void deleteWorld(World *world, int entities_number)
 {
-    printf("Deleted world: %zu ̶b̶y̶t̶e̶s\n", sizeof(world));
+    printf(" ̶D ̶e ̶l ̶e ̶t ̶e ̶d  ̶w ̶o ̶r ̶l ̶d: ̶%zu ̶b̶y̶t̶e̶s\n", sizeof(world));
 
     for (int i = 0; i < entities_number; i++)
     {
@@ -131,7 +131,7 @@ void deleteWorld(World *world, int entities_number)
 //         }  
 // }
 
-World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *source_log_file, time_t rawTime)
+World *initializeWorld(int structuresNumber, int textBufferSize, char* logs_barriers, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *source_log_file, time_t rawTime)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
@@ -147,6 +147,7 @@ World *initializeWorld(int structuresNumber, int textBufferSize, Coord mapSize, 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 
     createEntities(world, entitiesNumber, textBufferSize, tm, source_log_file, rawTime);
+    rawLogToFile(source_log_file, logs_barriers);
 
     world->items = malloc(sizeof(LandscapeCell) * (foodOnMap + 5)); // creating resources
 

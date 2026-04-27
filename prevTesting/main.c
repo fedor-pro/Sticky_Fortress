@@ -17,6 +17,8 @@
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500
 
+#define LOGS_BARRIERS "------------------------------------------------\n"
+
 #define DEFAULT_FONT_SIZE 23
 #define DEFAULT_FOOD_CHAR "*"
 #define DEFAULT_HUMAN_CHAR "&"
@@ -27,6 +29,8 @@
 
 int main()
 {
+    SetTraceLogLevel(LOG_NONE); // for delete all raylib's sys logs
+
     //------------------------------------------------------------------------------------------
     bool isPaused = false;
     int timer = 0;
@@ -45,7 +49,6 @@ int main()
     FILE *sourceLogFile;
 
     initializeLogFile(sourceLogFilePath, &sourceLogFile, tm);
-    
 
     if (sourceLogFile == NULL)
     {
@@ -54,9 +57,9 @@ int main()
         return 1;
     }
 
-    rawLogToFile(sourceLogFile, "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "PROGRAM STARTED\n");
-    rawLogToFile(sourceLogFile, "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
     int windowSizeX = WINDOW_WIDTH;
     int windowSizeY = WINDOW_HEIGHT;
@@ -66,19 +69,23 @@ int main()
 
     Coord ms = {WINDOW_WIDTH / CELL_WIDTH, WINDOW_HEIGHT / CELL_HEIGHT};
 
-    printf("%s %d,%d\n\n", "Defined window size", windowSizeX, windowSizeY);
-    printf("%s %d,%d\n\n", "Defined cell size", rectSizeX, rectSizeY);
-    printf("%s %d,%d\n\n", "Defined map size", ms.x, ms.y);
+    char *initLogInfo = malloc(sizeof(char) * 1024);
+    sprintf(initLogInfo, "%s %d,%d\n\n", "Defined window size", windowSizeX, windowSizeY);
+    logToFile(sourceLogFile, tm, initLogInfo);
+
+    sprintf(initLogInfo, "%s %d,%d\n\n", "Defined cell size", rectSizeX, rectSizeY);
+    logToFile(sourceLogFile, tm, initLogInfo);
+    
+    sprintf(initLogInfo, "Defined map size %d, %d\n", ms.x, ms.y);
+    logToFile(sourceLogFile, tm, initLogInfo);
+
+    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
     //------------------------------------------------------------------------------------------
-    // Define landscape types
-    World *world = initializeWorld(30, TEXT_BUFFER_SIZE, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, tm, sourceLogFile, rawTime);
+    // Creating world
+    World *world = initializeWorld(30, TEXT_BUFFER_SIZE, LOGS_BARRIERS, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, tm, sourceLogFile, rawTime);
 
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
-
-    // Generating world map
-
-    rawLogToFile(sourceLogFile, "\n");
 
     // Initializing window
     char *windowName = malloc(124);
@@ -98,7 +105,7 @@ int main()
 
     logToFile(sourceLogFile, tm, "INITIALIZED WINDOW\n");
 
-    // Initializing GUI
+    // Initializing GUI - в UILord
 
     GuiPannel mouseInfo = {.startCoords.x = 0, .startCoords.y = 0, .canvSizeCoords.x = 280, .canvSizeCoords.y = 150, .backgroundColor = BLACK};
 
@@ -118,9 +125,9 @@ int main()
 
     GuiText fpsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = 180, .startCoords.y = 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
 
-    rawLogToFile(sourceLogFile,  "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
-    rawLogToFile(sourceLogFile,  "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
 
     while (!WindowShouldClose()) // main
     {
@@ -258,9 +265,9 @@ int main()
 
     CloseWindow();
 
-    rawLogToFile(sourceLogFile, "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "APP CORRECTLY CLOSED\n");
-    rawLogToFile(sourceLogFile, "------------------------------------------------\n");
+    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
     deleteWorld(world, ENTITIES_LIST_SIZE);
 
