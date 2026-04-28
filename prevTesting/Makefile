@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -O2 -I./modules
-LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
+LDFLAGS = -g -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
 TARGET = ./apps/sticky_fortress
 
 HEADERS = $(wildcard ./modules/*.h)

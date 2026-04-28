@@ -108,13 +108,13 @@ typedef enum
 
 typedef struct
 {
+    Coord coords;
+
     ItemType imType;
     char *charValue;
 
     float number;
     bool isExist;
-
-    Coord coords;
 } Item;
 
 typedef struct

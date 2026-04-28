@@ -17,7 +17,7 @@
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500
 
-#define LOGS_BARRIERS "------------------------------------------------\n"
+#define LOGS_BARRIERS "---------------------------------------------------------------\n"
 
 #define DEFAULT_FONT_SIZE 23
 #define DEFAULT_FOOD_CHAR "*"
@@ -84,8 +84,6 @@ int main()
     //------------------------------------------------------------------------------------------
     // Creating world
     World *world = initializeWorld(30, TEXT_BUFFER_SIZE, LOGS_BARRIERS, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, tm, sourceLogFile, rawTime);
-
-    logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
 
     // Initializing window
     char *windowName = malloc(124);

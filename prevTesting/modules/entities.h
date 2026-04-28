@@ -57,18 +57,27 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     }
 }
 
-void restoreHungerEntity(World  *world, Entity *e, int foodOnMap)
+void restoreHungerEntity(World  *world, Entity *e, int foodOnMap, struct tm *tm, FILE *sourceLogFile)
 {
+    char* foodGameId = malloc(sizeof(char)*12);
+    sprintf(foodGameId, "%d", e->targetFoodId);
+    
+    world->items[e->targetFoodId].number--;
+
     if (world->items[e->targetFoodId].number <= 0)
     {
+        logToFile(sourceLogFile, tm, "Food with id |");
+        rawLogToFile(sourceLogFile, foodGameId);
+        rawLogToFile(sourceLogFile, "| is over\n");
         return;
     }
-    world->items[e->targetFoodId].number--;
 
     e->hunger -= 20 + rand() % 10;
     if (e->hunger < 0) {
         e->hunger = 0;
     }
+
+    free(foodGameId);
 }
 
 bool findNearestFood(World * world, Entity *e, int foodOnMap)
@@ -191,7 +200,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
                 }
                 else
                 {
-                    restoreHungerEntity(world, e, foodOnMap);
+                    restoreHungerEntity(world, e, foodOnMap, tm, sourceLogFile);
                 }
             }
         }

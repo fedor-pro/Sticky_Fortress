@@ -62,17 +62,23 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
         }
 
         char *entityGameId = malloc(textBufferSize);
-        sprintf(entityGameId, "%s%d", "entities:human", x);
+        sprintf(entityGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 50, 50 + rand() % 10, 0, RED};
+        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 10, rand() % 25 + rand() % 35, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
         
-        logToFile(sourceLogFile, tm, "Created ");
-        rawLogToFile(sourceLogFile, ent.gameName);
-        rawLogToFile(sourceLogFile, " with id: ");
-        rawLogToFile(sourceLogFile, ent.gameId);
-        rawLogToFile(sourceLogFile ,"\n");
+        if (x > 0 && x < entitiesNumber - 1) {
+            if (x == 1) {
+                rawLogToFile(sourceLogFile, "...\n");
+            }
+        } else {
+            logToFile(sourceLogFile, tm, "Created ");
+            rawLogToFile(sourceLogFile, ent.gameName);
+            rawLogToFile(sourceLogFile, " with id: |");
+            rawLogToFile(sourceLogFile, ent.gameId);
+            rawLogToFile(sourceLogFile ,"|\n");
+        }
 
         time(&rawTime);
         tm = localtime(&rawTime); // updating time
@@ -94,7 +100,7 @@ void createWorldFood(World *world, int foodNumber)
             resY = rand() % world->mapSize.y;
         }
 
-        Item f = {FOOD, "*", 30 + rand() % 20, true, resX, resY};
+        Item f = {resX, resY, FOOD, "*", 1 + rand() % 2, true};
 
         world->items[x] = f;
     }
@@ -102,7 +108,7 @@ void createWorldFood(World *world, int foodNumber)
 
 void deleteWorld(World *world, int entities_number)
 {
-    printf(" ̶D ̶e ̶l ̶e ̶t ̶e ̶d  ̶w ̶o ̶r ̶l ̶d: ̶%zu ̶b̶y̶t̶e̶s\n", sizeof(world));
+    printf("̶D̶e̶l̶e̶t̶e̶d̶ ̶w̶o̶r̶l̶d: ̶%zu̶ ̶b̶y̶t̶e̶s̶\n", sizeof(world));
 
     for (int i = 0; i < entities_number; i++)
     {
@@ -113,6 +119,7 @@ void deleteWorld(World *world, int entities_number)
     }
 
     free(world->map);
+    free(world->worldLandscapes);
     free(world->entities);
     free(world->items);
     free(world);
@@ -131,7 +138,7 @@ void deleteWorld(World *world, int entities_number)
 //         }  
 // }
 
-World *initializeWorld(int structuresNumber, int textBufferSize, char* logs_barriers, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *source_log_file, time_t rawTime)
+World *initializeWorld(int structuresNumber, int textBufferSize, char* logsBarriers, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *sourceLogFile, time_t rawTime)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
@@ -141,13 +148,15 @@ World *initializeWorld(int structuresNumber, int textBufferSize, char* logs_barr
     initializeWorldLandscapes(world);
 
     createWorldMap(world);
+    logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
+    rawLogToFile(sourceLogFile, logsBarriers);
 
     generateWorldStructures(world, structuresNumber);
 
     world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
 
-    createEntities(world, entitiesNumber, textBufferSize, tm, source_log_file, rawTime);
-    rawLogToFile(source_log_file, logs_barriers);
+    createEntities(world, entitiesNumber, textBufferSize, tm, sourceLogFile, rawTime);
+    rawLogToFile(sourceLogFile, logsBarriers);
 
     world->items = malloc(sizeof(LandscapeCell) * (foodOnMap + 5)); // creating resources
 
