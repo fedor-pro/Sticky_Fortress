@@ -135,3 +135,9 @@ typedef struct
 
     LandscapeType *worldLandscapes;
 } World;
+
+typedef struct
+{
+    GuiPannel *allGuiPannels;
+    GuiText *allGuiText;
+} UILord;

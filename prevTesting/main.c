@@ -106,25 +106,9 @@ int main()
 
     logToFile(sourceLogFile, tm, "INITIALIZED WINDOW\n");
 
-    // Initializing GUI - в UILord
-
-    GuiPannel mouseInfo = {.startCoords.x = 0, .startCoords.y = 0, .canvSizeCoords.x = 280, .canvSizeCoords.y = 150, .backgroundColor = BLACK};
-
-    GuiText mouseCoordsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = mouseInfo.startCoords.x + 15, .startCoords.y = mouseInfo.startCoords.y + 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = RED};
-
-    GuiPannel selectedCellsInfo = {.startCoords.y = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
-    selectedCellsInfo.startCoords.x = windowSizeX - selectedCellsInfo.canvSizeCoords.x;
-
-    GuiText selectedCellsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = selectedCellsInfo.startCoords.x + 15, .startCoords.y = selectedCellsInfo.startCoords.y + 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GOLD};
-
     int selectedCells[5];
 
-    GuiPannel entitiesInfo = {.startCoords.x = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
-    entitiesInfo.startCoords.y = windowSizeY - entitiesInfo.canvSizeCoords.y;
-
-    GuiText entitiesNumberString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
-
-    GuiText fpsString = {.text = (char *)malloc(TEXT_BUFFER_SIZE), .startCoords.x = 180, .startCoords.y = 25, .fontSize = DEFAULT_FONT_SIZE, .fontColor = GREEN};
+    UILord *UICentral = malloc(sizeof(UILord));
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -230,20 +214,20 @@ int main()
         int mouseCoordX = (int)mousePosition.x;
         int mouseCoordY = (int)mousePosition.y;
 
-        drawGuiPannel(mouseInfo);
+        sprintf(UICentral->allGuiText[0].text, "X: %d Y: %d", mouseCoordX, mouseCoordY);
+        DrawText("Lmb to select, \nrmb to deselect area.", UICentral->allGuiText[0].startCoords.x, UICentral->allGuiText[0].startCoords.y + 30, 23, GREEN);
 
-        sprintf(mouseCoordsString.text, "X: %d Y: %d", mouseCoordX, mouseCoordY);
-        drawGuiText(mouseCoordsString);
-        DrawText("Lmb to select, \nrmb to deselect area.", mouseCoordsString.startCoords.x, mouseCoordsString.startCoords.y + 30, 23, GREEN);
+        sprintf(UICentral->allGuiText[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
 
-        drawGuiPannel(selectedCellsInfo);
+        sprintf(UICentral->allGuiText[2].text, "Entities alive: %d", entitiesAlive);
 
-        sprintf(selectedCellsString.text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
-        drawGuiText(selectedCellsString);
+        for (int x = 0; x < 3; x ++) {
+            drawGuiPannel(UICentral->allGuiPannels[x]);
+        }
 
-        drawGuiPannel(entitiesInfo);
-        sprintf(entitiesNumberString.text, "Entities alive: %d", entitiesAlive);
-        drawGuiText(entitiesNumberString);
+        for (int y = 0; y < 3; y ++) {
+            drawGuiText(UICentral->allGuiText[y]);
+        }
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {
@@ -280,10 +264,10 @@ int main()
 
     deleteWorld(world, ENTITIES_LIST_SIZE);
 
-    free(entitiesNumberString.text);
+    free(UICentral->allGuiText[2].text);
     free(stringFPS);
-    free(mouseCoordsString.text);
-    free(selectedCellsString.text); 
+    free(UICentral->allGuiText[0].text);
+    free(UICentral->allGuiText[1].text); 
     free(windowName);
 
     free(sourceLogFilePath);
