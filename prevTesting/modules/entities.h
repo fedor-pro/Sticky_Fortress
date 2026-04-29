@@ -72,7 +72,7 @@ void restoreHungerEntity(World  *world, Entity *e, int foodOnMap, struct tm *tm,
         return;
     }
 
-    e->hunger -= 20 + rand() % 10;
+    e->hunger -= 10 + rand() % 10;
     if (e->hunger < 0) {
         e->hunger = 0;
     }
@@ -116,7 +116,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
     int randomForMove = rand() % 5;
 
     bool isReachedTargetFood = (e->coords.x == world->items[e->targetFoodId].coords.x && e->coords.y == world->items[e->targetFoodId].coords.y && world->items[e->targetFoodId].number > 0);
-    bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.40);
+    bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.60);
 
     if (e->humanity == true)
     {

@@ -24,7 +24,7 @@
 #define DEFAULT_HUMAN_CHAR "&"
 
 #define ENTITIES_LIST_SIZE 100
-#define FOOD_ON_MAP 10
+#define FOOD_ON_MAP 50
 
 
 int main()
@@ -35,6 +35,9 @@ int main()
     bool isPaused = false;
     int timer = 0;
     int fps = 0;
+
+    int entitiesAlive = 0;
+    int entitiesSelected = 0;
 
     char *stringFPS = malloc(TEXT_BUFFER_SIZE);
 
@@ -142,11 +145,19 @@ int main()
         {
             timer++; // updating timer
 
+            entitiesAlive = 0;
+            entitiesSelected = 0;
+
             for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // update entities
             {
                 if (world->entities[x].isAlive == true)
                 {
+                    entitiesAlive ++;
                     updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
+                }
+
+                if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
+                    entitiesSelected ++;
                 }
             }
 
@@ -231,7 +242,7 @@ int main()
         drawGuiText(selectedCellsString);
 
         drawGuiPannel(entitiesInfo);
-        sprintf(entitiesNumberString.text, "Timer: %d", timer);
+        sprintf(entitiesNumberString.text, "Entities alive: %d", entitiesAlive);
         drawGuiText(entitiesNumberString);
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells

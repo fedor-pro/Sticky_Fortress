@@ -64,7 +64,7 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
         char *entityGameId = malloc(textBufferSize);
         sprintf(entityGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 10, rand() % 25 + rand() % 35, 0, RED};
+        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, rand() % 100 + rand() % 35, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
         
@@ -100,7 +100,7 @@ void createWorldFood(World *world, int foodNumber)
             resY = rand() % world->mapSize.y;
         }
 
-        Item f = {resX, resY, FOOD, "*", 1 + rand() % 2, true};
+        Item f = {resX, resY, FOOD, "*", 50 - rand() % 5, true};
 
         world->items[x] = f;
     }

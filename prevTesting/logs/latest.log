@@ -1,53 +1,24 @@
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] PROGRAM STARTED
+[2026-04-29 13:57:06] PROGRAM STARTED
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] Defined window size 1900,1000
+[2026-04-29 13:57:06] Defined window size 1900,1000
 
-[2026-04-28 11:30:12] Defined cell size 5,6
+[2026-04-29 13:57:06] Defined cell size 5,6
 
-[2026-04-28 11:30:12] Defined map size 380, 166
+[2026-04-29 13:57:06] Defined map size 380, 166
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] INITIALIZED WORLD MAP
+[2026-04-29 13:57:06] INITIALIZED WORLD MAP
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] Created Human with id: |0|
+[2026-04-29 13:57:06] Created Human with id: |0|
 ...
-[2026-04-28 11:30:12] Created Human with id: |99|
+[2026-04-29 13:57:06] Created Human with id: |99|
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] INITIALIZED WINDOW
+[2026-04-29 13:57:06] INITIALIZED WINDOW
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] STARTED APP
+[2026-04-29 13:57:06] STARTED APP
 ---------------------------------------------------------------
-[2026-04-28 11:30:12] Entity with id |5| died from hunger
-[2026-04-28 11:30:12] Entity with id |12| died from hunger
-[2026-04-28 11:30:12] Entity with id |42| died from hunger
-[2026-04-28 11:30:12] Entity with id |55| died from hunger
-[2026-04-28 11:30:12] Entity with id |62| died from hunger
-[2026-04-28 11:30:12] Entity with id |90| died from hunger
-[2026-04-28 11:30:12] Entity with id |92| died from hunger
-[2026-04-28 11:30:13] Current FPS: 60
-[2026-04-28 11:30:13] Food with id |0| is over
-[2026-04-28 11:30:13] Food with id |7| is over
-[2026-04-28 11:30:13] Food with id |4| is over
-[2026-04-28 11:30:13] Food with id |3| is over
-[2026-04-28 11:30:14] Current FPS: 60
-[2026-04-28 11:30:14] Food with id |6| is over
-[2026-04-28 11:30:15] Current FPS: 60
-[2026-04-28 11:30:15] Food with id |5| is over
-[2026-04-28 11:30:15] Food with id |8| is over
-[2026-04-28 11:30:16] Current FPS: 60
-[2026-04-28 11:30:16] Food with id |2| is over
-[2026-04-28 11:30:17] Entity with id |19| died from hunger
-[2026-04-28 11:30:17] Entity with id |70| died from hunger
-[2026-04-28 11:30:17] Current FPS: 60
-[2026-04-28 11:30:18] Current FPS: 60
-[2026-04-28 11:30:18] Entity with id |96| died from hunger
-[2026-04-28 11:30:18] Food with id |1| is over
-[2026-04-28 11:30:19] Food with id |9| is over
-[2026-04-28 11:30:19] Current FPS: 60
-[2026-04-28 11:30:20] Current FPS: 60
-[2026-04-28 11:30:20] Entity with id |6| died from hunger
-[2026-04-28 11:30:20] Entity with id |99| died from hunger
-[2026-04-28 11:30:21] Current FPS: 60
+[2026-04-29 13:57:07] Current FPS: 60
+[2026-04-29 13:57:08] Current FPS: 60
 ---------------------------------------------------------------
-[2026-04-28 11:30:22] APP CORRECTLY CLOSED
+[2026-04-29 13:57:09] APP CORRECTLY CLOSED
 ---------------------------------------------------------------
