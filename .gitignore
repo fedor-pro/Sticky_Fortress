@@ -1,2 +1,3 @@
 .vscode/
-prevTesting/apps/sticky_fortress 
+prevTesting/apps/*
+!prevTesting/apps/.gitkeep
