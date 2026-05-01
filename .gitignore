@@ -1,3 +1,7 @@
 .vscode/
+
 prevTesting/apps/*
 !prevTesting/apps/.gitkeep
+
+prevTesting/logs/*
+!prevTesting/logs/.gitkeep
