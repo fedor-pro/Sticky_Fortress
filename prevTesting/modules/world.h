@@ -13,7 +13,7 @@
 
 void initializeWorldLandscapes(World *world) 
 {
-    LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color){3, 130, 0, 225}};
+    LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color) {3, 130, 0, 225}};
     LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){15, 20, 65, 255}};
     LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){0, 0, 139, 255}};
     LandscapeType mountainsLandscape = {LAND_MOUNTAINS, "Mountains and hills", true, (Color){128, 124, 123, 255}};
@@ -64,7 +64,7 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
         char *entityGameId = malloc(textBufferSize);
         sprintf(entityGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, rand() % 100 + rand() % 35, 0, RED};
+        Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, rand () % 100 + rand () % 50, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
         
@@ -100,7 +100,7 @@ void createWorldFood(World *world, int foodNumber)
             resY = rand() % world->mapSize.y;
         }
 
-        Item f = {resX, resY, FOOD, "*", 50 - rand() % 5, true};
+        Item f = {resX, resY, FOOD, "*", 50 + rand() % 30, true};
 
         world->items[x] = f;
     }

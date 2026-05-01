@@ -146,7 +146,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         // Doing
         // -------------------------------------------------------------------
 
-        if (timer % 5 == 0) // moving and eating
+        if (timer % 10 == 0) // moving and eating
         {
             if (e->movingState == UNTARGET_MOVING) // random moving
             {

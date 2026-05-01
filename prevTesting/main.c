@@ -11,8 +11,8 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 5
-#define CELL_HEIGHT 6
+#define CELL_WIDTH 11
+#define CELL_HEIGHT 12
 #define TARGET_FPS 60
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500
@@ -23,8 +23,8 @@
 #define DEFAULT_FOOD_CHAR "*"
 #define DEFAULT_HUMAN_CHAR "&"
 
-#define ENTITIES_LIST_SIZE 100
-#define FOOD_ON_MAP 50
+#define ENTITIES_LIST_SIZE 40
+#define FOOD_ON_MAP 10
 
 
 int main()
@@ -64,6 +64,7 @@ int main()
     logToFile(sourceLogFile, tm, "PROGRAM STARTED\n");
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
+    // Window settings
     int windowSizeX = WINDOW_WIDTH;
     int windowSizeY = WINDOW_HEIGHT;
 
@@ -72,6 +73,7 @@ int main()
 
     Coord ms = {WINDOW_WIDTH / CELL_WIDTH, WINDOW_HEIGHT / CELL_HEIGHT};
 
+    // Log start info
     char *initLogInfo = malloc(sizeof(char) * 1024);
     sprintf(initLogInfo, "%s %d,%d\n\n", "Defined window size", windowSizeX, windowSizeY);
     logToFile(sourceLogFile, tm, initLogInfo);
@@ -84,7 +86,7 @@ int main()
 
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
-    //------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------------------------------------
     // Creating world
     World *world = initializeWorld(30, TEXT_BUFFER_SIZE, LOGS_BARRIERS, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, tm, sourceLogFile, rawTime);
 
@@ -106,9 +108,10 @@ int main()
 
     logToFile(sourceLogFile, tm, "INITIALIZED WINDOW\n");
 
-    int selectedCells[5];
+    int *selectedCells = malloc(sizeof(int)*5);
 
-    UILord *UICentral = malloc(sizeof(UILord));
+    // Creating all UI
+    UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -169,9 +172,9 @@ int main()
             {
                 if (world->map[x+world->mapSize.x*y].isSelected == 1)
                 {
-                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD); // в draw.h
+                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD);
 
-                    if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC) // в updateWorld() в world.h
+                    if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC)
                     {
                         selectedCells[0]++;
                     }
@@ -210,29 +213,16 @@ int main()
             drawEntity(world->entities[x], rectSizeX, rectSizeY);
         }
 
-        Vector2 mousePosition = GetMousePosition(); // updating info about mouse position
-        int mouseCoordX = (int)mousePosition.x;
-        int mouseCoordY = (int)mousePosition.y;
+        Vector2 mp = GetMousePosition(); // updating info about mouse position
+        Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        sprintf(UICentral->allGuiText[0].text, "X: %d Y: %d", mouseCoordX, mouseCoordY);
-        DrawText("Lmb to select, \nrmb to deselect area.", UICentral->allGuiText[0].startCoords.x, UICentral->allGuiText[0].startCoords.y + 30, 23, GREEN);
-
-        sprintf(UICentral->allGuiText[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
-
-        sprintf(UICentral->allGuiText[2].text, "Entities alive: %d", entitiesAlive);
-
-        for (int x = 0; x < 3; x ++) {
-            drawGuiPannel(UICentral->allGuiPannels[x]);
-        }
-
-        for (int y = 0; y < 3; y ++) {
-            drawGuiText(UICentral->allGuiText[y]);
-        }
+        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive); // updating main UI
+        drawUILord(UICentral); // draw main ui
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {
-            int cellX = mouseCoordX / rectSizeX;
-            int cellY = mouseCoordY / rectSizeY;
+            int cellX = mousePosition.x / rectSizeX;
+            int cellY = mousePosition.y / rectSizeY;
             if (cellX >= 0 && cellX < world->mapSize.x && cellY >= 0 && cellY < world->mapSize.y)
             {
                 world->map[cellX+world->mapSize.x*cellY].isSelected = 1;
@@ -241,14 +231,16 @@ int main()
 
         if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) // deselecting area of cells
         {
-            int cellX = mouseCoordX / rectSizeX;
-            int cellY = mouseCoordY / rectSizeY;
+            int cellX = mousePosition.x / rectSizeX;
+            int cellY = mousePosition.y / rectSizeY;
 
             for (int x = cellX - 1; x <= cellX + 1; x++)
             {
                 for (int y = cellY - 1; y <= cellY + 1; y++)
                 {
-                    world->map[x+world->mapSize.x*y].isSelected = 0;
+                    if (cellX - 1 >= 0 && cellX + 1 < world->mapSize.x && cellY - 1 >= 0 && cellY + 1 < world->mapSize.y) {
+                        world->map[x+world->mapSize.x*y].isSelected = 0;
+                    }
                 }
             }
         }
@@ -263,11 +255,9 @@ int main()
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
     deleteWorld(world, ENTITIES_LIST_SIZE);
+    deleteUILord(UICentral);
 
-    free(UICentral->allGuiText[2].text);
     free(stringFPS);
-    free(UICentral->allGuiText[0].text);
-    free(UICentral->allGuiText[1].text); 
     free(windowName);
 
     free(sourceLogFilePath);
