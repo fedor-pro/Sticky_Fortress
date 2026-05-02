@@ -5,8 +5,6 @@ TARGET = ./apps/sticky_fortress
 
 HEADERS = $(wildcard ./modules/*.h)
 
-all: $(TARGET)
-
 $(TARGET): main.c $(HEADERS)
 	$(CC) $(CFLAGS) -o $(TARGET) main.c $(LDFLAGS)
 
@@ -15,5 +13,3 @@ clean:
 
 run: $(TARGET)
 	$(TARGET)
-
-.PHONY: all clean run

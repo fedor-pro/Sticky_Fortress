@@ -109,8 +109,7 @@ int main()
     logToFile(sourceLogFile, tm, "INITIALIZED WINDOW\n");
 
     int *selectedCells = malloc(sizeof(int)*5);
-
-    // Creating all UI
+    // Initialize main UI
     UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
@@ -216,8 +215,8 @@ int main()
         Vector2 mp = GetMousePosition(); // updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive); // updating main UI
-        drawUILord(UICentral); // draw main ui
+        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive); // update main UI 
+        drawUILord(UICentral); // draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {
