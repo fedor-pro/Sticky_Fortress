@@ -5,11 +5,11 @@
 #include <time.h>
 
 #pragma once
-#include "types.h"
-#include "entities.h"
-#include "logging.h"
-#include "generate.h"
-#include "spawn.h"
+#include "../types.h"
+#include "../entities.h"
+#include "../logging.h"
+#include "../generate.h"
+#include "../spawn.h"
 
 void initializeWorldLandscapes(World *world) 
 {

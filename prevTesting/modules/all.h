@@ -6,6 +6,6 @@
 #include "generate.h"
 #include "logging.h"
 #include "entities.h"
-#include "world.h"
+#include "controllers/world.h"
 #include "draw.h"
-#include "uilord.h"
+#include "controllers/uilord.h"

@@ -39,6 +39,9 @@ int main()
     int entitiesAlive = 0;
     int entitiesSelected = 0;
 
+    bool ifSquareSelectingActive = false;
+    Coord squareSelectingStartCellCoords;
+
     char *stringFPS = malloc(TEXT_BUFFER_SIZE);
 
     srand(time(NULL));
