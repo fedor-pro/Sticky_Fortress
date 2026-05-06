@@ -63,11 +63,11 @@
 
 # ver 0.02:
 1) Сделать выделение прямоугольником
-   1. Сделать переменную ifSquareSelectingActive. Каждый тик проверять, нажата ли ЛКМ. Если нажата - изменить ifSquareSelectingActive на противоположное и установить некоторый freeze на смену её значения.
-   2. Сделать переменную squareSelectingStartCellCoords. Когда ifSquareSelectingActive меняется на true - установить squareSelectingStartCellCoords в координаты мыши. Когда ifSquareSelectingActive меняется на false - выделить все клетки от squareSelectingStartCellCoords до текущих координат мыши.
+   1. Сделать переменную ifSquareSelectingActive. Каждый тик проверять, нажата ли ЛКМ. Если нажата - изменить ifSquareSelectingActive на противоположное и установить некоторый freeze на смену её значения. ✔
+   2. Сделать переменную squareSelectingStartCellCoords. Когда ifSquareSelectingActive меняется на true - установить squareSelectingStartCellCoords в координаты мыши. ✔ Когда ifSquareSelectingActive меняется на false - выделить все клетки от squareSelectingStartCellCoords до текущих координат мыши.
 
-1) Создать структуру-базу данных, где хранить все переменные вроде WindowSize и FoodOnMap (можно назвать dataLord)
+2) Создать структуру-базу данных, где хранить все переменные вроде WindowSize и FoodOnMap (можно назвать dataLord)
 
-2) Перенести все обновление(то что сейчас лежит в апдейте таймера) в единую систему (можно назвать updateLord)
+3) Перенести все обновление(то что сейчас лежит в апдейте таймера) в единую систему (можно назвать updateLord)
 
-3) Начать делать систему управления сущностями (приказы для перемещения, размещение еды и т. д.)
+4) Начать делать систему управления сущностями (приказы для перемещения, размещение еды и т. д.)

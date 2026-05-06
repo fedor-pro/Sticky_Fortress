@@ -41,6 +41,7 @@ int main()
 
     bool ifSquareSelectingActive = false;
     Coord squareSelectingStartCellCoords;
+    int squareSelectingFreeze = 0;
 
     char *stringFPS = malloc(TEXT_BUFFER_SIZE);
 
@@ -137,6 +138,10 @@ int main()
             entitiesAlive = 0;
             entitiesSelected = 0;
 
+            if (squareSelectingFreeze > 0) {
+                squareSelectingFreeze --;
+            }
+
             for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // update entities
             {
                 if (world->entities[x].isAlive == true)
@@ -202,7 +207,7 @@ int main()
             }
         }
 
-        for (int x = 0; x < FOOD_ON_MAP; x++) // update and draw items
+        for (int x = 0; x < FOOD_ON_MAP; x++) // draw items
         {
             if (world->items[x].number > 0)
             {
@@ -223,27 +228,19 @@ int main()
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {
-            int cellX = mousePosition.x / rectSizeX;
-            int cellY = mousePosition.y / rectSizeY;
-            if (cellX >= 0 && cellX < world->mapSize.x && cellY >= 0 && cellY < world->mapSize.y)
-            {
-                world->map[cellX+world->mapSize.x*cellY].isSelected = 1;
-            }
-        }
+            if (squareSelectingFreeze == 0) {
+                ifSquareSelectingActive = !ifSquareSelectingActive;
 
-        if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) // deselecting area of cells
-        {
-            int cellX = mousePosition.x / rectSizeX;
-            int cellY = mousePosition.y / rectSizeY;
-
-            for (int x = cellX - 1; x <= cellX + 1; x++)
-            {
-                for (int y = cellY - 1; y <= cellY + 1; y++)
-                {
-                    if (cellX - 1 >= 0 && cellX + 1 < world->mapSize.x && cellY - 1 >= 0 && cellY + 1 < world->mapSize.y) {
-                        world->map[x+world->mapSize.x*y].isSelected = 0;
-                    }
+                if (ifSquareSelectingActive == true) {
+                    squareSelectingStartCellCoords = mousePosition;
+                    printf("start selecting\n");
+                } else {
+                    printf("x\n");
+                    world->map[squareSelectingStartCellCoords.x/rectSizeX + world->mapSize.x * (squareSelectingStartCellCoords.y/rectSizeY)].isSelected = true;
+                    printf("y\n");
                 }
+
+                squareSelectingFreeze = 10;
             }
         }
 
