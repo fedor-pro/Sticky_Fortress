@@ -28,8 +28,6 @@ void initializeWorldLandscapes(World *world)
 
 void createWorldMap(World *world)
 {
-    int i = 0;
-
     for (int x = 0; x < world->mapSize.x; x++)
     {
         for (int y = 0; y < world->mapSize.y; y++)

@@ -236,11 +236,19 @@ int main()
                     printf("start selecting\n");
                 } else {
                     printf("x\n");
-                    world->map[squareSelectingStartCellCoords.x/rectSizeX + world->mapSize.x * (squareSelectingStartCellCoords.y/rectSizeY)].isSelected = true;
+
+                    // Select square from (c1.x; c1.y) to (c2.x; c2.y)
+                    // Go from selecting start to selecting end (mouse position right now)
+                    for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) {
+                        for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) {
+                            printf("z\n");
+                            world->map[ab + world->mapSize.x * ord].isSelected = true;
+                        }
+                    }
                     printf("y\n");
                 }
 
-                squareSelectingFreeze = 10;
+                squareSelectingFreeze = 30;
             }
         }
 
