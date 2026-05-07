@@ -62,9 +62,9 @@
 3) Строк кода: 1090 включая все include
 
 # ver 0.02:
-1) Сделать выделение прямоугольником
+1) Сделать выделение прямоугольником ✔
    1. Сделать переменную ifSquareSelectingActive. Каждый тик проверять, нажата ли ЛКМ. Если нажата - изменить ifSquareSelectingActive на противоположное и установить некоторый freeze на смену её значения. ✔
-   2. Сделать переменную squareSelectingStartCellCoords. Когда ifSquareSelectingActive меняется на true - установить squareSelectingStartCellCoords в координаты мыши. ✔ Когда ifSquareSelectingActive меняется на false - выделить все клетки от squareSelectingStartCellCoords до текущих координат мыши.
+   2. Сделать переменную squareSelectingStartCellCoords. Когда ifSquareSelectingActive меняется на true - установить squareSelectingStartCellCoords в координаты мыши. Когда ifSquareSelectingActive меняется на false - выделить все клетки от squareSelectingStartCellCoords до текущих координат мыши(пока-что сделать просто выделение слева-направо сверху-вниз). ✔
 
 2) Создать структуру-базу данных, где хранить все переменные вроде WindowSize и FoodOnMap (можно назвать dataLord)
 

@@ -233,23 +233,28 @@ int main()
 
                 if (ifSquareSelectingActive == true) {
                     squareSelectingStartCellCoords = mousePosition;
-                    printf("start selecting\n");
+                    world->map[(squareSelectingStartCellCoords.x/rectSizeX) + world->mapSize.x * (squareSelectingStartCellCoords.y/rectSizeY)].isSelected = true;
                 } else {
-                    printf("x\n");
-
                     // Select square from (c1.x; c1.y) to (c2.x; c2.y)
                     // Go from selecting start to selecting end (mouse position right now)
+
                     for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) {
                         for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) {
-                            printf("z\n");
-                            world->map[ab + world->mapSize.x * ord].isSelected = true;
+                            world->map[(ab/rectSizeX) + world->mapSize.x * (ord/rectSizeY)].isSelected = true;
                         }
                     }
-                    printf("y\n");
                 }
 
-                squareSelectingFreeze = 30;
+                squareSelectingFreeze = 10;
             }
+        } else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) { // Stub
+            world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
+
+            world->map[(mousePosition.x/rectSizeX) + 1 + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
+            world->map[(mousePosition.x/rectSizeX) - 1 + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
+
+            world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY + 1)].isSelected = false;
+            world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY - 1)].isSelected = false;
         }
 
         EndDrawing();
@@ -269,6 +274,4 @@ int main()
 
     free(sourceLogFilePath);
     fclose(sourceLogFile);
-
-    return 0;
 }
