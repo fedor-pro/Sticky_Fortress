@@ -11,8 +11,8 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 11
-#define CELL_HEIGHT 12
+#define CELL_WIDTH 5
+#define CELL_HEIGHT 6
 #define TARGET_FPS 60
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500
@@ -100,6 +100,8 @@ int main()
 
     InitWindow(windowSizeX, windowSizeY, windowName);
     SetTargetFPS(TARGET_FPS);
+
+    SetExitKey(KEY_NULL); // Window willn't close on ESC button
 
     Image windowIcon = LoadImage("./images/windowIcon.png");
 
@@ -232,6 +234,8 @@ int main()
                 ifSquareSelectingActive = !ifSquareSelectingActive;
 
                 if (ifSquareSelectingActive == true) {
+                    deselectAllWorldMap(world);
+
                     squareSelectingStartCellCoords = mousePosition;
                     world->map[(squareSelectingStartCellCoords.x/rectSizeX) + world->mapSize.x * (squareSelectingStartCellCoords.y/rectSizeY)].isSelected = true;
                 } else {
@@ -247,7 +251,8 @@ int main()
 
                 squareSelectingFreeze = 10;
             }
-        } else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) { // Stub
+        } else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub
+        {
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
 
             world->map[(mousePosition.x/rectSizeX) + 1 + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
@@ -255,6 +260,9 @@ int main()
 
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY + 1)].isSelected = false;
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY - 1)].isSelected = false;
+        } else if (IsKeyDown(KEY_ESCAPE))
+        {
+            deselectAllWorldMap(world);
         }
 
         EndDrawing();

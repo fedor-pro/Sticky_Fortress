@@ -46,6 +46,16 @@ void createWorldMap(World *world)
     }
 }
 
+void deselectAllWorldMap(World *world) {
+    for (int x = 0; x < world->mapSize.x; x++)
+    {
+        for (int y = 0; y < world->mapSize.y; y++)
+        {
+            world->map[x + world->mapSize.x * y].isSelected = false;
+        }
+    }
+}
+
 void createEntities(World *world, int entitiesNumber, int textBufferSize, struct tm *tm, FILE  *sourceLogFile, time_t rawTime)
 {
     for (int x = 0; x < entitiesNumber; x++)
