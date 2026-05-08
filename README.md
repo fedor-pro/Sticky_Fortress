@@ -1,8 +1,10 @@
 A clone of dwarf fortress on C with using Raylib. Right now in prototype stage.
 
-# How to run if you have linux
+![alt text](./prevTesting/images/game_working.png)
 
-First, you need to install raylib on your system directories
+# How to run on linux
+
+First, you need to install raylib in your system directories
 
 ### Debian: 
 sudo apt update &&
@@ -20,4 +22,6 @@ Then, you need to go prevTesting folder and write this command in console: "make
 
 1) Program crashed with error "Not found ./logs/latest.log" or similar: check that the logs/ folder exists in the Sticky_Fortress/prevTesting folder and that it contains the latest.log file. If they are missing, create them yourself. 
 
-2) The program icon is missing from the window: check that the images/ folder esists in the Sticky_Fortress/prevTesting folder and that it contains the windowIcon.png file. If they are missing you need to create folder images/ , copy windowIcon.png from git repository and put it in this folder.
+2) The program icon is missing from the window: check that the images/ folder exsists in the Sticky_Fortress/prevTesting folder and that it contains the windowIcon.png file. If they are missing you need to create folder images/ , copy windowIcon.png from git repository and put it in this folder.
+
+![alt text](./prevTesting/images/windowIcon.png)
