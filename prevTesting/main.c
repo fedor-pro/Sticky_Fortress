@@ -11,8 +11,8 @@
 
 #define WINDOW_WIDTH 1900
 #define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 5
-#define CELL_HEIGHT 6
+#define CELL_WIDTH 11
+#define CELL_HEIGHT 11
 #define TARGET_FPS 60
 #define TIMER_RESET 60
 #define TEXT_BUFFER_SIZE 500

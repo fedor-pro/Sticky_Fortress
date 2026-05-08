@@ -22,6 +22,4 @@ Then, you need to go prevTesting folder and write this command in console: "make
 
 1) Program crashed with error "Not found ./logs/latest.log" or similar: check that the logs/ folder exists in the Sticky_Fortress/prevTesting folder and that it contains the latest.log file. If they are missing, create them yourself. 
 
-2) The program icon is missing from the window: check that the images/ folder exsists in the Sticky_Fortress/prevTesting folder and that it contains the windowIcon.png file. If they are missing you need to create folder images/ , copy windowIcon.png from git repository and put it in this folder.
-
-![alt text](./prevTesting/images/windowIcon.png)
+2) The program icon is missing from the window: check that the images/ folder exsists in the Sticky_Fortress/prevTesting folder and that it contains the windowIcon.png file. If they are missing you need to create folder images/ , copy windowIcon.png from git repository and put it in this folder. ![alt text](./prevTesting/images/windowIcon.png)
