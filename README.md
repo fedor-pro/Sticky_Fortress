@@ -1,25 +1,36 @@
+# Sticky Fortress
+
+## Description
+
 A clone of dwarf fortress on C with using Raylib. Right now in prototype stage.
 
 ![alt text](./prevTesting/images/game_working.png)
 
-# How to run on linux
+## Installation & running (Linux)
 
-First, you need to install raylib in your system directories
+1) Clone this git repository:
+    ```sh
+    git clone https://github.com/fedor-pro/Sticky_Fortress.git
+    ```
 
-### Debian: 
-sudo apt update &&
-sudo apt install libraylib-dev
+2) Install raylib following these instructions:
+    ```
+    https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux
+    ```
 
-### Arch Linux / Manjaro:
-sudo pacman -S raylib
+3) Navigate to the project directory:
+    ```sh
+    cd Sticky_Fortress/prevTesting
+    ```
 
-### Fedora:
-sudo dnf install raylib-devel
-
-Then, you need to go prevTesting folder and write this command in console: "make clean". Then write "make run". Game will start. 
+4) Build & run project using `make`
+    ```sh
+    make run
+    ```
 
 ## Common errors
 
-1) Program crashed with error "Not found ./logs/latest.log" or similar: check that the logs/ folder exists in the Sticky_Fortress/prevTesting folder and that it contains the latest.log file. If they are missing, create them yourself. 
+1) Program crashed with error `Not found ./logs/latest.log` or similar: check that the `logs/` folder exists in the `Sticky_Fortress/prevTesting` folder and that it contains the `latest.log` file. If they are missing, create them yourself. 
 
-2) The program icon is missing from the window: check that the images/ folder exsists in the Sticky_Fortress/prevTesting folder and that it contains the windowIcon.png file. If they are missing you need to create folder images/ , copy windowIcon.png from git repository and put it in this folder. ![alt text](./prevTesting/images/windowIcon.png)
+2) The program icon is missing from the window: check that the `images/` folder exsists in the `Sticky_Fortress/prevTesting` folder and that it contains the `windowIcon.png` file. If they are missing you need to create folder `images/` , copy `windowIcon.png` from git repository and put it in this folder. 
+![alt text](./prevTesting/images/windowIcon.png)
