@@ -131,9 +131,11 @@ int main()
 
         fps = GetFPS();
 
-        if (IsKeyPressed(KEY_SPACE)) isPaused = !isPaused;
+        if (IsKeyPressed(KEY_SPACE)) {
+            isPaused = !isPaused;
+        }
 
-        if (!IsKeyDown(KEY_SPACE))
+        if (!isPaused)
         {
             timer++; // updating timer
 
@@ -225,7 +227,7 @@ int main()
         Vector2 mp = GetMousePosition(); // updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive); // update main UI 
+        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, timer, isPaused); // update main UI 
         drawUILord(UICentral); // draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells

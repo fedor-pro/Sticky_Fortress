@@ -70,9 +70,7 @@ void generateStructure(World *world)
                 } else {
                     world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
                 } // so ugly generation
-
-                world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
-
+                
                 j++;
             }
             else

@@ -4,7 +4,8 @@
 
 A clone of dwarf fortress on C with using Raylib. Right now in prototype stage.
 
-![alt text](./prevTesting/images/game_working.png)
+<!-- ![alt text](./prevTesting/images/game_working.png) -->
+![Image alt](./prevTesting/images/game_working_gif.gif)
 
 ## Installation & running (Linux)
 
