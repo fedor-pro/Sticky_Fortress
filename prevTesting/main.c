@@ -103,9 +103,9 @@ int main()
 
     SetExitKey(KEY_NULL); // Window willn't close on ESC button
 
-    Image windowIcon = LoadImage("./images/windowIcon.png");
+    Image windowIcon = LoadImage("./images/windowIcon.png"); // loading icon
 
-    if (windowIcon.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) // formatting image
+    if (windowIcon.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) // formatting icon
     {
         ImageFormat(&windowIcon, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     }
@@ -131,7 +131,7 @@ int main()
 
         fps = GetFPS();
 
-        if (IsKeyPressed(KEY_SPACE)) {
+        if (IsKeyPressed(KEY_SPACE)) { // pause
             isPaused = !isPaused;
         }
 
@@ -172,7 +172,7 @@ int main()
 
         ClearBackground(BLACK); // clear background
 
-        for (int u = 0; u < 5; u++)
+        for (int u = 0; u < 5; u++) // reset selected landscape cells stats
         {
             selectedCells[u] = 0;
         }
@@ -181,10 +181,11 @@ int main()
         {
             for (int y = 0; y < world->mapSize.y; y++)
             {
-                if (world->map[x+world->mapSize.x*y].isSelected == 1)
+                if (world->map[x+world->mapSize.x*y].isSelected == 1) // if cell is selected
                 {
-                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD);
+                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD); 
 
+                    // Update selected landscape cells stats
                     if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC)
                     {
                         selectedCells[0]++;
@@ -253,7 +254,7 @@ int main()
 
                 squareSelectingFreeze = 10;
             }
-        } else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub
+        } else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
         {
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
 

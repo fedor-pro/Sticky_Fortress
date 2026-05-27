@@ -56,7 +56,7 @@ void generateStructure(World *world)
     {
         for (int g = 0; g < zoneMaxLongY; g++)
         {
-            if (!(structure.landscape.gameId == LAND_MOUNTAINS))
+            if (!(structure.landscape.gameId == LAND_MOUNTAINS)) // water
             {
                 structure.incomingCellsCoords[j].x = zoneStartCoord.x + l;
                 structure.incomingCellsCoords[j].y = zoneStartCoord.y + g;
@@ -65,7 +65,7 @@ void generateStructure(World *world)
                     return;
                 }
 
-                if (20 + (rand() % pondBorder)/2 >= pond) {
+                if ((zoneMaxLongY/2) + (rand() % pondBorder)/2 >= pond) {
                     world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.secondLandscape;
                 } else {
                     world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType = structure.landscape;
@@ -73,7 +73,7 @@ void generateStructure(World *world)
                 
                 j++;
             }
-            else
+            else // mountains
             {
                 if (((rand() % pondBorder) - 20) > pond)
                 {
