@@ -1,17 +1,13 @@
 #include <stdio.h>
-#include <raylib.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
 
-#pragma once
-#include "../types.h"
-#include "../entities.h"
-#include "../logging.h"
-#include "../generate.h"
-#include "../spawn.h"
+#include "uilord.h"
+#include "draw.h"
 
-UILord *initializeUILord (int windowSizeX, int windowSizeY, int text_buffer_size, int default_font_size) {
+UILord *initializeUILord (int windowSizeX, int windowSizeY, int text_buffer_size, int default_font_size) 
+{
     GuiPannel mouseInfo = {.startCoords.x = 0, .startCoords.y = 0, .canvSizeCoords.x = 280, .canvSizeCoords.y = 150, .backgroundColor = BLACK};
 
     GuiText mouseCoordsString = {.text = (char *)malloc(text_buffer_size), .startCoords.x = mouseInfo.startCoords.x + 15, .startCoords.y = mouseInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = RED};
@@ -49,13 +45,15 @@ UILord *initializeUILord (int windowSizeX, int windowSizeY, int text_buffer_size
     return UIL;
 }
 
-void deleteUILord (UILord *UIL) {
+void deleteUILord (UILord *UIL) 
+{
     free(UIL->allGuiPannels);
     free(UIL->allGuiText);
     free(UIL);
 }
 
-void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, int entitiesAlive, int timer, bool isPaused) {
+void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, int entitiesAlive, int timer, bool isPaused)
+{
     sprintf(UIL->allGuiText[0].text, "X: %d Y: %d", mousePosition.x, mousePosition.y);
     DrawText("Lmb to select, \nrmb to deselect area.", UIL->allGuiText[0].startCoords.x, UIL->allGuiText[0].startCoords.y + 30, 23, GREEN);
 
@@ -63,19 +61,25 @@ void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, int ent
 
     sprintf(UIL->allGuiText[2].text, "Entities alive: %d", entitiesAlive);
 
-    if (isPaused) {
+    if (isPaused) 
+    {
         sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n true", timer);
-    } else {
+    } 
+    else 
+    {
         sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n false", timer);
     }
 }
 
-void drawUILord (UILord *UIL) {
-    for (int x = 0; x < 4; x ++) {
+void drawUILord (UILord *UIL)
+{
+    for (int x = 0; x < 4; x ++) 
+    {
         drawGuiPannel(UIL->allGuiPannels[x]);
     }
 
-    for (int y = 0; y < 4; y ++) {
+    for (int y = 0; y < 4; y ++) 
+    {
         drawGuiText(UIL->allGuiText[y]);
     }
 }
