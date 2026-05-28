@@ -1,7 +1,5 @@
-//STANDALONE MODULE
-
-#pragma once
-#include "types.h"
+#include "logging.h"
+#include <time.h>
 
 void initializeLogFile(char *sourceLogFilePath, FILE **sourceLogFile, struct tm *tm) // initializing log file
 {

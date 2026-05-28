@@ -1,9 +1,5 @@
-#include <stdio.h>  // for printf
-#include <raylib.h> // for graphics
-#include <stdlib.h> // for rand() func
-
-#pragma once
-#include "types.h"
+#include "draw.h"
+#include <raylib.h>
 
 void drawGuiPannel(GuiPannel guip) // draw pannel
 {

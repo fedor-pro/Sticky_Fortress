@@ -1,15 +1,10 @@
-#include <stdio.h>
+#include "world.h"
+#include "generate.h"
 #include <raylib.h>
-#include <stdlib.h>
-#include <string.h>
 #include <time.h>
-
-#pragma once
-#include "../types.h"
-#include "../entities.h"
-#include "../logging.h"
-#include "../generate.h"
-#include "../spawn.h"
+#include <stdlib.h>
+#include "spawn.h"
+#include "logging.h"
 
 void initializeWorldLandscapes(World *world) 
 {
@@ -132,19 +127,6 @@ void deleteWorld(World *world, int entities_number)
     free(world->items);
     free(world);
 }
-
-// void updateWorld(World *world, int entities_list_size) {
-
-//     for (int x = 0; x < entities_list_size; x++) // update and draw entities
-//         {
-//             if (world->entities[x].isAlive == true)
-//             {
-//                 updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
-//             }
-
-//             drawEntity(world->entities[x], rectSizeX, rectSizeY);
-//         }  
-// }
 
 World *initializeWorld(int structuresNumber, int textBufferSize, char* logsBarriers, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *sourceLogFile, time_t rawTime)
 {

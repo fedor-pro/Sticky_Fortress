@@ -1,15 +1,6 @@
-#include <stdio.h>
+#include "uilord.h"
+#include "draw.h"
 #include <raylib.h>
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
-
-#pragma once
-#include "../types.h"
-#include "../entities.h"
-#include "../logging.h"
-#include "../generate.h"
-#include "../spawn.h"
 
 UILord *initializeUILord (int windowSizeX, int windowSizeY, int text_buffer_size, int default_font_size) {
     GuiPannel mouseInfo = {.startCoords.x = 0, .startCoords.y = 0, .canvSizeCoords.x = 280, .canvSizeCoords.y = 150, .backgroundColor = BLACK};

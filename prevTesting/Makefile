@@ -1,15 +1,35 @@
-CC = gcc
-CFLAGS = -O2 -I./modules
-LDFLAGS = -lraylib -lGL -lm -lpthread -ldl -lrt -lX11
-TARGET = ./apps/sticky_fortress
+CC = gcc # Compiler
+CFLAGS = -I./src/include -I./src # C compilation flags
+LDFLAGS = -lm -lpthread # Multi OS linker flags
 
-HEADERS = $(wildcard ./modules/*.h)
+UNAME_S := $(shell uname -s) # Operation system
 
-$(TARGET): main.c $(HEADERS)
-	$(CC) $(CFLAGS) -o $(TARGET) main.c $(LDFLAGS)
+TARGET = ./apps/sticky_fortress # Final programm
 
-clean:
-	rm -f $(TARGET)
+SRCS = $(wildcard ./src/run/*.c ./src/*.c) # Collecting .c files
+OBJS = $(SRCS:.c=.o) # Convert .c files from SRCS to .o files
 
-run: $(TARGET)
+HEADERS = $(wildcard ./src/include/*.h) # Headers
+
+ifeq ($(strip $(UNAME_S)), Linux)
+	LDFLAGS += -lraylib -lGL -ldl -lrt -lX11 -lm -lpthread
+endif
+
+.PHONY: all clean run # Reserve this names for directives
+
+all: $(TARGET)
+
+$(TARGET): $(OBJS) # Create folder for app and compile it
+	mkdir -p $(dir $(TARGET))
+	$(CC) -o $@ $^ $(LDFLAGS)
+# gcc ./apps/sticky_fortress [OBJS] [LDFLAGS]
+
+%.o: %.c $(HEADERS)
+	$(CC) $(CFLAGS) -c $< -o $@
+# gcc [CFLAGS] [.c for compile] [target .o]
+
+clean: # Clear compilation results
+	rm -f $(OBJS) $(TARGET)
+
+run: $(TARGET) # Run this program
 	$(TARGET)

@@ -1,11 +1,13 @@
-// SYSTEM HEAD FILES:
 #include <stdio.h>  // for printf
 #include <raylib.h> // for graphics
 #include <stdlib.h> // for rand() func
 #include <time.h>   // for timestamp and rand() initialize
 
-// MODULES:
-#include "./modules/all.h"
+#include "draw.h"
+#include "entities.h"
+#include "logging.h"
+#include "world.h"
+#include "uilord.h"
 
 #define VERSION "0.0.1"
 
@@ -116,7 +118,7 @@ int main()
 
     int *selectedCells = malloc(sizeof(int)*5);
     // Initialize main UI
-    UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
+    // UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -131,7 +133,9 @@ int main()
 
         fps = GetFPS();
 
-        if (IsKeyPressed(KEY_SPACE)) { // pause
+        // pause
+        if (IsKeyPressed(KEY_SPACE)) 
+        {
             isPaused = !isPaused;
         }
 
@@ -142,7 +146,8 @@ int main()
             entitiesAlive = 0;
             entitiesSelected = 0;
 
-            if (squareSelectingFreeze > 0) {
+            if (squareSelectingFreeze > 0)
+            {
                 squareSelectingFreeze --;
             }
 
@@ -228,25 +233,30 @@ int main()
         Vector2 mp = GetMousePosition(); // updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, timer, isPaused); // update main UI 
-        drawUILord(UICentral); // draw main UI
+        // updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, timer, isPaused); // update main UI 
+        // drawUILord(UICentral); // draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {
             if (squareSelectingFreeze == 0) {
                 ifSquareSelectingActive = !ifSquareSelectingActive;
 
-                if (ifSquareSelectingActive == true) {
+                if (ifSquareSelectingActive == true) 
+                {
                     deselectAllWorldMap(world);
 
                     squareSelectingStartCellCoords = mousePosition;
                     world->map[(squareSelectingStartCellCoords.x/rectSizeX) + world->mapSize.x * (squareSelectingStartCellCoords.y/rectSizeY)].isSelected = true;
-                } else {
+                } 
+                else 
+                {
                     // Select square from (c1.x; c1.y) to (c2.x; c2.y)
                     // Go from selecting start to selecting end (mouse position right now)
 
-                    for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) {
-                        for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) {
+                    for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) 
+                    {
+                        for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) 
+                        {
                             world->map[(ab/rectSizeX) + world->mapSize.x * (ord/rectSizeY)].isSelected = true;
                         }
                     }
@@ -254,7 +264,8 @@ int main()
 
                 squareSelectingFreeze = 10;
             }
-        } else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
+        } 
+        else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
         {
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
 
@@ -263,7 +274,8 @@ int main()
 
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY + 1)].isSelected = false;
             world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY - 1)].isSelected = false;
-        } else if (IsKeyDown(KEY_ESCAPE))
+        } 
+        else if (IsKeyDown(KEY_ESCAPE))
         {
             deselectAllWorldMap(world);
         }
@@ -278,7 +290,7 @@ int main()
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
     deleteWorld(world, ENTITIES_LIST_SIZE);
-    deleteUILord(UICentral);
+    // deleteUILord(UICentral);
 
     free(stringFPS);
     free(windowName);

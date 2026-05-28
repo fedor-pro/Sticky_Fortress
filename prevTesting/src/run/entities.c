@@ -1,11 +1,8 @@
-#include <stdio.h>
+#include "entities.h"
 #include <raylib.h>
-#include <stdlib.h>
-#include <string.h>
 #include <time.h>
-
-#pragma once
-#include "types.h"
+#include <stdlib.h>
+#include "logging.h"
 
 void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 {

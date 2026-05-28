@@ -1,12 +1,9 @@
-// STANDALONE MODULE
+#ifndef TYPES_H
+#define TYPES_H
 
-#pragma once
-
-#include <stdio.h>  // for printf
-#include <raylib.h> // for graphics
-#include <stdlib.h>
-#include <string.h>
-#include <time.h>
+#include <stdio.h>
+#include <stdbool.h>
+#include <raylib.h>
 
 typedef struct
 {
@@ -141,3 +138,5 @@ typedef struct
     GuiPannel *allGuiPannels;
     GuiText *allGuiText;
 } UILord;
+
+#endif

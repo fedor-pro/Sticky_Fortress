@@ -1,13 +1,6 @@
-// STANDALONE MODULE
-
-#include <stdio.h>
-#include <raylib.h>
-#include <stdlib.h>
-#include <string.h>
+#include <generate.h>
 #include <time.h>
-
-#pragma once
-#include "types.h"
+#include <stdlib.h>
 
 bool structuresOverlayCheck(World *world, LandscapeStructure structure, Coord zoneStartCoord, int ZoneMaxLongX, int zoneMaxLongY, int l, int g) {
     if (world->map[(zoneStartCoord.x + l) + world->mapSize.x * (zoneStartCoord.y + g)].landType.gameId != world->worldLandscapes[0].gameId) { // Overlay check
