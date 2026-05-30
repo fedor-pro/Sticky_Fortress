@@ -1,5 +1,5 @@
-#if !defined(UILORD_H)
-#define UILORD_H
+#if !defined(WORLD_H)
+#define WORLD_H
 
 #include "types.h"
 #include <time.h>

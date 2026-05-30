@@ -6,8 +6,8 @@
 #include "draw.h"
 #include "entities.h"
 #include "logging.h"
-#include "world.h"
 #include "uilord.h"
+#include "world.h"
 
 #define VERSION "0.0.1"
 
@@ -118,7 +118,7 @@ int main()
 
     int *selectedCells = malloc(sizeof(int)*5);
     // Initialize main UI
-    // UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
+    UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -233,8 +233,8 @@ int main()
         Vector2 mp = GetMousePosition(); // updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        // updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, timer, isPaused); // update main UI 
-        // drawUILord(UICentral); // draw main UI
+        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, timer, isPaused); // update main UI 
+        drawUILord(UICentral); // draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
         {
@@ -290,7 +290,7 @@ int main()
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
     deleteWorld(world, ENTITIES_LIST_SIZE);
-    // deleteUILord(UICentral);
+    deleteUILord(UICentral);
 
     free(stringFPS);
     free(windowName);
