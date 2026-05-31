@@ -5,8 +5,8 @@
 #include <time.h>
 
 void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map);
-void restoreHungerEntity(World  *world, Entity *e, int foodOnMap, struct tm *tm, FILE *sourceLogFile);
-bool findNearestFood(World *world, Entity *e, int foodOnMap);
-void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnMap, FILE *sourceLogFile, struct tm *tm) ;
+void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldParamsData, struct tm *tm, FILE *sourceLogFile);
+bool findNearestFood(World *world, Entity *e, worldParamsDataLord* worldParamsData);
+void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParamsDataLord* worldParamsData, FILE *sourceLogFile, struct tm *tm) ;
 
 #endif 

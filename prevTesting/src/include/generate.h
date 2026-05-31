@@ -5,6 +5,6 @@
 
 bool structuresOverlayCheck(World *world, LandscapeStructure structure, Coord zoneStartCoord, int ZoneMaxLongX, int zoneMaxLongY, int l, int g);
 void generateStructure(World *world);
-void generateWorldStructures(World *world, int numberOfStructures);
+void generateWorldStructures(World *world, worldParamsDataLord* worldParamsData);
 
 #endif

@@ -15,8 +15,8 @@ void generateStructure(World *world)
 {
     LandscapeStructure structure;
 
-    float pond = 65 + rand() % 15;
-    float pondIncrementStep = 2;
+    float pond = rand() % 100 + rand() % 15;
+    float pondIncrementStep = 1 + rand () % 3;
     int pondBorder = 200 + rand() % 100;
 
     if (rand() % 10 > 5)
@@ -94,12 +94,12 @@ void generateStructure(World *world)
     free(structure.incomingCellsCoords);
 }
 
-void generateWorldStructures(World *world, int numberOfStructures)
+void generateWorldStructures(World *world, worldParamsDataLord* worldParamsData)
 {
-    for (int x = 0; x < numberOfStructures; x++)
+    for (int x = 0; x < worldParamsData->structuresNumber; x++)
     {
         generateStructure(world);
     }
 
     return;
-} // Generate structures
+}

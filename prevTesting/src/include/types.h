@@ -1,4 +1,4 @@
-#ifndef TYPES_H
+#if !defined(TYPES_H)
 #define TYPES_H
 
 #include <stdio.h>
@@ -138,5 +138,25 @@ typedef struct
     GuiPannel *allGuiPannels;
     GuiText *allGuiText;
 } UILord;
+
+typedef struct
+{
+    int entitiesNumber;
+    int foodOnMap;
+    int structuresNumber;
+} worldParamsDataLord;
+
+typedef struct
+{
+    Coord windowSize;
+    Coord rectSize;
+    int textBufferSize;
+} progParamsDataLord;
+
+// typedef struct
+// {
+//     worldParamsDataLord worldParamsData;
+//     progParamsDataLord progParamsData;
+// } mainDataLord;
 
 #endif

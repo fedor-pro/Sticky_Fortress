@@ -2,26 +2,27 @@
 #include "draw.h"
 #include <raylib.h>
 
-UILord *initializeUILord (int windowSizeX, int windowSizeY, int text_buffer_size, int default_font_size) {
+UILord *initializeUILord (progParamsDataLord *progParamsData, int default_font_size) {
     GuiPannel mouseInfo = {.startCoords.x = 0, .startCoords.y = 0, .canvSizeCoords.x = 280, .canvSizeCoords.y = 150, .backgroundColor = BLACK};
 
-    GuiText mouseCoordsString = {.text = (char *)malloc(text_buffer_size), .startCoords.x = mouseInfo.startCoords.x + 15, .startCoords.y = mouseInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = RED};
+    GuiText mouseCoordsText= {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = mouseInfo.startCoords.x + 15, .startCoords.y = mouseInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = RED};
 
     GuiPannel selectedCellsInfo = {.startCoords.y = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
-    selectedCellsInfo.startCoords.x = windowSizeX - selectedCellsInfo.canvSizeCoords.x;
+    selectedCellsInfo.startCoords.x = progParamsData->windowSize.x - selectedCellsInfo.canvSizeCoords.x;
 
-    GuiText selectedCellsString = {.text = (char *)malloc(text_buffer_size), .startCoords.x = selectedCellsInfo.startCoords.x + 15, .startCoords.y = selectedCellsInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = GOLD};
+    GuiText selectedCellsText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = selectedCellsInfo.startCoords.x + 15, .startCoords.y = selectedCellsInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = GOLD};
 
     int selectedCells[5];
 
     GuiPannel entitiesInfo = {.startCoords.x = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
-    entitiesInfo.startCoords.y = windowSizeY - entitiesInfo.canvSizeCoords.y;
+    entitiesInfo.startCoords.y = progParamsData->windowSize.y - entitiesInfo.canvSizeCoords.y;
 
-    GuiText entitiesNumberString = {.text = (char *)malloc(text_buffer_size), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText entitiesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText entitiesSelectedText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 60, .fontSize = default_font_size, .fontColor = GREEN};
 
-    GuiPannel zeroInfo = {.startCoords.x = windowSizeX - 200, .startCoords.y = windowSizeY - 200, .canvSizeCoords.x = 200, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
+    GuiPannel zeroInfo = {.startCoords.x = progParamsData->windowSize.x - 200, .startCoords.y = progParamsData->windowSize.y- 200, .canvSizeCoords.x = 200, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
 
-    GuiText zeroInfoText = {.text = (char *)malloc(text_buffer_size), .startCoords.x = zeroInfo.startCoords.x + 5, .startCoords.y = zeroInfo.startCoords.y + 5, .fontSize = default_font_size-5, .fontColor = RED};
+    GuiText zeroInfoText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = zeroInfo.startCoords.x + 5, .startCoords.y = zeroInfo.startCoords.y + 5, .fontSize = default_font_size-5, .fontColor = RED};
 
     UILord *UIL = malloc(sizeof(UILord));
     UIL->allGuiPannels = malloc(sizeof(GuiPannel)*10);
@@ -32,10 +33,11 @@ UILord *initializeUILord (int windowSizeX, int windowSizeY, int text_buffer_size
     UIL->allGuiPannels[2] = entitiesInfo;
     UIL->allGuiPannels[3] = zeroInfo;
 
-    UIL->allGuiText[0] = mouseCoordsString;
-    UIL->allGuiText[1] = selectedCellsString;
-    UIL->allGuiText[2] = entitiesNumberString;
+    UIL->allGuiText[0] = mouseCoordsText;
+    UIL->allGuiText[1] = selectedCellsText;
+    UIL->allGuiText[2] = entitiesNumberText;
     UIL->allGuiText[3] = zeroInfoText;
+    UIL->allGuiText[4] = entitiesSelectedText;
 
     return UIL;
 }
@@ -46,13 +48,13 @@ void deleteUILord (UILord *UIL) {
     free(UIL);
 }
 
-void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, int entitiesAlive, int timer, bool isPaused) {
+void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, int entitiesAlive, int entitiesSelected, int timer, bool isPaused) {
     sprintf(UIL->allGuiText[0].text, "X: %d Y: %d", mousePosition.x, mousePosition.y);
-    DrawText("Lmb to select, \nrmb to deselect area.", UIL->allGuiText[0].startCoords.x, UIL->allGuiText[0].startCoords.y + 30, 23, GREEN);
 
     sprintf(UIL->allGuiText[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
 
     sprintf(UIL->allGuiText[2].text, "Entities alive: %d", entitiesAlive);
+    sprintf(UIL->allGuiText[4].text, "      selected: %d", entitiesSelected);
 
     if (isPaused) {
         sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n true", timer);
@@ -66,7 +68,9 @@ void drawUILord (UILord *UIL) {
         drawGuiPannel(UIL->allGuiPannels[x]);
     }
 
-    for (int y = 0; y < 4; y ++) {
+    for (int y = 0; y < 5; y ++) {
         drawGuiText(UIL->allGuiText[y]);
     }
+
+    DrawText("Lmb to select, \nrmb to deselect area.", UIL->allGuiText[0].startCoords.x, UIL->allGuiText[0].startCoords.y + 30, 23, GREEN);
 }

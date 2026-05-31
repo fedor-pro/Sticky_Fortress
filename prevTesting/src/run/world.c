@@ -51,9 +51,9 @@ void deselectAllWorldMap(World *world) {
     }
 }
 
-void createEntities(World *world, int entitiesNumber, int textBufferSize, struct tm *tm, FILE  *sourceLogFile, time_t rawTime)
+void createEntities(World *world, worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, struct tm *tm, FILE  *sourceLogFile, time_t rawTime)
 {
-    for (int x = 0; x < entitiesNumber; x++)
+    for (int x = 0; x < worldParamsData->entitiesNumber; x++)
     {
         int entX = rand() % world->mapSize.x;
         int entY = rand() % world->mapSize.y;
@@ -64,14 +64,14 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
             entY = rand() % world->mapSize.y;
         }
 
-        char *entityGameId = malloc(textBufferSize);
+        char *entityGameId = malloc(progParamsData->textBufferSize);
         sprintf(entityGameId, "%d", x);
 
         Entity ent = {entityGameId, "Human", true, true, "&", entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, rand () % 100 + rand () % 50, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
         
-        if (x > 0 && x < entitiesNumber - 1) {
+        if (x > 0 && x < worldParamsData->entitiesNumber - 1) {
             if (x == 1) {
                 rawLogToFile(sourceLogFile, "...\n");
             }
@@ -90,9 +90,9 @@ void createEntities(World *world, int entitiesNumber, int textBufferSize, struct
     }
 }
 
-void createWorldFood(World *world, int foodNumber)
+void createWorldFood(World *world, worldParamsDataLord* worldParamsData)
 {
-    for (int x = 0; x < foodNumber; x++)
+    for (int x = 0; x < worldParamsData->foodOnMap; x++)
     {
         int resX = rand() % world->mapSize.x;
         int resY = rand() % world->mapSize.y;
@@ -109,11 +109,11 @@ void createWorldFood(World *world, int foodNumber)
     }
 }
 
-void deleteWorld(World *world, int entities_number)
+void deleteWorld(World *world, worldParamsDataLord* worldParamsData)
 {
     printf("̶D̶e̶l̶e̶t̶e̶d̶ ̶w̶o̶r̶l̶d: ̶%zu̶ ̶b̶y̶t̶e̶s̶\n", sizeof(world));
 
-    for (int i = 0; i < entities_number; i++)
+    for (int i = 0; i < worldParamsData->entitiesNumber; i++)
     {
         if (world->entities[i].gameId != NULL)
         {
@@ -128,7 +128,7 @@ void deleteWorld(World *world, int entities_number)
     free(world);
 }
 
-World *initializeWorld(int structuresNumber, int textBufferSize, char* logsBarriers, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *sourceLogFile, time_t rawTime)
+World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, char* logsBarriers, Coord mapSize, struct tm *tm, FILE *sourceLogFile, time_t rawTime)
 {
     World *world = malloc(sizeof(World));
     world->mapSize = mapSize;
@@ -141,16 +141,16 @@ World *initializeWorld(int structuresNumber, int textBufferSize, char* logsBarri
     logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
     rawLogToFile(sourceLogFile, logsBarriers);
 
-    generateWorldStructures(world, structuresNumber);
+    generateWorldStructures(world, worldParamsData);
 
-    world->entities = malloc(sizeof(Entity) * (entitiesNumber) * 1.5); // creating entities
+    world->entities = malloc(sizeof(Entity) * (worldParamsData->entitiesNumber) * 1.5); // creating entities
 
-    createEntities(world, entitiesNumber, textBufferSize, tm, sourceLogFile, rawTime);
+    createEntities(world, worldParamsData, progParamsData, tm, sourceLogFile, rawTime);
     rawLogToFile(sourceLogFile, logsBarriers);
 
-    world->items = malloc(sizeof(LandscapeCell) * (foodOnMap + 5)); // creating resources
+    world->items = malloc(sizeof(LandscapeCell) * (worldParamsData->foodOnMap + 5)); // creating resources
 
-    createWorldFood(world, foodOnMap);
+    createWorldFood(world, worldParamsData);
 
     return world;
 }

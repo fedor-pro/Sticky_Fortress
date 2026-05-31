@@ -25,7 +25,7 @@ A clone of dwarf fortress on C with using Raylib. Right now in prototype stage.
 
 4) Clean all compile results if they are with using `make`
     ```sh
-    make run
+    make clean
     ```
 
 4) Build & run project using `make`

@@ -7,9 +7,9 @@
 void initializeWorldLandscapes(World *world);
 void createWorldMap(World *world);
 void deselectAllWorldMap(World *world);
-void createEntities(World *world, int entitiesNumber, int textBufferSize, struct tm *tm, FILE  *sourceLogFile, time_t rawTime);
-void createWorldFood(World *world, int foodNumber);
-void deleteWorld(World *world, int entities_number);
-World *initializeWorld(int structuresNumber, int textBufferSize, char* logsBarriers, Coord mapSize, int foodOnMap, int entitiesNumber, struct tm *tm, FILE *sourceLogFile, time_t rawTime);
+void createEntities(World *world, worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, struct tm *tm, FILE  *sourceLogFile, time_t rawTime);
+void createWorldFood(World *world, worldParamsDataLord* worldParamsData);
+void deleteWorld(World *world, worldParamsDataLord* worldParamsData);
+World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, char* logsBarriers, Coord mapSize, struct tm *tm, FILE *sourceLogFile, time_t rawTime);
 
 #endif

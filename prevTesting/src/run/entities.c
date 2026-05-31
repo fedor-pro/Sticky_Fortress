@@ -54,7 +54,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     }
 }
 
-void restoreHungerEntity(World  *world, Entity *e, int foodOnMap, struct tm *tm, FILE *sourceLogFile)
+void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldParamsData, struct tm *tm, FILE *sourceLogFile)
 {
     char* foodGameId = malloc(sizeof(char)*12);
     sprintf(foodGameId, "%d", e->targetFoodId);
@@ -77,12 +77,12 @@ void restoreHungerEntity(World  *world, Entity *e, int foodOnMap, struct tm *tm,
     free(foodGameId);
 }
 
-bool findNearestFood(World * world, Entity *e, int foodOnMap)
+bool findNearestFood(World * world, Entity *e, worldParamsDataLord* worldParamsData)
 {
     int minDistance = 1000;
     bool isExistAnyFood = false;
 
-    for (int z = 0; z < foodOnMap; z++) // finding nearest food
+    for (int z = 0; z < worldParamsData->foodOnMap; z++) // finding nearest food
     {
         if (world->items[z].number > 0 && (abs(e->coords.x - world->items[z].coords.x) + abs(e->coords.y - world->items[z].coords.y)) < minDistance)
         {
@@ -108,7 +108,7 @@ bool findNearestFood(World * world, Entity *e, int foodOnMap)
     return false;
 }
 
-void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnMap, FILE *sourceLogFile, struct tm *tm) // updating entity
+void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParamsDataLord* worldParamsData, FILE *sourceLogFile, struct tm *tm) // updating entity
 {
     int randomForMove = rand() % 5;
 
@@ -129,7 +129,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
         {
             e->movingState = TARGETING;
 
-            if (!findNearestFood(world, e, foodOnMap)) // find nearest food, if wasn't finded - boring
+            if (!findNearestFood(world, e, worldParamsData)) // find nearest food, if wasn't finded - boring
             {
                 e->movingState = UNTARGET_MOVING;
                 e->targetFoodId = -1;
@@ -189,7 +189,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
                 {
                     e->movingState = TARGETING;
 
-                    if (!findNearestFood(world, e, foodOnMap))
+                    if (!findNearestFood(world, e, worldParamsData))
                     {
                         e->movingState = UNTARGET_MOVING;
                         e->targetFoodId = -1;
@@ -197,7 +197,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, int foodOnM
                 }
                 else
                 {
-                    restoreHungerEntity(world, e, foodOnMap, tm, sourceLogFile);
+                    restoreHungerEntity(world, e, worldParamsData, tm, sourceLogFile);
                 }
             }
         }

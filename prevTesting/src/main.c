@@ -3,21 +3,17 @@
 #include <stdlib.h> // for rand() func
 #include <time.h>   // for timestamp and rand() initialize
 
-#include "draw.h"
 #include "entities.h"
 #include "logging.h"
 #include "uilord.h"
 #include "world.h"
+#include "datalord.h"
+#include "draw.h"
 
 #define VERSION "0.0.1"
 
-#define WINDOW_WIDTH 1900
-#define WINDOW_HEIGHT 1000
-#define CELL_WIDTH 11
-#define CELL_HEIGHT 11
 #define TARGET_FPS 60
 #define TIMER_RESET 60
-#define TEXT_BUFFER_SIZE 500
 
 #define LOGS_BARRIERS "---------------------------------------------------------------\n"
 
@@ -25,17 +21,18 @@
 #define DEFAULT_FOOD_CHAR "*"
 #define DEFAULT_HUMAN_CHAR "&"
 
-#define ENTITIES_LIST_SIZE 40
-#define FOOD_ON_MAP 10
-
 
 int main()
 {
     SetTraceLogLevel(LOG_NONE); // for delete all raylib's sys logs
 
     //------------------------------------------------------------------------------------------
+    // Creating dataLords
+    progParamsDataLord* progParamsData = defineProgParamsDataLord();
+    worldParamsDataLord* worldParamsData = defineWorldParamsDataLord();
+
     bool isPaused = false;
-    int timer = 0;
+    int timer = 0; // it's only for update
     int fps = 0;
 
     int entitiesAlive = 0;
@@ -45,7 +42,7 @@ int main()
     Coord squareSelectingStartCellCoords;
     int squareSelectingFreeze = 0;
 
-    char *stringFPS = malloc(TEXT_BUFFER_SIZE);
+    char *stringFPS = malloc(progParamsData->textBufferSize);
 
     srand(time(NULL));
 
@@ -70,21 +67,14 @@ int main()
     logToFile(sourceLogFile, tm, "PROGRAM STARTED\n");
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
-    // Window settings
-    int windowSizeX = WINDOW_WIDTH;
-    int windowSizeY = WINDOW_HEIGHT;
-
-    int rectSizeX = CELL_WIDTH;
-    int rectSizeY = CELL_HEIGHT;
-
-    Coord ms = {WINDOW_WIDTH / CELL_WIDTH, WINDOW_HEIGHT / CELL_HEIGHT};
+    Coord ms = {progParamsData->windowSize.x / progParamsData->rectSize.x, progParamsData->windowSize.y / progParamsData->rectSize.y};
 
     // Log start info
     char *initLogInfo = malloc(sizeof(char) * 1024);
-    sprintf(initLogInfo, "%s %d,%d\n\n", "Defined window size", windowSizeX, windowSizeY);
+    sprintf(initLogInfo, "%s %d,%d\n\n", "Defined window size", progParamsData->windowSize.x, progParamsData->windowSize.y);
     logToFile(sourceLogFile, tm, initLogInfo);
 
-    sprintf(initLogInfo, "%s %d,%d\n\n", "Defined cell size", rectSizeX, rectSizeY);
+    sprintf(initLogInfo, "%s %d,%d\n\n", "Defined cell size", progParamsData->rectSize.x, progParamsData->rectSize.y);
     logToFile(sourceLogFile, tm, initLogInfo);
     
     sprintf(initLogInfo, "Defined map size %d, %d\n", ms.x, ms.y);
@@ -94,16 +84,16 @@ int main()
 
     //----------------------------------------------------------------------------------------------------------------------------------
     // Creating world
-    World *world = initializeWorld(30, TEXT_BUFFER_SIZE, LOGS_BARRIERS, ms, FOOD_ON_MAP, ENTITIES_LIST_SIZE, tm, sourceLogFile, rawTime);
+    World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, tm, sourceLogFile, rawTime);
 
     // Initializing window
     char *windowName = malloc(124);
     sprintf(windowName, "Sticky Fortress %s", VERSION);
 
-    InitWindow(windowSizeX, windowSizeY, windowName);
+    InitWindow(progParamsData->windowSize.x, progParamsData->windowSize.y, windowName);
     SetTargetFPS(TARGET_FPS);
 
-    SetExitKey(KEY_NULL); // Window willn't close on ESC button
+    // SetExitKey(KEY_NULL); // Window willn't close on ESC button
 
     Image windowIcon = LoadImage("./images/windowIcon.png"); // loading icon
 
@@ -118,7 +108,7 @@ int main()
 
     int *selectedCells = malloc(sizeof(int)*5);
     // Initialize main UI
-    UILord *UICentral = initializeUILord(windowSizeX, windowSizeY, TEXT_BUFFER_SIZE, DEFAULT_FONT_SIZE);
+    UILord *UICentral = initializeUILord(progParamsData, DEFAULT_FONT_SIZE);
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -133,6 +123,14 @@ int main()
 
         fps = GetFPS();
 
+        entitiesAlive = 0;
+        entitiesSelected = 0;
+
+        if (squareSelectingFreeze > 0)
+        {
+           squareSelectingFreeze --;
+        }
+
         // pause
         if (IsKeyPressed(KEY_SPACE)) 
         {
@@ -142,37 +140,32 @@ int main()
         if (!isPaused)
         {
             timer++; // updating timer
+        }
 
-            entitiesAlive = 0;
-            entitiesSelected = 0;
-
-            if (squareSelectingFreeze > 0)
-            {
-                squareSelectingFreeze --;
-            }
-
-            for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // update entities
+        for (int x = 0; x < worldParamsData->entitiesNumber; x++) // update entities
             {
                 if (world->entities[x].isAlive == true)
                 {
                     entitiesAlive ++;
-                    updateEntity(world, world->mapSize, &world->entities[x], timer, FOOD_ON_MAP, sourceLogFile, tm);
+
+                    if (!isPaused) {
+                        updateEntity(world, world->mapSize, &world->entities[x], timer, worldParamsData, sourceLogFile, tm);
+                    }
                 }
 
                 if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
                     entitiesSelected ++;
-                }
-            }
+                } 
+        }
 
-            if (timer >= TIMER_RESET)
-            {
-                timer = 0;
+        if (!isPaused && timer >= TIMER_RESET)
+        {
+            timer = 0;
 
-                sprintf(stringFPS, "%d", fps);
-                logToFile(sourceLogFile, tm, "Current FPS: ");
-                rawLogToFile(sourceLogFile, stringFPS);
-                rawLogToFile(sourceLogFile, "\n");
-            }
+            sprintf(stringFPS, "%d", fps);
+            logToFile(sourceLogFile, tm, "Current FPS: ");
+            rawLogToFile(sourceLogFile, stringFPS);
+            rawLogToFile(sourceLogFile, "\n");
         }
 
         ClearBackground(BLACK); // clear background
@@ -188,7 +181,7 @@ int main()
             {
                 if (world->map[x+world->mapSize.x*y].isSelected == 1) // if cell is selected
                 {
-                    DrawRectangle(x * rectSizeX, y * rectSizeY, rectSizeX + 1, rectSizeY + 1, GOLD); 
+                    DrawRectangle(x * progParamsData->rectSize.x, y * progParamsData->rectSize.y, progParamsData->rectSize.x + 1, progParamsData->rectSize.y + 1, GOLD); 
 
                     // Update selected landscape cells stats
                     if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC)
@@ -213,27 +206,27 @@ int main()
                     }
                 }
 
-                DrawRectangle(x * rectSizeX + 1, y * rectSizeY + 1, rectSizeX - 1, rectSizeY - 1, world->map[x+world->mapSize.x*y].landType.drawColor);
+                DrawRectangle(x * progParamsData->rectSize.x + 1, y * progParamsData->rectSize.y + 1, progParamsData->rectSize.x - 1, progParamsData->rectSize.y - 1, world->map[x+world->mapSize.x*y].landType.drawColor);
             }
         }
 
-        for (int x = 0; x < FOOD_ON_MAP; x++) // draw items
+        for (int x = 0; x < worldParamsData->foodOnMap; x++) // draw items
         {
             if (world->items[x].number > 0)
             {
-                drawItem(world->items[x], rectSizeX, rectSizeY);
+                drawItem(world->items[x], progParamsData);
             }
         }
 
-        for (int x = 0; x < ENTITIES_LIST_SIZE; x++) // draw entities
+        for (int x = 0; x < worldParamsData->entitiesNumber; x++) // draw entities
         {
-            drawEntity(world->entities[x], rectSizeX, rectSizeY);
+            drawEntity(world->entities[x], progParamsData);
         }
 
         Vector2 mp = GetMousePosition(); // updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, timer, isPaused); // update main UI 
+        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, entitiesSelected, timer, isPaused); // update main UI 
         drawUILord(UICentral); // draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
@@ -246,7 +239,7 @@ int main()
                     deselectAllWorldMap(world);
 
                     squareSelectingStartCellCoords = mousePosition;
-                    world->map[(squareSelectingStartCellCoords.x/rectSizeX) + world->mapSize.x * (squareSelectingStartCellCoords.y/rectSizeY)].isSelected = true;
+                    world->map[(squareSelectingStartCellCoords.x/progParamsData->rectSize.x) + world->mapSize.x * (squareSelectingStartCellCoords.y/progParamsData->rectSize.y)].isSelected = true;
                 } 
                 else 
                 {
@@ -257,23 +250,23 @@ int main()
                     {
                         for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) 
                         {
-                            world->map[(ab/rectSizeX) + world->mapSize.x * (ord/rectSizeY)].isSelected = true;
+                            world->map[(ab/progParamsData->rectSize.x) + world->mapSize.x * (ord/progParamsData->rectSize.y)].isSelected = true;
                         }
                     }
                 }
 
-                squareSelectingFreeze = 10;
+                squareSelectingFreeze = 30;
             }
         } 
         else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
         {
-            world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
+            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
-            world->map[(mousePosition.x/rectSizeX) + 1 + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
-            world->map[(mousePosition.x/rectSizeX) - 1 + world->mapSize.x * (mousePosition.y/rectSizeY)].isSelected = false;
+            world->map[(mousePosition.x/progParamsData->rectSize.x) + 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+            world->map[(mousePosition.x/progParamsData->rectSize.x) - 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
-            world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY + 1)].isSelected = false;
-            world->map[(mousePosition.x/rectSizeX) + world->mapSize.x * (mousePosition.y/rectSizeY - 1)].isSelected = false;
+            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y + 1)].isSelected = false;
+            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y - 1)].isSelected = false;
         } 
         else if (IsKeyDown(KEY_ESCAPE))
         {
@@ -289,7 +282,7 @@ int main()
     logToFile(sourceLogFile, tm, "APP CORRECTLY CLOSED\n");
     rawLogToFile(sourceLogFile, LOGS_BARRIERS);
 
-    deleteWorld(world, ENTITIES_LIST_SIZE);
+    deleteWorld(world, worldParamsData);
     deleteUILord(UICentral);
 
     free(stringFPS);

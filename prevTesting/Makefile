@@ -6,8 +6,9 @@ UNAME_S := $(shell uname -s) # Operation system
 
 TARGET = ./apps/sticky_fortress # Final programm
 
+OBJ_DIR = ./bin
 SRCS = $(wildcard ./src/run/*.c ./src/*.c) # Collecting .c files
-OBJS = $(SRCS:.c=.o) # Convert .c files from SRCS to .o files
+OBJS = $(SRCS:.c=.o) 
 
 HEADERS = $(wildcard ./src/include/*.h) # Headers
 
@@ -16,7 +17,7 @@ ifeq ($(strip $(UNAME_S)), Linux)
 endif
 
 .PHONY: all clean run # Reserve this names for directives
-
+ 
 all: $(TARGET)
 
 $(TARGET): $(OBJS) # Create folder for app and compile it
