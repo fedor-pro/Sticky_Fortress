@@ -141,9 +141,13 @@ typedef struct
 
 typedef struct
 {
-    int entitiesNumber;
-    int foodOnMap;
+    int startEntitiesNumber;
+    int startFoodOnMap;
     int structuresNumber;
+
+    int entitiesAlive;
+    int entitiesSelected;
+    int foodExists;
 } worldParamsDataLord;
 
 typedef struct
@@ -152,6 +156,14 @@ typedef struct
     Coord rectSize;
     int textBufferSize;
 } progParamsDataLord;
+
+typedef struct
+{
+    int defaultFontSize;
+
+    char* defaultHumanChar;
+    char* defaultFoodChar;
+} drawDataLord;
 
 // typedef struct
 // {

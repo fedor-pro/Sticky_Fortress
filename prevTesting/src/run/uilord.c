@@ -48,18 +48,18 @@ void deleteUILord (UILord *UIL) {
     free(UIL);
 }
 
-void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, int entitiesAlive, int entitiesSelected, int timer, bool isPaused) {
+void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, worldParamsDataLord *worldParamsData, int timer, bool isPaused) {
     sprintf(UIL->allGuiText[0].text, "X: %d Y: %d", mousePosition.x, mousePosition.y);
 
     sprintf(UIL->allGuiText[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
 
-    sprintf(UIL->allGuiText[2].text, "Entities alive: %d", entitiesAlive);
-    sprintf(UIL->allGuiText[4].text, "      selected: %d", entitiesSelected);
+    sprintf(UIL->allGuiText[2].text, "Entities alive: %d", worldParamsData->entitiesAlive);
+    sprintf(UIL->allGuiText[4].text, "      selected: %d", worldParamsData->entitiesSelected);
 
     if (isPaused) {
-        sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n true", timer);
+        sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n true\n\n You can find FPS\n in log files", timer);
     } else {
-        sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n false", timer);
+        sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n false\n\n You can find FPS\n in log files", timer);
     }
 }
 

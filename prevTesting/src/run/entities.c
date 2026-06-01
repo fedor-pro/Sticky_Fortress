@@ -82,7 +82,7 @@ bool findNearestFood(World * world, Entity *e, worldParamsDataLord* worldParamsD
     int minDistance = 1000;
     bool isExistAnyFood = false;
 
-    for (int z = 0; z < worldParamsData->foodOnMap; z++) // finding nearest food
+    for (int z = 0; z < worldParamsData->startFoodOnMap; z++) // finding nearest food
     {
         if (world->items[z].number > 0 && (abs(e->coords.x - world->items[z].coords.x) + abs(e->coords.y - world->items[z].coords.y)) < minDistance)
         {

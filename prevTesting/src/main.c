@@ -17,11 +17,6 @@
 
 #define LOGS_BARRIERS "---------------------------------------------------------------\n"
 
-#define DEFAULT_FONT_SIZE 23
-#define DEFAULT_FOOD_CHAR "*"
-#define DEFAULT_HUMAN_CHAR "&"
-
-
 int main()
 {
     SetTraceLogLevel(LOG_NONE); // for delete all raylib's sys logs
@@ -30,13 +25,11 @@ int main()
     // Creating dataLords
     progParamsDataLord* progParamsData = defineProgParamsDataLord();
     worldParamsDataLord* worldParamsData = defineWorldParamsDataLord();
+    drawDataLord* drawData = defineDrawDataLord();
 
     bool isPaused = false;
     int timer = 0; // it's only for update
     int fps = 0;
-
-    int entitiesAlive = 0;
-    int entitiesSelected = 0;
 
     bool ifSquareSelectingActive = false;
     Coord squareSelectingStartCellCoords;
@@ -84,7 +77,7 @@ int main()
 
     //----------------------------------------------------------------------------------------------------------------------------------
     // Creating world
-    World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, tm, sourceLogFile, rawTime);
+    World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, tm, sourceLogFile, rawTime, drawData);
 
     // Initializing window
     char *windowName = malloc(124);
@@ -108,7 +101,7 @@ int main()
 
     int *selectedCells = malloc(sizeof(int)*5);
     // Initialize main UI
-    UILord *UICentral = initializeUILord(progParamsData, DEFAULT_FONT_SIZE);
+    UILord *UICentral = initializeUILord(progParamsData, drawData->defaultFontSize);
 
     rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
     logToFile(sourceLogFile, tm, "STARTED APP\n");
@@ -123,8 +116,8 @@ int main()
 
         fps = GetFPS();
 
-        entitiesAlive = 0;
-        entitiesSelected = 0;
+        worldParamsData->entitiesAlive = 0;
+        worldParamsData->entitiesSelected = 0;
 
         if (squareSelectingFreeze > 0)
         {
@@ -142,11 +135,11 @@ int main()
             timer++; // updating timer
         }
 
-        for (int x = 0; x < worldParamsData->entitiesNumber; x++) // update entities
+        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // update entities
             {
                 if (world->entities[x].isAlive == true)
                 {
-                    entitiesAlive ++;
+                    worldParamsData->entitiesAlive ++;
 
                     if (!isPaused) {
                         updateEntity(world, world->mapSize, &world->entities[x], timer, worldParamsData, sourceLogFile, tm);
@@ -154,7 +147,7 @@ int main()
                 }
 
                 if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
-                    entitiesSelected ++;
+                    worldParamsData->entitiesSelected ++;
                 } 
         }
 
@@ -210,7 +203,7 @@ int main()
             }
         }
 
-        for (int x = 0; x < worldParamsData->foodOnMap; x++) // draw items
+        for (int x = 0; x < worldParamsData->startFoodOnMap; x++) // draw items
         {
             if (world->items[x].number > 0)
             {
@@ -218,7 +211,7 @@ int main()
             }
         }
 
-        for (int x = 0; x < worldParamsData->entitiesNumber; x++) // draw entities
+        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // draw entities
         {
             drawEntity(world->entities[x], progParamsData);
         }
@@ -226,7 +219,7 @@ int main()
         Vector2 mp = GetMousePosition(); // updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, entitiesAlive, entitiesSelected, timer, isPaused); // update main UI 
+        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, timer, isPaused); // update main UI 
         drawUILord(UICentral); // draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells

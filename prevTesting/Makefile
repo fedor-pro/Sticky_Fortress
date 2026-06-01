@@ -12,7 +12,7 @@ OBJS = $(SRCS:.c=.o)
 
 HEADERS = $(wildcard ./src/include/*.h) # Headers
 
-ifeq ($(strip $(UNAME_S)), Linux)
+ifeq ($(strip $(UNAME_S)), Linux) # Linux linker flags
 	LDFLAGS += -lraylib -lGL -ldl -lrt -lX11 -lm -lpthread
 endif
 
