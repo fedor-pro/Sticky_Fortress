@@ -37,6 +37,7 @@ logDataLord* defineLogDataLord () {
 
     logData->rawTime = time(NULL);
     logData->tm = localtime(&(logData->rawTime));
+    time(&logData->rawTime);
 
     // logData->sourceLogFile will be initialize in logging.c    
 }

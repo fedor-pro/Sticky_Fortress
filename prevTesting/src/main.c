@@ -29,6 +29,7 @@ int main()
     drawDataLord* drawData = defineDrawDataLord();
     logDataLord* logData = defineLogDataLord();
     logData->tm = localtime(&(logData->rawTime));
+    time(&logData->rawTime);
     LL();
 
     bool isPaused = false;
@@ -84,8 +85,6 @@ int main()
     //----------------------------------------------------------------------------------------------------------------------------------
     // Creating world
     World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, logData, drawData);
-
-    printf("%s\n","aam");
 
     // Initializing window
     char *windowName = malloc(124);

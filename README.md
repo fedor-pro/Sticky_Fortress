@@ -32,6 +32,10 @@ A clone of dwarf fortress on C with using Raylib. Right now in prototype stage.
     ```sh
     make run
     ```
+    or:
+    ```sh
+    make crun
+    ```
 
 ## Common errors
 

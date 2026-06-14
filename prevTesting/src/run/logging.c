@@ -15,7 +15,6 @@ void logToFile(logDataLord* logData, char *text) // write info into the log file
 {
     LL();
     printf("logData->tm->tm_sec : %04d\n", logData->tm->tm_sec);
-    printf("   ");
     
     LL();
 

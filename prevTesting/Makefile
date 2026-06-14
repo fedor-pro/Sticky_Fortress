@@ -16,7 +16,7 @@ ifeq ($(strip $(UNAME_S)), Linux) # Linux linker flags
 	LDFLAGS += -lraylib -lGL -ldl -lrt -lX11 -lm -lpthread
 endif
 
-.PHONY: all clean run # Reserve this names for directives
+.PHONY: all clean run crun # Reserve this names for directives
  
 all: $(TARGET)
 
@@ -34,3 +34,6 @@ clean: # Clear compilation results
 
 run: $(TARGET) # Run this program
 	$(TARGET)
+
+crun: $(TARGET) # Run this program and clean compilation results
+	./$(TARGET) ; echo "---" ; $(MAKE) clean
