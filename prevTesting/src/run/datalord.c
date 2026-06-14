@@ -1,5 +1,6 @@
 #include "types.h"
-#include "stdlib.h"
+#include <stdlib.h>
+#include <time.h>
 
 progParamsDataLord* defineProgParamsDataLord () {
     progParamsDataLord* progParamsData = malloc(sizeof(progParamsDataLord));
@@ -11,6 +12,8 @@ progParamsDataLord* defineProgParamsDataLord () {
 
 worldParamsDataLord* defineWorldParamsDataLord () {
     worldParamsDataLord* worldParamsData = malloc(sizeof(worldParamsDataLord));
+
+    worldParamsData->defaultName = "test_world";
 
     worldParamsData->startEntitiesNumber = 40;
     worldParamsData->startFoodOnMap = 10;
@@ -27,4 +30,13 @@ drawDataLord* defineDrawDataLord () {
     drawData->defaultFontSize = 23;
     drawData->defaultFoodChar = "*";
     drawData->defaultHumanChar = "&";
+}
+
+logDataLord* defineLogDataLord () {
+    logDataLord* logData = malloc(sizeof(logDataLord));
+
+    logData->rawTime = time(NULL);
+    logData->tm = localtime(&(logData->rawTime));
+
+    // logData->sourceLogFile will be initialize in logging.c    
 }

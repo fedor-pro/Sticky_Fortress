@@ -51,7 +51,7 @@ void deselectAllWorldMap(World *world) {
     }
 }
 
-void createEntities(World *world, worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, struct tm *tm, FILE  *sourceLogFile, time_t rawTime, drawDataLord *drawData)
+void createEntities(World *world, worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, logDataLord* logData, drawDataLord *drawData)
 {
     for (int x = 0; x < worldParamsData->startEntitiesNumber; x++)
     {
@@ -64,27 +64,44 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
             entY = rand() % world->mapSize.y;
         }
 
+        LL();
+
         char *entityGameId = malloc(progParamsData->textBufferSize);
         sprintf(entityGameId, "%d", x);
 
         Entity ent = {entityGameId, "Human", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, rand () % 100 + rand () % 50, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
-        
+
+        LL();
+
         if (x > 0 && x < worldParamsData->startEntitiesNumber - 1) {
+            LL();
+
             if (x == 1) {
-                rawLogToFile(sourceLogFile, "...\n");
+                LL();
+                // rawLogToFile(logData, "abc\n"); // <-- Error
+                LL();
             }
+
+            LL();
         } else {
-            logToFile(sourceLogFile, tm, "Created ");
-            rawLogToFile(sourceLogFile, ent.gameName);
-            rawLogToFile(sourceLogFile, " with id: |");
-            rawLogToFile(sourceLogFile, ent.gameId);
-            rawLogToFile(sourceLogFile ,"|\n");
+            LL();
+
+            logToFile(logData, "Created ");
+            LL();
+            rawLogToFile(logData, ent.gameName);
+            rawLogToFile(logData, " with id: |");
+            rawLogToFile(logData, ent.gameId);
+            rawLogToFile(logData,"|\n");
+
+            LL();
         }
 
-        time(&rawTime);
-        tm = localtime(&rawTime); // updating time
+        LL();
+
+        time(&logData->rawTime);
+        logData->tm = localtime(&logData->rawTime); // updating time
 
         spawnEntity(world, (Coord) {entX, entY}, ent, x);
     }
@@ -128,25 +145,37 @@ void deleteWorld(World *world, worldParamsDataLord* worldParamsData)
     free(world);
 }
 
-World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, char* logsBarriers, Coord mapSize, struct tm *tm, FILE *sourceLogFile, time_t rawTime, drawDataLord* drawData)
+World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, char* logsBarriers, Coord mapSize, logDataLord* logData, drawDataLord* drawData)
 {
     World *world = malloc(sizeof(World));
+    world->worldName = worldParamsData->defaultName;
     world->mapSize = mapSize;
     world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
+
+    LL();
 
     world->worldLandscapes = malloc(sizeof(LandscapeType)*10);
     initializeWorldLandscapes(world);
 
+    LL();
+
     createWorldMap(world);
-    logToFile(sourceLogFile, tm, "INITIALIZED WORLD MAP\n");
-    rawLogToFile(sourceLogFile, logsBarriers);
+    logToFile(logData, "INITIALIZED WORLD MAP\n");
+    rawLogToFile(logData, logsBarriers);
+
+    LL();
 
     generateWorldStructures(world, worldParamsData);
 
+    LL();
+
     world->entities = malloc(sizeof(Entity) * (worldParamsData->startEntitiesNumber) * 1.5); // creating entities
 
-    createEntities(world, worldParamsData, progParamsData, tm, sourceLogFile, rawTime, drawData);
-    rawLogToFile(sourceLogFile, logsBarriers);
+    LL();
+    createEntities(world, worldParamsData, progParamsData, logData, drawData);
+    LL();
+
+    rawLogToFile(logData, logsBarriers);
 
     world->items = malloc(sizeof(LandscapeCell) * (worldParamsData->startFoodOnMap + 5)); // creating resources
 

@@ -4,8 +4,8 @@
 #include "types.h"
 #include <time.h>
 
-void initializeLogFile(char *sourceLogFilePath, FILE **sourceLogFile, struct tm *tm);
-void logToFile(FILE *sourceLogFile, struct tm *tm, char *text);
-void rawLogToFile(FILE *sourceLogFile, char *text);
+void initializeLogFile(char *sourceLogFilePath, logDataLord* logData);
+void logToFile(logDataLord* logData, char *text);
+void rawLogToFile(logDataLord* logData, char* text);
 
 #endif

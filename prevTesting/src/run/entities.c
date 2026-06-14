@@ -54,7 +54,7 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     }
 }
 
-void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldParamsData, struct tm *tm, FILE *sourceLogFile)
+void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldParamsData, logDataLord* logData)
 {
     char* foodGameId = malloc(sizeof(char)*12);
     sprintf(foodGameId, "%d", e->targetFoodId);
@@ -63,9 +63,9 @@ void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldPar
 
     if (world->items[e->targetFoodId].number <= 0)
     {
-        logToFile(sourceLogFile, tm, "Food with id |");
-        rawLogToFile(sourceLogFile, foodGameId);
-        rawLogToFile(sourceLogFile, "| is over\n");
+        logToFile(logData, "Food with id |");
+        rawLogToFile(logData, foodGameId);
+        rawLogToFile(logData, "| is over\n");
         return;
     }
 
@@ -108,7 +108,7 @@ bool findNearestFood(World * world, Entity *e, worldParamsDataLord* worldParamsD
     return false;
 }
 
-void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParamsDataLord* worldParamsData, FILE *sourceLogFile, struct tm *tm) // updating entity
+void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParamsDataLord* worldParamsData, logDataLord* logData) // updating entity
 {
     int randomForMove = rand() % 5;
 
@@ -197,7 +197,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParams
                 }
                 else
                 {
-                    restoreHungerEntity(world, e, worldParamsData, tm, sourceLogFile);
+                    restoreHungerEntity(world, e, worldParamsData, logData);
                 }
             }
         }
@@ -213,9 +213,9 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParams
             if (e->hunger >= e->dieLevelHunger) // die from hunger
             {
                 e->isAlive = false;
-                logToFile(sourceLogFile, tm, "Entity with id |");
-                rawLogToFile(sourceLogFile, e->gameId);
-                rawLogToFile(sourceLogFile, "| died from hunger\n");
+                logToFile(logData, "Entity with id |");
+                rawLogToFile(logData, e->gameId);
+                rawLogToFile(logData, "| died from hunger\n");
             }
         }
 

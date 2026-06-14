@@ -19,6 +19,7 @@
 
 int main()
 {
+    LL();
     SetTraceLogLevel(LOG_NONE); // for delete all raylib's sys logs
 
     //------------------------------------------------------------------------------------------
@@ -26,6 +27,9 @@ int main()
     progParamsDataLord* progParamsData = defineProgParamsDataLord();
     worldParamsDataLord* worldParamsData = defineWorldParamsDataLord();
     drawDataLord* drawData = defineDrawDataLord();
+    logDataLord* logData = defineLogDataLord();
+    logData->tm = localtime(&(logData->rawTime));
+    LL();
 
     bool isPaused = false;
     int timer = 0; // it's only for update
@@ -39,45 +43,49 @@ int main()
 
     srand(time(NULL));
 
-    // Initializng time
-    time_t rawTime = time(NULL);
-    struct tm *tm = localtime(&rawTime);
+    LL();
 
     // Initializing log file
     char *sourceLogFilePath = malloc(1024);
-    FILE *sourceLogFile;
 
-    initializeLogFile(sourceLogFilePath, &sourceLogFile, tm);
+    initializeLogFile(sourceLogFilePath, logData);
 
-    if (sourceLogFile == NULL)
+    if (logData->sourceLogFile == NULL)
     {
         printf("Not found %s\n", sourceLogFilePath);
         free(sourceLogFilePath);
         return 1;
     }
 
-    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
-    logToFile(sourceLogFile, tm, "PROGRAM STARTED\n");
-    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
+    LL();
+
+    rawLogToFile(logData, LOGS_BARRIERS);
+    logToFile(logData, "PROGRAM STARTED\n");
+    rawLogToFile(logData, LOGS_BARRIERS);
+    LL();
 
     Coord ms = {progParamsData->windowSize.x / progParamsData->rectSize.x, progParamsData->windowSize.y / progParamsData->rectSize.y};
 
     // Log start info
     char *initLogInfo = malloc(sizeof(char) * 1024);
     sprintf(initLogInfo, "%s %d,%d\n\n", "Defined window size", progParamsData->windowSize.x, progParamsData->windowSize.y);
-    logToFile(sourceLogFile, tm, initLogInfo);
+    logToFile(logData, initLogInfo);
 
     sprintf(initLogInfo, "%s %d,%d\n\n", "Defined cell size", progParamsData->rectSize.x, progParamsData->rectSize.y);
-    logToFile(sourceLogFile, tm, initLogInfo);
+    logToFile(logData, initLogInfo);
     
     sprintf(initLogInfo, "Defined map size %d, %d\n", ms.x, ms.y);
-    logToFile(sourceLogFile, tm, initLogInfo);
+    logToFile(logData, initLogInfo);
 
-    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
+    rawLogToFile(logData, LOGS_BARRIERS);
+
+    LL();
 
     //----------------------------------------------------------------------------------------------------------------------------------
     // Creating world
-    World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, tm, sourceLogFile, rawTime, drawData);
+    World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, logData, drawData);
+
+    printf("%s\n","aam");
 
     // Initializing window
     char *windowName = malloc(124);
@@ -97,183 +105,183 @@ int main()
 
     SetWindowIcon(windowIcon);
 
-    logToFile(sourceLogFile, tm, "INITIALIZED WINDOW\n");
+    logToFile(logData, "INITIALIZED WINDOW\n");
 
     int *selectedCells = malloc(sizeof(int)*5);
     // Initialize main UI
     UILord *UICentral = initializeUILord(progParamsData, drawData->defaultFontSize);
 
-    rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
-    logToFile(sourceLogFile, tm, "STARTED APP\n");
-    rawLogToFile(sourceLogFile,  LOGS_BARRIERS);
+    rawLogToFile(logData,  LOGS_BARRIERS);
+    logToFile(logData, "STARTED APP\n");
+    rawLogToFile(logData,  LOGS_BARRIERS);
 
-    while (!WindowShouldClose()) // main
-    {
-        time(&rawTime);
-        tm = localtime(&rawTime); // updating time
+    // while (!WindowShouldClose()) // main
+    // {
+    //     time(&logData->rawTime);
+    //     logData->tm = localtime(&logData->rawTime); // updating time
 
-        BeginDrawing();
+    //     BeginDrawing();
 
-        fps = GetFPS();
+    //     fps = GetFPS();
 
-        worldParamsData->entitiesAlive = 0;
-        worldParamsData->entitiesSelected = 0;
+    //     worldParamsData->entitiesAlive = 0;
+    //     worldParamsData->entitiesSelected = 0;
 
-        if (squareSelectingFreeze > 0)
-        {
-           squareSelectingFreeze --;
-        }
+    //     if (squareSelectingFreeze > 0)
+    //     {
+    //        squareSelectingFreeze --;
+    //     }
 
-        // pause
-        if (IsKeyPressed(KEY_SPACE)) 
-        {
-            isPaused = !isPaused;
-        }
+    //     // pause
+    //     if (IsKeyPressed(KEY_SPACE)) 
+    //     {
+    //         isPaused = !isPaused;
+    //     }
 
-        if (!isPaused)
-        {
-            timer++; // updating timer
-        }
+    //     if (!isPaused)
+    //     {
+    //         timer++; // updating timer
+    //     }
 
-        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // update entities
-            {
-                if (world->entities[x].isAlive == true)
-                {
-                    worldParamsData->entitiesAlive ++;
+    //     for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // update entities
+    //         {
+    //             if (world->entities[x].isAlive == true)
+    //             {
+    //                 worldParamsData->entitiesAlive ++;
 
-                    if (!isPaused) {
-                        updateEntity(world, world->mapSize, &world->entities[x], timer, worldParamsData, sourceLogFile, tm);
-                    }
-                }
+    //                 if (!isPaused) {
+    //                     updateEntity(world, world->mapSize, &world->entities[x], timer, worldParamsData, logData);
+    //                 }
+    //             }
 
-                if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
-                    worldParamsData->entitiesSelected ++;
-                } 
-        }
+    //             if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
+    //                 worldParamsData->entitiesSelected ++;
+    //             } 
+    //     }
 
-        if (!isPaused && timer >= TIMER_RESET)
-        {
-            timer = 0;
+    //     if (!isPaused && timer >= TIMER_RESET)
+    //     {
+    //         timer = 0;
 
-            sprintf(stringFPS, "%d", fps);
-            logToFile(sourceLogFile, tm, "Current FPS: ");
-            rawLogToFile(sourceLogFile, stringFPS);
-            rawLogToFile(sourceLogFile, "\n");
-        }
+    //         sprintf(stringFPS, "%d", fps);
+    //         logToFile(logData, "Current FPS: ");
+    //         rawLogToFile(logData, stringFPS);
+    //         rawLogToFile(logData, "\n");
+    //     }
 
-        ClearBackground(BLACK); // clear background
+    //     ClearBackground(BLACK); // clear background
 
-        for (int u = 0; u < 5; u++) // reset selected landscape cells stats
-        {
-            selectedCells[u] = 0;
-        }
+    //     for (int u = 0; u < 5; u++) // reset selected landscape cells stats
+    //     {
+    //         selectedCells[u] = 0;
+    //     }
 
-        for (int x = 0; x < world->mapSize.x; x++) // drawing map and update info about selected cells
-        {
-            for (int y = 0; y < world->mapSize.y; y++)
-            {
-                if (world->map[x+world->mapSize.x*y].isSelected == 1) // if cell is selected
-                {
-                    DrawRectangle(x * progParamsData->rectSize.x, y * progParamsData->rectSize.y, progParamsData->rectSize.x + 1, progParamsData->rectSize.y + 1, GOLD); 
+    //     for (int x = 0; x < world->mapSize.x; x++) // drawing map and update info about selected cells
+    //     {
+    //         for (int y = 0; y < world->mapSize.y; y++)
+    //         {
+    //             if (world->map[x+world->mapSize.x*y].isSelected == 1) // if cell is selected
+    //             {
+    //                 DrawRectangle(x * progParamsData->rectSize.x, y * progParamsData->rectSize.y, progParamsData->rectSize.x + 1, progParamsData->rectSize.y + 1, GOLD); 
 
-                    // Update selected landscape cells stats
-                    if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC)
-                    {
-                        selectedCells[0]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_WATER)
-                    {
-                        selectedCells[1]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_MOUNTAINS)
-                    {
-                        selectedCells[2]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_ROCK)
-                    {
-                        selectedCells[3]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_DEEP_WATER)
-                    {
-                        selectedCells[4]++;
-                    }
-                }
+    //                 // Update selected landscape cells stats
+    //                 if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC)
+    //                 {
+    //                     selectedCells[0]++;
+    //                 }
+    //                 else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_WATER)
+    //                 {
+    //                     selectedCells[1]++;
+    //                 }
+    //                 else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_MOUNTAINS)
+    //                 {
+    //                     selectedCells[2]++;
+    //                 }
+    //                 else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_ROCK)
+    //                 {
+    //                     selectedCells[3]++;
+    //                 }
+    //                 else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_DEEP_WATER)
+    //                 {
+    //                     selectedCells[4]++;
+    //                 }
+    //             }
 
-                DrawRectangle(x * progParamsData->rectSize.x + 1, y * progParamsData->rectSize.y + 1, progParamsData->rectSize.x - 1, progParamsData->rectSize.y - 1, world->map[x+world->mapSize.x*y].landType.drawColor);
-            }
-        }
+    //             DrawRectangle(x * progParamsData->rectSize.x + 1, y * progParamsData->rectSize.y + 1, progParamsData->rectSize.x - 1, progParamsData->rectSize.y - 1, world->map[x+world->mapSize.x*y].landType.drawColor);
+    //         }
+    //     }
 
-        for (int x = 0; x < worldParamsData->startFoodOnMap; x++) // draw items
-        {
-            if (world->items[x].number > 0)
-            {
-                drawItem(world->items[x], progParamsData);
-            }
-        }
+    //     for (int x = 0; x < worldParamsData->startFoodOnMap; x++) // draw items
+    //     {
+    //         if (world->items[x].number > 0)
+    //         {
+    //             drawItem(world->items[x], progParamsData);
+    //         }
+    //     }
 
-        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // draw entities
-        {
-            drawEntity(world->entities[x], progParamsData);
-        }
+    //     for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // draw entities
+    //     {
+    //         drawEntity(world->entities[x], progParamsData);
+    //     }
 
-        Vector2 mp = GetMousePosition(); // updating info about mouse position
-        Coord mousePosition = {(int) mp.x, (int) mp.y};
+    //     Vector2 mp = GetMousePosition(); // updating info about mouse position
+    //     Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, timer, isPaused); // update main UI 
-        drawUILord(UICentral); // draw main UI
+    //     updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, timer, isPaused); // update main UI 
+    //     drawUILord(UICentral); // draw main UI
 
-        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
-        {
-            if (squareSelectingFreeze == 0) {
-                ifSquareSelectingActive = !ifSquareSelectingActive;
+    //     if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
+    //     {
+    //         if (squareSelectingFreeze == 0) {
+    //             ifSquareSelectingActive = !ifSquareSelectingActive;
 
-                if (ifSquareSelectingActive == true) 
-                {
-                    deselectAllWorldMap(world);
+    //             if (ifSquareSelectingActive == true) 
+    //             {
+    //                 deselectAllWorldMap(world);
 
-                    squareSelectingStartCellCoords = mousePosition;
-                    world->map[(squareSelectingStartCellCoords.x/progParamsData->rectSize.x) + world->mapSize.x * (squareSelectingStartCellCoords.y/progParamsData->rectSize.y)].isSelected = true;
-                } 
-                else 
-                {
-                    // Select square from (c1.x; c1.y) to (c2.x; c2.y)
-                    // Go from selecting start to selecting end (mouse position right now)
+    //                 squareSelectingStartCellCoords = mousePosition;
+    //                 world->map[(squareSelectingStartCellCoords.x/progParamsData->rectSize.x) + world->mapSize.x * (squareSelectingStartCellCoords.y/progParamsData->rectSize.y)].isSelected = true;
+    //             } 
+    //             else 
+    //             {
+    //                 // Select square from (c1.x; c1.y) to (c2.x; c2.y)
+    //                 // Go from selecting start to selecting end (mouse position right now)
 
-                    for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) 
-                    {
-                        for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) 
-                        {
-                            world->map[(ab/progParamsData->rectSize.x) + world->mapSize.x * (ord/progParamsData->rectSize.y)].isSelected = true;
-                        }
-                    }
-                }
+    //                 for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) 
+    //                 {
+    //                     for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) 
+    //                     {
+    //                         world->map[(ab/progParamsData->rectSize.x) + world->mapSize.x * (ord/progParamsData->rectSize.y)].isSelected = true;
+    //                     }
+    //                 }
+    //             }
 
-                squareSelectingFreeze = 30;
-            }
-        } 
-        else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
-        {
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+    //             squareSelectingFreeze = 30;
+    //         }
+    //     } 
+    //     else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
+    //     {
+    //         world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
-            world->map[(mousePosition.x/progParamsData->rectSize.x) - 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+    //         world->map[(mousePosition.x/progParamsData->rectSize.x) + 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+    //         world->map[(mousePosition.x/progParamsData->rectSize.x) - 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y + 1)].isSelected = false;
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y - 1)].isSelected = false;
-        } 
-        else if (IsKeyDown(KEY_ESCAPE))
-        {
-            deselectAllWorldMap(world);
-        }
+    //         world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y + 1)].isSelected = false;
+    //         world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y - 1)].isSelected = false;
+    //     } 
+    //     else if (IsKeyDown(KEY_ESCAPE))
+    //     {
+    //         deselectAllWorldMap(world);
+    //     }
 
-        EndDrawing();
-    }
+    //     EndDrawing();
+    // }
 
     CloseWindow();
 
-    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
-    logToFile(sourceLogFile, tm, "APP CORRECTLY CLOSED\n");
-    rawLogToFile(sourceLogFile, LOGS_BARRIERS);
+    rawLogToFile(logData, LOGS_BARRIERS);
+    logToFile(logData, "APP CORRECTLY CLOSED\n");
+    rawLogToFile(logData, LOGS_BARRIERS);
 
     deleteWorld(world, worldParamsData);
     deleteUILord(UICentral);
@@ -282,5 +290,5 @@ int main()
     free(windowName);
 
     free(sourceLogFilePath);
-    fclose(sourceLogFile);
+    fclose(logData->sourceLogFile);
 }

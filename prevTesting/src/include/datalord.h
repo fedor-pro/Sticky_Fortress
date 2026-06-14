@@ -7,5 +7,6 @@
 progParamsDataLord* defineProgParamsDataLord ();
 worldParamsDataLord* defineWorldParamsDataLord ();
 drawDataLord* defineDrawDataLord ();
+logDataLord* defineLogDataLord ();
 
 #endif

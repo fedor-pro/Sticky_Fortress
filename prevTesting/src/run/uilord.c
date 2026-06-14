@@ -72,5 +72,5 @@ void drawUILord (UILord *UIL) {
         drawGuiText(UIL->allGuiText[y]);
     }
 
-    DrawText("Lmb to select, \nrmb to deselect area.", UIL->allGuiText[0].startCoords.x, UIL->allGuiText[0].startCoords.y + 30, 23, GREEN);
+    DrawText("Lmb to select square, \nrmb to deselect area.", UIL->allGuiText[0].startCoords.x, UIL->allGuiText[0].startCoords.y + 30, 23, GREEN);
 }

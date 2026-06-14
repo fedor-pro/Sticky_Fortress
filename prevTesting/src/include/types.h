@@ -1,9 +1,12 @@
 #if !defined(TYPES_H)
 #define TYPES_H
 
+#define LL() printf("Check at %s : %d passed succesfully\n", __FILE__, __LINE__)
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <raylib.h>
+#include <time.h>
 
 typedef struct
 {
@@ -124,6 +127,8 @@ typedef struct
 
 typedef struct
 {
+    char* worldName;
+
     LandscapeCell *map;
     Coord mapSize;
 
@@ -141,6 +146,8 @@ typedef struct
 
 typedef struct
 {
+    char* defaultName;
+
     int startEntitiesNumber;
     int startFoodOnMap;
     int structuresNumber;
@@ -164,6 +171,13 @@ typedef struct
     char* defaultHumanChar;
     char* defaultFoodChar;
 } drawDataLord;
+
+typedef struct
+{
+    struct tm *tm; 
+    FILE *sourceLogFile;
+    time_t rawTime;
+} logDataLord;
 
 // typedef struct
 // {
