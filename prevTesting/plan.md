@@ -60,9 +60,9 @@
                               * `drawDataLord`        - для  переменных вроде `default_font_size` ✔
                               * `logDataLord`         - для  `struct tm *tm, FILE *sourceLogFile`
                                                       -- решить три проблемы:
-                                                      --- встроить `logDataLord` в `entities` и `world`
-                                                      --- сделать обновление `rawTime` и иже с ним в `main.c`
-                                                      --- исправить segfault, который возникает при вызове `[raw]logToFile` (что-то явно с указателями)
+                                                      --- встроить `logDataLord` в `entities` и `world` ✔
+                                                      --- сделать обновление `rawTime` и иже с ним в `main.c` ✔
+                                                      !-- исправить segfault, который возникает при вызове `[raw]logToFile` вне main. Тесты показывают, что `logData->tm->tm_...` оказываются не инициализированными.
 3) Добавить функцию сохранения мира в файл:
    1. Добавить параметр `worldName` в `World` ✔
    2. При инициализации создавать файл `[worldName].txt`
