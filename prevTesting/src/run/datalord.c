@@ -8,6 +8,8 @@ progParamsDataLord* defineProgParamsDataLord () {
     progParamsData->windowSize = (Coord) {1900, 1000};
     progParamsData->rectSize = (Coord) {11, 11};
     progParamsData->textBufferSize = 500;
+
+    return progParamsData;
 }
 
 worldParamsDataLord* defineWorldParamsDataLord () {
@@ -22,6 +24,8 @@ worldParamsDataLord* defineWorldParamsDataLord () {
     worldParamsData->entitiesAlive = worldParamsData->startEntitiesNumber;
     worldParamsData->entitiesSelected = 0;
     worldParamsData->foodExists = worldParamsData->startFoodOnMap;
+
+    return worldParamsData;
 }
 
 drawDataLord* defineDrawDataLord () {
@@ -30,6 +34,8 @@ drawDataLord* defineDrawDataLord () {
     drawData->defaultFontSize = 23;
     drawData->defaultFoodChar = "*";
     drawData->defaultHumanChar = "&";
+
+    return drawData;
 }
 
 logDataLord* defineLogDataLord () {
@@ -40,4 +46,6 @@ logDataLord* defineLogDataLord () {
     time(&logData->rawTime);
 
     // logData->sourceLogFile will be initialize in logging.c    
+
+    return logData;
 }

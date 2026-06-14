@@ -13,18 +13,11 @@ void initializeLogFile(char *sourceLogFilePath, logDataLord* logData) // initial
 
 void logToFile(logDataLord* logData, char *text) // write info into the log file
 {
-    LL();
-    printf("logData->tm->tm_sec : %04d\n", logData->tm->tm_sec);
-    
-    LL();
-
-    // fprintf(logData->sourceLogFile, "[%04d-%02d-%02d %02d:%02d:%02d] ",
-    //         logData->tm->tm_year + 1900, logData->tm->tm_mon + 1, logData->tm->tm_mday,
-    //         logData->tm->tm_hour, logData->tm->tm_min, logData->tm->tm_sec);
-    // LL();
+    fprintf(logData->sourceLogFile, "[%04d-%02d-%02d %02d:%02d:%02d] ",
+            logData->tm->tm_year + 1900, logData->tm->tm_mon + 1, logData->tm->tm_mday,
+            logData->tm->tm_hour, logData->tm->tm_min, logData->tm->tm_sec);
 
     fprintf(logData->sourceLogFile, "%s", text);
-    LL();
 }
 
 void rawLogToFile(logDataLord* logData, char* text) // without timestamp

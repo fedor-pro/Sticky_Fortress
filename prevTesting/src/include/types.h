@@ -1,7 +1,7 @@
 #if !defined(TYPES_H)
 #define TYPES_H
 
-#define LL() printf("Check at %s : %d passed succesfully\n", __FILE__, __LINE__)
+// ✗✗✗ RESTRICTED ✗✗✗ #define LL() printf("Check at %s : %d passed succesfully\n", __FILE__, __LINE__) ✗✗✗ RESTRICTED ✗✗✗
 
 #include <stdio.h>
 #include <stdbool.h>

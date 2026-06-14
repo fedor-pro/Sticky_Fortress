@@ -62,7 +62,8 @@
                                                       -- решить три проблемы:
                                                       --- встроить `logDataLord` в `entities` и `world` ✔
                                                       --- сделать обновление `rawTime` и иже с ним в `main.c` ✔
-                                                      !-- исправить segfault, который возникает при вызове `[raw]logToFile` вне `main` и при `time(&logData->rawTime)` даже в `main`. Тесты показывают, что `logData->tm->tm_...` и `logData->rawTime` оказываются не инициализированными даже в `main`.
+                                                      !-- исправить segfault, который возникает при вызове `[raw]logToFile` вне `main` и при `time(&logData->rawTime)` даже в `main`. Тесты показывают, что `logData->tm->tm_...` и `logData->rawTime` оказываются не инициализированными даже в `main` .✔
+
 3) Добавить функцию сохранения мира в файл:
    1. Добавить параметр `worldName` в `World` ✔
    2. При инициализации создавать файл `[worldName].txt`

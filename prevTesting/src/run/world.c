@@ -64,8 +64,6 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
             entY = rand() % world->mapSize.y;
         }
 
-        LL();
-
         char *entityGameId = malloc(progParamsData->textBufferSize);
         sprintf(entityGameId, "%d", x);
 
@@ -73,32 +71,18 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
 
-        LL();
-
         if (x > 0 && x < worldParamsData->startEntitiesNumber - 1) {
-            LL();
 
             if (x == 1) {
-                LL();
-                // rawLogToFile(logData, "abc\n"); // <-- Error
-                LL();
+                rawLogToFile(logData, "...\n");
             }
-
-            LL();
         } else {
-            LL();
-
             logToFile(logData, "Created ");
-            LL();
             rawLogToFile(logData, ent.gameName);
             rawLogToFile(logData, " with id: |");
             rawLogToFile(logData, ent.gameId);
             rawLogToFile(logData,"|\n");
-
-            LL();
         }
-
-        LL();
 
         time(&logData->rawTime);
         logData->tm = localtime(&logData->rawTime); // updating time
@@ -152,28 +136,18 @@ World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord*
     world->mapSize = mapSize;
     world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
 
-    LL();
-
     world->worldLandscapes = malloc(sizeof(LandscapeType)*10);
     initializeWorldLandscapes(world);
-
-    LL();
 
     createWorldMap(world);
     logToFile(logData, "INITIALIZED WORLD MAP\n");
     rawLogToFile(logData, logsBarriers);
 
-    LL();
-
     generateWorldStructures(world, worldParamsData);
-
-    LL();
 
     world->entities = malloc(sizeof(Entity) * (worldParamsData->startEntitiesNumber) * 1.5); // creating entities
 
-    LL();
     createEntities(world, worldParamsData, progParamsData, logData, drawData);
-    LL();
 
     rawLogToFile(logData, logsBarriers);
 
