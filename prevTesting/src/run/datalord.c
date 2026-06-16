@@ -6,7 +6,7 @@ progParamsDataLord* defineProgParamsDataLord () {
     progParamsDataLord* progParamsData = malloc(sizeof(progParamsDataLord));
 
     progParamsData->windowSize = (Coord) {1900, 1000};
-    progParamsData->rectSize = (Coord) {11, 11};
+    progParamsData->rectSize = (Coord) {15, 15};
     progParamsData->textBufferSize = 500;
 
     return progParamsData;
@@ -17,8 +17,8 @@ worldParamsDataLord* defineWorldParamsDataLord () {
 
     worldParamsData->defaultName = "test_world";
 
-    worldParamsData->startEntitiesNumber = 40;
-    worldParamsData->startFoodOnMap = 10;
+    worldParamsData->startEntitiesNumber = 1000;
+    worldParamsData->startFoodOnMap = 15;
     worldParamsData->structuresNumber = 15;
 
     worldParamsData->entitiesAlive = worldParamsData->startEntitiesNumber;
@@ -33,7 +33,7 @@ drawDataLord* defineDrawDataLord () {
 
     drawData->defaultFontSize = 23;
     drawData->defaultFoodChar = "*";
-    drawData->defaultHumanChar = "&";
+    drawData->defaultHumanChar = "A";
 
     return drawData;
 }

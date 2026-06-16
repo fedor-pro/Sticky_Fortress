@@ -17,8 +17,8 @@ UILord *initializeUILord (progParamsDataLord *progParamsData, int default_font_s
     GuiPannel entitiesInfo = {.startCoords.x = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
     entitiesInfo.startCoords.y = progParamsData->windowSize.y - entitiesInfo.canvSizeCoords.y;
 
-    GuiText entitiesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = default_font_size, .fontColor = GREEN};
-    GuiText entitiesSelectedText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 20, .startCoords.y = entitiesInfo.startCoords.y + 60, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText entitiesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText entitiesSelectedText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 60, .fontSize = default_font_size, .fontColor = GREEN};
 
     GuiPannel zeroInfo = {.startCoords.x = progParamsData->windowSize.x - 200, .startCoords.y = progParamsData->windowSize.y- 200, .canvSizeCoords.x = 200, .canvSizeCoords.y = 200, .backgroundColor = BLACK};
 
@@ -53,7 +53,7 @@ void updateUILord (UILord *UIL, Coord mousePosition, int* selectedCells, worldPa
 
     sprintf(UIL->allGuiText[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
 
-    sprintf(UIL->allGuiText[2].text, "Entities alive: %d", worldParamsData->entitiesAlive);
+    sprintf(UIL->allGuiText[2].text, "Entities alive: %d / %d", worldParamsData->entitiesAlive, worldParamsData->startEntitiesNumber);
     sprintf(UIL->allGuiText[4].text, "      selected: %d", worldParamsData->entitiesSelected);
 
     if (isPaused) {

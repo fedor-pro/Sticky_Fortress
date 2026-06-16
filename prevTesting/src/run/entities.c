@@ -63,6 +63,8 @@ void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldPar
 
     if (world->items[e->targetFoodId].number <= 0)
     {
+        worldParamsData->foodExists --;
+
         logToFile(logData, "Food with id |");
         rawLogToFile(logData, foodGameId);
         rawLogToFile(logData, "| is over\n");

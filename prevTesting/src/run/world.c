@@ -67,7 +67,7 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
         char *entityGameId = malloc(progParamsData->textBufferSize);
         sprintf(entityGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Human", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, rand () % 100 + rand () % 50, 0, RED};
+        Entity ent = {entityGameId, "Human", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 1000 + rand () % 50, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
 
@@ -91,7 +91,7 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
     }
 }
 
-void createWorldFood(World *world, worldParamsDataLord* worldParamsData)
+void createWorldFood(World *world, worldParamsDataLord* worldParamsData, drawDataLord* drawData)
 {
     for (int x = 0; x < worldParamsData->startFoodOnMap; x++)
     {
@@ -104,7 +104,7 @@ void createWorldFood(World *world, worldParamsDataLord* worldParamsData)
             resY = rand() % world->mapSize.y;
         }
 
-        Item f = {resX, resY, FOOD, "*", 50 + rand() % 30, true};
+        Item f = {resX, resY, FOOD, drawData->defaultFoodChar, 50 + rand() % 30, true};
 
         world->items[x] = f;
     }
@@ -153,7 +153,7 @@ World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord*
 
     world->items = malloc(sizeof(LandscapeCell) * (worldParamsData->startFoodOnMap + 5)); // creating resources
 
-    createWorldFood(world, worldParamsData);
+    createWorldFood(world, worldParamsData, drawData);
 
     return world;
 }

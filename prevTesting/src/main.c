@@ -150,6 +150,19 @@ int main()
         if (!isPaused && timer >= TIMER_RESET)
         {
             timer = 0;
+            
+            for (int u = 0; u < worldParamsData->foodExists; u ++) {
+                if ((rand() % 10) > 9) {
+                    world->items[u].number ++;
+
+                    char* si = malloc(sizeof(char)*12);
+                    sprintf(si, "%d", u);
+
+                    logToFile(logData, "Food with id |");
+                    rawLogToFile(logData, si);
+                    rawLogToFile(logData, "| restored\n");
+                }
+            }
 
             sprintf(stringFPS, "%d", fps);
             logToFile(logData, "Current FPS: ");

@@ -2,6 +2,8 @@ CC = gcc # Compiler
 CFLAGS = -I./src/include -I./src # C compilation flags
 LDFLAGS = -lm -lpthread # Multi OS linker flags
 
+MAKEFLAGS += --no-print-directory
+
 UNAME_S := $(shell uname -s) # Operation system
 
 TARGET = ./apps/sticky_fortress # Final programm
@@ -21,7 +23,7 @@ endif
 all: $(TARGET)
 
 $(TARGET): $(OBJS) # Create folder for app and compile it
-	mkdir -p $(dir $(TARGET))
+	@mkdir -p $(dir $(TARGET))
 	$(CC) -o $@ $^ $(LDFLAGS)
 # gcc ./apps/sticky_fortress [OBJS] [LDFLAGS]
 
@@ -30,10 +32,12 @@ $(TARGET): $(OBJS) # Create folder for app and compile it
 # gcc [CFLAGS] [.c for compile] [target .o]
 
 clean: # Clear compilation results
-	rm -f $(OBJS) $(TARGET)
+	@rm -f $(OBJS) 
+	rm -f $(TARGET)
 
 run: $(TARGET) # Run this program
 	$(TARGET)
 
 crun: $(TARGET) # Run this program and clean compilation results
-	./$(TARGET) ; echo "---" ; $(MAKE) clean
+	@./$(TARGET)
+	@$(MAKE) clean
