@@ -9,6 +9,8 @@ void initializeLogFile(char *sourceLogFilePath, logDataLord* logData) // initial
             tm->tm_hour, tm->tm_min;*/
 
     logData->sourceLogFile = fopen(sourceLogFilePath, "w");
+
+    fflush(logData->sourceLogFile);
 }
 
 void logToFile(logDataLord* logData, char *text) // write info into the log file
@@ -18,9 +20,13 @@ void logToFile(logDataLord* logData, char *text) // write info into the log file
             logData->tm->tm_hour, logData->tm->tm_min, logData->tm->tm_sec);
 
     fprintf(logData->sourceLogFile, "%s", text);
+
+    fflush(logData->sourceLogFile);
 }
 
 void rawLogToFile(logDataLord* logData, char* text) // without timestamp
 {
     fprintf(logData->sourceLogFile, "%s", text);
+
+    fflush(logData->sourceLogFile);
 }

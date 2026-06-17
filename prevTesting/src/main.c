@@ -91,6 +91,8 @@ int main()
         ImageFormat(&windowIcon, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     }
 
+    ImageColorReplace(&windowIcon, WHITE, BLANK);
+
     SetWindowIcon(windowIcon);
 
     logToFile(logData, "INITIALIZED WINDOW\n");
@@ -151,8 +153,8 @@ int main()
         {
             timer = 0;
             
-            for (int u = 0; u < worldParamsData->foodExists; u ++) {
-                if ((rand() % 10) > 9) {
+            for (int u = 0; u < worldParamsData->startFoodOnMap; u ++) {
+                if ((rand() % 100) > 95) {
                     world->items[u].number ++;
 
                     char* si = malloc(sizeof(char)*12);
