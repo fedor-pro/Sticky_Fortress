@@ -10,7 +10,7 @@
 #include "datalord.h"
 #include "draw.h"
 
-#define VERSION "0.0.1"
+#define VERSION "0.0.2"
 
 #define TARGET_FPS 60
 #define TIMER_RESET 60
