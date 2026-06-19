@@ -4,6 +4,12 @@
 void drawGuiPannel(GuiPannel guip) // draw pannel
 {
     DrawRectangle(guip.startCoords.x, guip.startCoords.y, guip.canvSizeCoords.x, guip.canvSizeCoords.y, guip.backgroundColor);
+
+    DrawRectangle(guip.startCoords.x + (guip.canvSizeCoords.x/50), (guip.startCoords.y + guip.canvSizeCoords.y) - (guip.canvSizeCoords.y/30), guip.canvSizeCoords.x - ((guip.canvSizeCoords.x/50)*2), (guip.canvSizeCoords.y/150), (Color) {255, 255, 255, 120});
+    DrawRectangle(guip.startCoords.x + (guip.canvSizeCoords.x/50), (guip.startCoords.y + guip.canvSizeCoords.y) - (guip.canvSizeCoords.y/50), guip.canvSizeCoords.x - ((guip.canvSizeCoords.x/50)*2), (guip.canvSizeCoords.y/150), (Color) {255, 255, 255, 120});
+
+    DrawRectangle(guip.startCoords.x + (guip.canvSizeCoords.x/50), guip.startCoords.y + (guip.canvSizeCoords.y/30), guip.canvSizeCoords.x - ((guip.canvSizeCoords.x/50)*2), (guip.canvSizeCoords.y/150), (Color) {255, 255, 255, 120});
+    DrawRectangle(guip.startCoords.x + (guip.canvSizeCoords.x/50), guip.startCoords.y + (guip.canvSizeCoords.y/50), guip.canvSizeCoords.x - ((guip.canvSizeCoords.x/50)*2), (guip.canvSizeCoords.y/150), (Color) {255, 255, 255, 120});
 }
 
 void drawGuiText(GuiText guitx) // draw text
