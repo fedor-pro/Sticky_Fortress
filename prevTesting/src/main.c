@@ -76,7 +76,7 @@ int main()
     World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, logData, drawData);
 
     // Initializing window
-    char *windowName = malloc(124);
+    char *windowName = malloc(progParamsData->textBufferSize);
     sprintf(windowName, "Sticky Fortress %s", VERSION);
 
     InitWindow(progParamsData->windowSize.x, progParamsData->windowSize.y, windowName);
