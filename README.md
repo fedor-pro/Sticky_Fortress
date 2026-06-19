@@ -41,6 +41,4 @@ At this time, you can't manage entities - they'll move, find food and die withou
 
 ## Common errors
 
-1) Program crashed with error `Not found ./logs/latest.log` or similar: check that the `logs/` folder exists in the `Sticky_Fortress/prevTesting` folder and that it contains the `latest.log` file. If they are missing, create them yourself. 
-
-2) The program icon is missing from the window: check that the `images/` folder exsists in the `Sticky_Fortress/prevTesting` folder and that it contains the `windowIcon.png` file. If they are missing you need to create folder `images/` , copy `windowIcon.png` from git repository and put it in this folder.  ![(./prevTesting/images/windowIcon.png)](./prevTesting/images/windowIcon.pngXXX)
+1) Programm compilation crashed with `Makefile` error `src/run/draw.o: in function «drawGuiPannel»: draw.c:(.text+0x1e): undefined reference to DrawRectangle'` or similar: check that you have Linux and Raylib downloaded
