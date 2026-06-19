@@ -19,11 +19,12 @@ ifeq ($(strip $(UNAME_S)), Linux) # Linux linker flags
 endif
 
 .PHONY: all clean run crun # Reserve this names for directives
+.IGNORE: crun # If error, compilation results will be clean anyway
  
 all: $(TARGET)
 
 $(TARGET): $(OBJS) # Create folder for app and compile it
-	@mkdir -p $(dir $(TARGET))
+	mkdir -p $(dir $(TARGET))
 	$(CC) -o $@ $^ $(LDFLAGS)
 # gcc ./apps/sticky_fortress [OBJS] [LDFLAGS]
 
@@ -32,7 +33,7 @@ $(TARGET): $(OBJS) # Create folder for app and compile it
 # gcc [CFLAGS] [.c for compile] [target .o]
 
 clean: # Clear compilation results
-	@rm -f $(OBJS) 
+	rm -f $(OBJS) 
 	rm -f $(TARGET)
 
 run: $(TARGET) # Run this program

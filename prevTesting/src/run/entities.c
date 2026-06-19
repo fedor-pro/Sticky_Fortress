@@ -6,6 +6,8 @@
 
 void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 {
+    // Aaaaaaaargh
+
     switch (direct)
     {
     case RIGHT:

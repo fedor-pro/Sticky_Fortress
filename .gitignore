@@ -5,3 +5,6 @@ prevTesting/apps/*
 
 prevTesting/logs/*
 !prevTesting/logs/.gitkeep
+
+prevTesting/worlds/*
+!prevTesting/worlds/.gitkeep

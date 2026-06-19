@@ -127,7 +127,8 @@ typedef struct
 
 typedef struct
 {
-    char* worldName;
+    char *worldName;
+    FILE *worldFile;
 
     LandscapeCell *map;
     Coord mapSize;
@@ -146,7 +147,7 @@ typedef struct
 
 typedef struct
 {
-    char* defaultName;
+    char *defaultName;
 
     int startEntitiesNumber;
     int startFoodOnMap;

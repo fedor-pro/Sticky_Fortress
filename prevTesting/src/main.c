@@ -41,7 +41,7 @@ int main()
     srand(time(NULL));
 
     // Initializing log file
-    char *sourceLogFilePath = malloc(1024);
+    char *sourceLogFilePath = malloc(progParamsData->textBufferSize);
 
     initializeLogFile(sourceLogFilePath, logData);
 
@@ -59,7 +59,7 @@ int main()
     Coord ms = {progParamsData->windowSize.x / progParamsData->rectSize.x, progParamsData->windowSize.y / progParamsData->rectSize.y};
 
     // Log start info
-    char *initLogInfo = malloc(sizeof(char) * 1024);
+    char *initLogInfo = malloc(progParamsData->textBufferSize);
     sprintf(initLogInfo, "%s %d,%d\n\n", "Defined window size", progParamsData->windowSize.x, progParamsData->windowSize.y);
     logToFile(logData, initLogInfo);
 

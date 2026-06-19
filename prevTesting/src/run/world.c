@@ -21,6 +21,17 @@ void initializeWorldLandscapes(World *world)
     world->worldLandscapes[4] = rockLandscape;
 }
 
+void initializeWorldFile(World *world, progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData) {
+    
+    char *worldFilePath = malloc(progParamsData->textBufferSize);
+    sprintf(worldFilePath, "./worlds/%s.txt", worldParamsData->defaultName);
+
+    world->worldFile = fopen(worldFilePath, "w");
+
+    fprintf(world->worldFile, "Start writing data in %s...", worldParamsData->defaultName);
+    fflush(world->worldFile);
+}
+
 void createWorldMap(World *world)
 {
     for (int x = 0; x < world->mapSize.x; x++)
@@ -112,8 +123,6 @@ void createWorldFood(World *world, worldParamsDataLord* worldParamsData, drawDat
 
 void deleteWorld(World *world, worldParamsDataLord* worldParamsData)
 {
-    printf("̶D̶e̶l̶e̶t̶e̶d̶ ̶w̶o̶r̶l̶d: ̶%zu̶ ̶b̶y̶t̶e̶s̶\n", sizeof(world));
-
     for (int i = 0; i < worldParamsData->startEntitiesNumber; i++)
     {
         if (world->entities[i].gameId != NULL)
@@ -121,6 +130,8 @@ void deleteWorld(World *world, worldParamsDataLord* worldParamsData)
             free(world->entities[i].gameId);
         }
     }
+
+    fclose(world->worldFile);
 
     free(world->map);
     free(world->worldLandscapes);
@@ -138,6 +149,8 @@ World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord*
 
     world->worldLandscapes = malloc(sizeof(LandscapeType)*10);
     initializeWorldLandscapes(world);
+
+    initializeWorldFile(world, progParamsData, worldParamsData);
 
     createWorldMap(world);
     logToFile(logData, "INITIALIZED WORLD MAP\n");
