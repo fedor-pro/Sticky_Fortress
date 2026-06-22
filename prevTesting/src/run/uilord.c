@@ -18,7 +18,7 @@ UILord *initializeUILord (progParamsDataLord *progParamsData, int default_font_s
     GuiPannel entitiesInfo = {.startCoords.x = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor =  UIPannelsBack};
     entitiesInfo.startCoords.y = progParamsData->windowSize.y - entitiesInfo.canvSizeCoords.y;
 
-    GuiText entitiesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 20, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText entitiesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = GREEN};
     GuiText entitiesSelectedText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 60, .fontSize = default_font_size, .fontColor = GREEN};
 
     GuiPannel frameInfo = {.startCoords.x = progParamsData->windowSize.x - 200, .startCoords.y = progParamsData->windowSize.y- 200, .canvSizeCoords.x = 200, .canvSizeCoords.y = 200, .backgroundColor =  UIPannelsBack};

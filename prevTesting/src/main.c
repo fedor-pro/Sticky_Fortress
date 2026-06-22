@@ -286,7 +286,7 @@ int main()
     logToFile(logData, "APP CORRECTLY CLOSED\n");
     rawLogToFile(logData, LOGS_BARRIERS);
 
-    deleteWorld(world, worldParamsData);
+    deleteWorld(world, worldParamsData, logData);
     deleteUILord(UICentral);
 
     free(stringFPS);

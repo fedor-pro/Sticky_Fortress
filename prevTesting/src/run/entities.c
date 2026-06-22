@@ -7,6 +7,7 @@
 void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
 {
     // Aaaaaaaargh
+    // TODO: Fix all
 
     switch (direct)
     {

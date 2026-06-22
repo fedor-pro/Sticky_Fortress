@@ -28,7 +28,6 @@ void initializeWorldFile(World *world, progParamsDataLord *progParamsData, world
 
     world->worldFile = fopen(worldFilePath, "w");
 
-    fprintf(world->worldFile, "Start writing data in %s...", worldParamsData->defaultName);
     fflush(world->worldFile);
 }
 
@@ -78,7 +77,7 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
         char *entityGameId = malloc(progParamsData->textBufferSize);
         sprintf(entityGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Human", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 100 + rand () % 50, 0, RED};
+        Entity ent = {entityGameId, "Human", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 1000 + rand () % 50, 0, RED};
         //                             humanity   is                                target target hunger die level sleepiness
         //                                       alive                           food id   cell coords    hunger   
 
@@ -121,8 +120,15 @@ void createWorldFood(World *world, worldParamsDataLord* worldParamsData, drawDat
     }
 }
 
-void deleteWorld(World *world, worldParamsDataLord* worldParamsData)
+void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord *logData)
 {
+    fprintf(world->worldFile, "===WORLD DATA===\n");
+    fprintf(world->worldFile, "World name: %s\n", world->worldName);
+
+    fprintf(world->worldFile, "===DELETING WORLD===\n");
+    fprintf(world->worldFile, "Deleting entities' IDs...\n");
+    fflush(world->worldFile);
+
     for (int i = 0; i < worldParamsData->startEntitiesNumber; i++)
     {
         if (world->entities[i].gameId != NULL)
@@ -131,12 +137,28 @@ void deleteWorld(World *world, worldParamsDataLord* worldParamsData)
         }
     }
 
-    fclose(world->worldFile);
-
+    fprintf(world->worldFile, "Deleting world map...\n");
+    fflush(world->worldFile);
     free(world->map);
+
+    fprintf(world->worldFile, "Deleting world landscapes data...\n");
+    fflush(world->worldFile);
     free(world->worldLandscapes);
+
+    fprintf(world->worldFile, "Deleting world entities...\n");
+    fflush(world->worldFile);
     free(world->entities);
+
+    fprintf(world->worldFile, "Deleting world items...\n");
+    fflush(world->worldFile);
     free(world->items);
+
+    fprintf(world->worldFile, "DELETING WORLD AND CLOSING THIS FILE...\n");
+    fflush(world->worldFile);
+
+    fprintf(world->worldFile, "---\n");
+    fprintf(world->worldFile, "[%02d.%02d.%02d--%02d:%02d]\n", logData->tm->tm_year + 1900, logData->tm->tm_mon + 1, logData->tm->tm_mday, logData->tm->tm_hour, logData->tm->tm_min);
+    fclose(world->worldFile);
     free(world);
 }
 
