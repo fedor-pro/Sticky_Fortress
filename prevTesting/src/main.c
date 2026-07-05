@@ -21,7 +21,6 @@ int main()
 {
     SetTraceLogLevel(LOG_NONE); // for delete all raylib's sys logs
 
-    //------------------------------------------------------------------------------------------
     // Creating dataLords
     progParamsDataLord* progParamsData = defineProgParamsDataLord();
     worldParamsDataLord* worldParamsData = defineWorldParamsDataLord();
@@ -71,7 +70,6 @@ int main()
 
     rawLogToFile(logData, LOGS_BARRIERS);
 
-    //----------------------------------------------------------------------------------------------------------------------------------
     // Creating world
     World *world = initializeWorld(worldParamsData, progParamsData, LOGS_BARRIERS, ms, logData, drawData);
 

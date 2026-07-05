@@ -33,7 +33,7 @@ drawDataLord* defineDrawDataLord () {
 
     drawData->defaultFontSize = 23;
     drawData->defaultFoodChar = "*";
-    drawData->defaultHumanChar = "A";
+    drawData->defaultHumanChar = "&";
 
     return drawData;
 }

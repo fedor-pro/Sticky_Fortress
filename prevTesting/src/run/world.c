@@ -9,16 +9,18 @@
 void initializeWorldLandscapes(World *world) 
 {
     LandscapeType basicLandscape = {LAND_BASIC, "Basic landscape", true, (Color) {3, 130, 0, 225}};
-    LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){0, 0, 150, 255}};
-    LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){0, 0, 60, 255}};
-    LandscapeType mountainsLandscape = {LAND_MOUNTAINS, "Mountains and hills", true, (Color){128, 124, 123, 255}};
-    LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){78, 74, 73, 255}};
+    LandscapeType waterLandscape = {LAND_WATER, "Water surface", false, (Color){0, 0, 120, 255}};
+    LandscapeType deepWaterLandscape = {LAND_DEEP_WATER, "Deep water", false, (Color){0, 0, 50, 255}};
+    LandscapeType mountainsLandscape = {LAND_MOUNTAINS, "Mountains and hills", true, (Color){118, 114, 113, 255}};
+    LandscapeType rockLandscape = {LAND_ROCK, "Hard rock landscape", false, (Color){68, 64, 63, 255}};
 
     world->worldLandscapes[0] = basicLandscape;
     world->worldLandscapes[1] = waterLandscape;
     world->worldLandscapes[2] = deepWaterLandscape;
     world->worldLandscapes[3] = mountainsLandscape;
     world->worldLandscapes[4] = rockLandscape;
+
+    world->worldLandscapes[0] = (LandscapeType) {LAND_BASIC, "Basic landscape", true, (Color) {3, 130, 0, 225}};
 }
 
 void initializeWorldFile(World *world, progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData) {
