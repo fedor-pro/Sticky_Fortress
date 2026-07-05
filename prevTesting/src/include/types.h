@@ -70,7 +70,6 @@ typedef struct
 typedef struct
 {
     Coord lCoord;
-    int index;
 
     bool isSelected;
     bool isOccupied;

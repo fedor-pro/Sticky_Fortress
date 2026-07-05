@@ -17,7 +17,7 @@ worldParamsDataLord* defineWorldParamsDataLord () {
 
     worldParamsData->defaultName = "test_world";
 
-    worldParamsData->startEntitiesNumber = 1000;
+    worldParamsData->startEntitiesNumber = 100;
     worldParamsData->startFoodOnMap = 15;
     worldParamsData->structuresNumber = 15;
 

@@ -124,12 +124,40 @@ void createWorldFood(World *world, worldParamsDataLord* worldParamsData, drawDat
 
 void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord *logData)
 {
-    fprintf(world->worldFile, "===WORLD DATA===\n");
-    fprintf(world->worldFile, "World name: %s\n", world->worldName);
-
-    fprintf(world->worldFile, "===DELETING WORLD===\n");
-    fprintf(world->worldFile, "Deleting entities' IDs...\n");
+    fprintf(world->worldFile, "==DATA==\n");
+    fprintf(world->worldFile, "[WORLD_NAME]:%s\n", world->worldName);
     fflush(world->worldFile);
+
+    fprintf(world->worldFile, "[ENTITIES_ALIVE]:%d\n", worldParamsData->entitiesAlive);
+    fprintf(world->worldFile, "[FOOD_REMAINING]:%d\n", worldParamsData->foodExists);
+    fflush(world->worldFile);
+
+    fprintf(world->worldFile, "\n==ENTITIES_LIST==\n");
+
+    for (int x = 0; x < worldParamsData->startEntitiesNumber; x++)
+    {
+        fprintf(world->worldFile, "{ENTITY}[ID]:%s|[GAME_NAME]:%s|[HUMANITY]:%d|[IS_ALIVE]:%d|[DRAWING_CHAR]:%s|[COORDS]:%d,%d|[HUNGER]:%f|[DIE_LEVEL_HUNGER]:%f|[SLEEPINESS]:%f\n", 
+            world->entities[x].gameId, world->entities[x].gameName, world->entities[x].humanity, world->entities[x].isAlive, world->entities[x].charValue,
+            world->entities[x].coords.x, world->entities[x].coords.y, world->entities[x].hunger, world->entities[x].dieLevelHunger, world->entities[x].sleepiness);
+
+        fflush(world->worldFile);
+    }
+
+    fprintf(world->worldFile, "\n==WORLD_MAP==\n");
+
+    for (int xx = 0; xx < world->mapSize.x; xx++)
+    {
+        for (int yy = 0; yy < world->mapSize.y; yy++)
+        { 
+            fprintf(world->worldFile, "{CELL}[COORDS]:%d,%d|[IS_SELECTED]:%d|[IS_OCCUPIED]:%d|[LANDSCAPE]:%d", 
+                world->map[xx + world->mapSize.x * yy].lCoord.x, world->map[xx + world->mapSize.x * yy].lCoord.y, 
+                world->map[xx + world->mapSize.x * yy].isSelected, world->map[xx + world->mapSize.x * yy].isOccupied, world->map[xx + world->mapSize.x * yy].landType);
+            
+            fflush(world->worldFile);
+        }
+
+        fprintf(world->worldFile, "\n");
+    }
 
     for (int i = 0; i < worldParamsData->startEntitiesNumber; i++)
     {
@@ -139,27 +167,11 @@ void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord
         }
     }
 
-    fprintf(world->worldFile, "Deleting world map...\n");
-    fflush(world->worldFile);
     free(world->map);
-
-    fprintf(world->worldFile, "Deleting world landscapes data...\n");
-    fflush(world->worldFile);
     free(world->worldLandscapes);
-
-    fprintf(world->worldFile, "Deleting world entities...\n");
-    fflush(world->worldFile);
     free(world->entities);
-
-    fprintf(world->worldFile, "Deleting world items...\n");
-    fflush(world->worldFile);
     free(world->items);
 
-    fprintf(world->worldFile, "DELETING WORLD AND CLOSING THIS FILE...\n");
-    fflush(world->worldFile);
-
-    fprintf(world->worldFile, "---\n");
-    fprintf(world->worldFile, "[%02d.%02d.%02d--%02d:%02d]\n", logData->tm->tm_year + 1900, logData->tm->tm_mon + 1, logData->tm->tm_mday, logData->tm->tm_hour, logData->tm->tm_min);
     fclose(world->worldFile);
     free(world);
 }

@@ -212,8 +212,10 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParams
 
         if (timer % 1 == 0)
         {
-            e->hunger += 0.01;
-            e->sleepiness += 0.1;
+            e->hunger += 0.001;
+            if (rand() % 2 > 0) {
+                e->hunger += 0.0005;
+            }
 
             if (e->hunger >= e->dieLevelHunger) // die from hunger
             {
