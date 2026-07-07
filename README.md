@@ -2,8 +2,8 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/language-C-blue" alt="C"/>
-  <img src="https://img.shields.io/badge/dependencies-raylib-brightgreen" alt="Raylib"/>
-  <img src="https://img.shields.io/badge/license-none-yellow" alt="No license"/>
+  <img src="https://img.shields.io/badge/dependencies-Raylib-brightgreen" alt="Raylib"/>
+  <img src="https://img.shields.io/badge/license-IDK-yellow" alt="No license"/>
 </p>
 
 > Clone of dwarf fortress on C with using Raylib. Right now in prototype stage.  
