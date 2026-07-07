@@ -9,6 +9,7 @@
 #include "world.h"
 #include "datalord.h"
 #include "draw.h"
+#include "updatelord.h"
 
 #define VERSION "0.0.2"
 
@@ -105,6 +106,8 @@ int main()
 
     while (!WindowShouldClose()) // main
     {
+        mainUpdate();
+
         time(&logData->rawTime);
         logData->tm = localtime(&logData->rawTime); // updating time
 

@@ -1,4 +1,4 @@
-#if !defined(DATALORDH)
+#if !defined(DATALORD_H)
 #define DATALORD_H
 
 #include "types.h"
