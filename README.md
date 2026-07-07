@@ -1,8 +1,8 @@
+# Sticky Fortress
+
 <p align="center">
   <img src="https://img.shields.io/badge/language-C-blue" alt="C"/>
 </p>
-
-# Sticky Fortress
 
 ## Description
 
