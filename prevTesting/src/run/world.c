@@ -79,9 +79,9 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
         char *entityGameId = malloc(progParamsData->textBufferSize);
         sprintf(entityGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Human", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 1000 + rand () % 50, 0, RED};
-        //                             humanity   is                                target target hunger die level sleepiness
-        //                                       alive                           food id   cell coords    hunger   
+        Entity ent = {entityGameId, "Dwarf", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 1000 + rand () % 50, 0, RED};
+        //                              dwarvenness  is                                                      target target hunger die level sleepiness
+        //                                           alive                                                  food id   cell coords    hunger   
 
         if (x > 0 && x < worldParamsData->startEntitiesNumber - 1) {
 
@@ -136,8 +136,8 @@ void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord
 
     for (int x = 0; x < worldParamsData->startEntitiesNumber; x++)
     {
-        fprintf(world->worldFile, "{ENTITY}[ID]:%s|[GAME_NAME]:%s|[HUMANITY]:%d|[IS_ALIVE]:%d|[DRAWING_CHAR]:%s|[COORDS]:%d,%d|[HUNGER]:%f|[DIE_LEVEL_HUNGER]:%f|[SLEEPINESS]:%f\n", 
-            world->entities[x].gameId, world->entities[x].gameName, world->entities[x].humanity, world->entities[x].isAlive, world->entities[x].charValue,
+        fprintf(world->worldFile, "{ENTITY}[ID]:%s|[GAME_NAME]:%s|[DWARVENNESS]:%d|[IS_ALIVE]:%d|[DRAWING_CHAR]:%s|[COORDS]:%d,%d|[HUNGER]:%f|[DIE_LEVEL_HUNGER]:%f|[SLEEPINESS]:%f\n", 
+            world->entities[x].gameId, world->entities[x].gameName, world->entities[x].dwarvenness, world->entities[x].isAlive, world->entities[x].charValue,
             world->entities[x].coords.x, world->entities[x].coords.y, world->entities[x].hunger, world->entities[x].dieLevelHunger, world->entities[x].sleepiness);
 
         fflush(world->worldFile);

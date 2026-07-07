@@ -82,7 +82,7 @@ typedef struct
     char *gameId;
     char *gameName;
 
-    bool humanity;
+    bool dwarvenness;
     bool isAlive;
     char *charValue;
 

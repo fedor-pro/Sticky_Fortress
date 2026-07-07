@@ -120,7 +120,7 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParams
     bool isReachedTargetFood = (e->coords.x == world->items[e->targetFoodId].coords.x && e->coords.y == world->items[e->targetFoodId].coords.y && world->items[e->targetFoodId].number > 0);
     bool IsEnoughHungerReached = e->hunger >= (e->dieLevelHunger * 0.60);
 
-    if (e->humanity == true)
+    if (e->dwarvenness == true)
     {
         // Select moving state
         // -------------------------------------------------------------------
