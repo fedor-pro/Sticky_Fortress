@@ -162,6 +162,8 @@ typedef struct
     Coord windowSize;
     Coord rectSize;
     int textBufferSize;
+
+    
 } progParamsDataLord;
 
 typedef struct

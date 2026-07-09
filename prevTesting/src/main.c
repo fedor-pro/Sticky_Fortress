@@ -1,5 +1,5 @@
-#include <stdio.h>  // for printf
-#include <raylib.h> // for graphics
+#include <stdio.h>
+#include <raylib.h>
 #include <stdlib.h> // for rand() func
 #include <time.h>   // for timestamp and rand() initialize
 
@@ -81,7 +81,7 @@ int main()
     InitWindow(progParamsData->windowSize.x, progParamsData->windowSize.y, windowName);
     SetTargetFPS(TARGET_FPS);
 
-    // SetExitKey(KEY_NULL); // Window willn't close on ESC button
+    SetExitKey(KEY_NULL); // If active, window willn't close on ESC button
 
     Image windowIcon = LoadImage("./images/windowIcon.png"); // loading icon
 
@@ -97,6 +97,7 @@ int main()
     logToFile(logData, "INITIALIZED WINDOW\n");
 
     int *selectedCells = malloc(sizeof(int)*5);
+
     // Initialize main UI
     UILord *UICentral = initializeUILord(progParamsData, drawData->defaultFontSize);
 
@@ -104,10 +105,10 @@ int main()
     logToFile(logData, "STARTED APP\n");
     rawLogToFile(logData,  LOGS_BARRIERS);
 
-    while (!WindowShouldClose()) // main
+    while (!WindowShouldClose())
     {
         mainUpdate();
-
+  
         time(&logData->rawTime);
         logData->tm = localtime(&logData->rawTime); // updating time
 
@@ -123,7 +124,7 @@ int main()
            squareSelectingFreeze --;
         }
 
-        // pause
+        // Pause
         if (IsKeyPressed(KEY_SPACE)) 
         {
             isPaused = !isPaused;
@@ -239,7 +240,7 @@ int main()
             if (squareSelectingFreeze == 0) {
                 ifSquareSelectingActive = !ifSquareSelectingActive;
 
-                if (ifSquareSelectingActive == true) 
+                if (ifSquareSelectingActive) 
                 {
                     deselectAllWorldMap(world);
 
@@ -275,6 +276,7 @@ int main()
         } 
         else if (IsKeyDown(KEY_ESCAPE))
         {
+            ifSquareSelectingActive = !ifSquareSelectingActive;
             deselectAllWorldMap(world);
         }
 
