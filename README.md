@@ -12,7 +12,8 @@ At this time, you can't manage entities - they'll move, find food and die withou
 
 ![alt text](./prevTesting/images/gameWorking.png)
 
-## Installation & running (Linux)
+## Installation & running
+> At the moment program's `Makefile` works only on Linux.
 
 1) Clone this git repository:
     ```sh
