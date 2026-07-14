@@ -83,15 +83,12 @@ int main()
 
     SetExitKey(KEY_NULL); // If active, window willn't close on ESC button
 
-    Image windowIcon = LoadImage("./images/windowIcon.png"); // loading icon
-
-    if (windowIcon.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) // formatting icon
+    Image windowIcon = LoadImage("./images/windowIcon.png"); // Loading icon
+    if (windowIcon.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) // Formatting icon
     {
         ImageFormat(&windowIcon, PIXELFORMAT_UNCOMPRESSED_R8G8B8A8);
     }
-
     ImageColorReplace(&windowIcon, WHITE, BLANK);
-
     SetWindowIcon(windowIcon);
 
     logToFile(logData, "INITIALIZED WINDOW\n");
@@ -107,10 +104,8 @@ int main()
 
     while (!WindowShouldClose())
     {
-        mainUpdate();
-  
         time(&logData->rawTime);
-        logData->tm = localtime(&logData->rawTime); // updating time
+        logData->tm = localtime(&logData->rawTime);
 
         BeginDrawing();
 
@@ -124,18 +119,17 @@ int main()
            squareSelectingFreeze --;
         }
 
-        // Pause
-        if (IsKeyPressed(KEY_SPACE)) 
+        if (IsKeyPressed(KEY_SPACE)) // Pause
         {
             isPaused = !isPaused;
         }
 
         if (!isPaused)
         {
-            timer++; // updating timer
+            timer++; // Update timer
         }
 
-        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // update entities
+        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // Update entities
             {
                 if (world->entities[x].isAlive == true)
                 {
@@ -174,18 +168,18 @@ int main()
             rawLogToFile(logData, "\n");
         }
 
-        ClearBackground(BLACK); // clear background
+        ClearBackground(BLACK); // Clear background
 
-        for (int u = 0; u < 5; u++) // reset selected landscape cells stats
+        for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
         {
             selectedCells[u] = 0;
         }
 
-        for (int x = 0; x < world->mapSize.x; x++) // drawing map and update info about selected cells
+        for (int x = 0; x < world->mapSize.x; x++) // Drawing map and update info about selected cells
         {
             for (int y = 0; y < world->mapSize.y; y++)
             {
-                if (world->map[x+world->mapSize.x*y].isSelected == 1) // if cell is selected
+                if (world->map[x+world->mapSize.x*y].isSelected == 1) // If cell is selected
                 {
                     DrawRectangle(x * progParamsData->rectSize.x, y * progParamsData->rectSize.y, progParamsData->rectSize.x + 1, progParamsData->rectSize.y + 1, GOLD); 
 
@@ -216,7 +210,7 @@ int main()
             }
         }
 
-        for (int x = 0; x < worldParamsData->startFoodOnMap; x++) // draw items
+        for (int x = 0; x < worldParamsData->startFoodOnMap; x++) // Draw items
         {
             if (world->items[x].number > 0)
             {
@@ -224,18 +218,18 @@ int main()
             }
         }
 
-        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // draw entities
+        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // Draw entities
         {
             drawEntity(world->entities[x], progParamsData);
         }
 
-        Vector2 mp = GetMousePosition(); // updating info about mouse position
+        Vector2 mp = GetMousePosition(); // Updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, timer, isPaused); // update main UI 
-        drawUILord(UICentral); // draw main UI
+        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, timer, isPaused); // Update main UI 
+        drawUILord(UICentral); // Draw main UI
 
-        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // selecting cells
+        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // Selecting cells
         {
             if (squareSelectingFreeze == 0) {
                 ifSquareSelectingActive = !ifSquareSelectingActive;
@@ -264,7 +258,7 @@ int main()
                 squareSelectingFreeze = 30;
             }
         } 
-        else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON))  // Stub for deselecting
+        else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) // Stub for deselecting
         {
             world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 

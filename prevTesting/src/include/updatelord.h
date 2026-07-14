@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-void mainUpdate();
+void updateGameRunningParams();
 
 #endif

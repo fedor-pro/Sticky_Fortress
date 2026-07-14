@@ -1,5 +1,13 @@
 #include "updatelord.h"
 
-void mainUpdate() {
-    printf("Updated\n");
+void updateGameRunningParams() { // Timer, fps, pause, time...
+     
+}
+
+void updateGameObjects() { // Entities, items...
+
+}
+
+void updateGameObjectsStats() { // Selected/alive entites, items...
+
 }
