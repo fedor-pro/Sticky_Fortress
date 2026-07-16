@@ -63,7 +63,7 @@ void deselectAllWorldMap(World *world) {
     }
 }
 
-void createEntities(World *world, worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, logDataLord* logData, drawDataLord *drawData)
+void createEntities(World *world, worldParamsDataLord *worldParamsData, progParamsDataLord *progParamsData, logDataLord *logData, drawDataLord *drawData)
 {
     for (int x = 0; x < worldParamsData->startEntitiesNumber; x++)
     {
@@ -103,7 +103,7 @@ void createEntities(World *world, worldParamsDataLord* worldParamsData, progPara
     }
 }
 
-void createWorldFood(World *world, worldParamsDataLord* worldParamsData, drawDataLord* drawData)
+void createWorldFood(World *world, worldParamsDataLord *worldParamsData, drawDataLord *drawData)
 {
     for (int x = 0; x < worldParamsData->startFoodOnMap; x++)
     {
@@ -176,7 +176,7 @@ void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord
     free(world);
 }
 
-World *initializeWorld(worldParamsDataLord* worldParamsData, progParamsDataLord* progParamsData, char* logsBarriers, Coord mapSize, logDataLord* logData, drawDataLord* drawData)
+World *initializeWorld(worldParamsDataLord *worldParamsData, progParamsDataLord *progParamsData, char *logsBarriers, Coord mapSize, logDataLord *logData, drawDataLord *drawData)
 {
     World *world = malloc(sizeof(World));
     world->worldName = worldParamsData->defaultName;

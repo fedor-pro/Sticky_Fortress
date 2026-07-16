@@ -163,15 +163,17 @@ typedef struct
     Coord rectSize;
     int textBufferSize;
 
-    
+    int timer;
+    int currentFPS;
+    bool isPaused;
 } progParamsDataLord;
 
 typedef struct
 {
     int defaultFontSize;
 
-    char* defaultHumanChar;
-    char* defaultFoodChar;
+    char *defaultHumanChar;
+    char *defaultFoodChar;
 } drawDataLord;
 
 typedef struct

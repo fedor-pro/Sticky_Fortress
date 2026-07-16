@@ -4,9 +4,9 @@
 #include "types.h"
 #include "stdlib.h"
 
-progParamsDataLord* defineProgParamsDataLord ();
-worldParamsDataLord* defineWorldParamsDataLord ();
-drawDataLord* defineDrawDataLord ();
-logDataLord* defineLogDataLord ();
+progParamsDataLord *defineProgParamsDataLord ();
+worldParamsDataLord *defineWorldParamsDataLord ();
+drawDataLord *defineDrawDataLord ();
+logDataLord *defineLogDataLord ();
 
 #endif

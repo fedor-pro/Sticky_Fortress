@@ -2,18 +2,22 @@
 #include <stdlib.h>
 #include <time.h>
 
-progParamsDataLord* defineProgParamsDataLord () {
-    progParamsDataLord* progParamsData = malloc(sizeof(progParamsDataLord));
+progParamsDataLord *defineProgParamsDataLord () {
+    progParamsDataLord *progParamsData = malloc(sizeof(progParamsDataLord));
 
     progParamsData->windowSize = (Coord) {1900, 1000};
     progParamsData->rectSize = (Coord) {15, 15};
     progParamsData->textBufferSize = 500;
 
+    progParamsData->timer = 0;
+    progParamsData->currentFPS = 0;
+    progParamsData->isPaused = false;
+
     return progParamsData;
 }
 
-worldParamsDataLord* defineWorldParamsDataLord () {
-    worldParamsDataLord* worldParamsData = malloc(sizeof(worldParamsDataLord));
+worldParamsDataLord *defineWorldParamsDataLord () {
+    worldParamsDataLord *worldParamsData = malloc(sizeof(worldParamsDataLord));
 
     worldParamsData->defaultName = "test_world";
 
@@ -28,8 +32,8 @@ worldParamsDataLord* defineWorldParamsDataLord () {
     return worldParamsData;
 }
 
-drawDataLord* defineDrawDataLord () {
-    drawDataLord* drawData = malloc(sizeof(drawDataLord));
+drawDataLord *defineDrawDataLord () {
+    drawDataLord *drawData = malloc(sizeof(drawDataLord));
 
     drawData->defaultFontSize = 23;
     drawData->defaultFoodChar = "*";
@@ -38,8 +42,8 @@ drawDataLord* defineDrawDataLord () {
     return drawData;
 }
 
-logDataLord* defineLogDataLord () {
-    logDataLord* logData = malloc(sizeof(logDataLord));
+logDataLord *defineLogDataLord () {
+    logDataLord *logData = malloc(sizeof(logDataLord));
 
     logData->rawTime = time(NULL);
     logData->tm = localtime(&(logData->rawTime));

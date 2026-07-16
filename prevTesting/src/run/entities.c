@@ -57,9 +57,9 @@ void moveEntity(Direction direct, Entity *e, Coord mapSize, LandscapeCell *map)
     }
 }
 
-void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldParamsData, logDataLord* logData)
+void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord *worldParamsData, logDataLord *logData)
 {
-    char* foodGameId = malloc(sizeof(char)*12);
+    char *foodGameId = malloc(sizeof(char)*12);
     sprintf(foodGameId, "%d", e->targetFoodId);
     
     world->items[e->targetFoodId].number--;
@@ -82,7 +82,7 @@ void restoreHungerEntity(World  *world, Entity *e, worldParamsDataLord* worldPar
     free(foodGameId);
 }
 
-bool findNearestFood(World * world, Entity *e, worldParamsDataLord* worldParamsData)
+bool findNearestFood(World *world, Entity *e, worldParamsDataLord *worldParamsData)
 {
     int minDistance = 1000;
     bool isExistAnyFood = false;
@@ -113,7 +113,7 @@ bool findNearestFood(World * world, Entity *e, worldParamsDataLord* worldParamsD
     return false;
 }
 
-void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParamsDataLord* worldParamsData, logDataLord* logData) // updating entity
+void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParamsDataLord *worldParamsData, logDataLord *logData) // updating entity
 {
     int randomForMove = rand() % 5;
 

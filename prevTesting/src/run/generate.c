@@ -94,7 +94,7 @@ void generateStructure(World *world)
     free(structure.incomingCellsCoords);
 }
 
-void generateWorldStructures(World *world, worldParamsDataLord* worldParamsData)
+void generateWorldStructures(World *world, worldParamsDataLord *worldParamsData)
 {
     for (int x = 0; x < worldParamsData->structuresNumber; x++)
     {

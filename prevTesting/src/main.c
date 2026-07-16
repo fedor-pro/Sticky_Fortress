@@ -20,16 +20,16 @@
 
 int main()
 {
-    SetTraceLogLevel(LOG_NONE); // for delete all raylib's sys logs
+    SetTraceLogLevel(LOG_NONE); // For delete all raylib's sys logs
 
     // Creating dataLords
-    progParamsDataLord* progParamsData = defineProgParamsDataLord();
-    worldParamsDataLord* worldParamsData = defineWorldParamsDataLord();
-    drawDataLord* drawData = defineDrawDataLord();
-    logDataLord* logData = defineLogDataLord();
+    progParamsDataLord *progParamsData = defineProgParamsDataLord();
+    worldParamsDataLord *worldParamsData = defineWorldParamsDataLord();
+    drawDataLord *drawData = defineDrawDataLord();
+    logDataLord *logData = defineLogDataLord();
 
     bool isPaused = false;
-    int timer = 0; // it's only for update
+    int timer = 0; // For update
     int fps = 0;
 
     bool ifSquareSelectingActive = false;
@@ -153,7 +153,7 @@ int main()
                 if ((rand() % 100) > 95) {
                     world->items[u].number ++;
 
-                    char* si = malloc(sizeof(char)*12);
+                    char *si = malloc(sizeof(char)*12);
                     sprintf(si, "%d", u);
 
                     logToFile(logData, "Food with id |");

@@ -3,6 +3,10 @@
 
 #include "types.h"
 
-void updateGameRunningParams();
+void updateGameRunningParams(progParamsDataLord *progParamsData);
+
+void updateGameObjects(World *world);
+
+void updateGameStats(World *world);
 
 #endif
