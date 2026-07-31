@@ -46,4 +46,4 @@ At this time, you can't manage entities - they'll move, find food and die withou
 
 ## Common errors
 
-1) Programm compilation crashed with `Makefile` error `src/run/draw.o: in function «drawGuiPannel»: draw.c:(.text+0x1e): undefined reference to DrawRectangle'` or similar: check that you have Linux and Raylib downloaded
+1) Programm compilation crashed with `Makefile` ERROR `src/run/draw.o: in function «drawGuiPannel»: draw.c:(.text+0x1e): undefined reference to DrawRectangle'` OR SIMILAR: check that you have Linux and Raylib downloaded

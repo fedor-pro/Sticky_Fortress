@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <raylib.h>
-#include <stdlib.h> // for rand() func
-#include <time.h>   // for timestamp and rand() initialize
+#include <stdlib.h> // For rand() func
+#include <time.h>   // For timestamp and rand() initialize
 
 #include "entities.h"
 #include "logging.h"
