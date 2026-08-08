@@ -3,9 +3,9 @@
 
 #include "types.h"
 
-void updateGameRunningParams(progParamsDataLord *progParamsData);
+void updateGameRunningParams(progParamsDataLord *progParamsData, logDataLord* logData);
 
-void updateGameObjects(World *world);
+void updateGameObjects(World *world, progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, logDataLord *logData);
 
 void updateGameStats(World *world);
 

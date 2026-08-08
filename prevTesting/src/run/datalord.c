@@ -11,7 +11,10 @@ progParamsDataLord *defineProgParamsDataLord () {
 
     progParamsData->timer = 0;
     progParamsData->currentFPS = 0;
+    progParamsData->stringCurrentFPS = malloc(progParamsData->textBufferSize);
     progParamsData->isPaused = false;
+
+    progParamsData->timerReset = 60;
 
     return progParamsData;
 }
@@ -52,4 +55,11 @@ logDataLord *defineLogDataLord () {
     // logData->sourceLogFile will be initialize in logging.c    
 
     return logData;
+}
+
+void undefineAllDatalords (progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, drawDataLord *drawData, logDataLord *logData) {
+    free(progParamsData);
+    free(worldParamsData);
+    free(drawData);
+    free(logData);
 }

@@ -5,6 +5,7 @@
 
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <raylib.h>
 #include <time.h>
 
@@ -166,6 +167,9 @@ typedef struct
     int timer;
     int currentFPS;
     bool isPaused;
+
+    int timerReset;
+    char *stringCurrentFPS;
 } progParamsDataLord;
 
 typedef struct

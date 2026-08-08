@@ -8,5 +8,6 @@ progParamsDataLord *defineProgParamsDataLord ();
 worldParamsDataLord *defineWorldParamsDataLord ();
 drawDataLord *defineDrawDataLord ();
 logDataLord *defineLogDataLord ();
+void undefineAllDatalords(progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, drawDataLord *drawData, logDataLord *logData);
 
 #endif

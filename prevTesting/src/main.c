@@ -14,7 +14,6 @@
 #define VERSION "0.0.2"
 
 #define TARGET_FPS 60
-#define TIMER_RESET 60
 
 #define LOGS_BARRIERS "---------------------------------------------------------------\n"
 
@@ -28,15 +27,13 @@ int main()
     drawDataLord *drawData = defineDrawDataLord();
     logDataLord *logData = defineLogDataLord();
 
-    bool isPaused = false;
-    int timer = 0; // For update
-    int fps = 0;
+    progParamsData->timer = 0;
+    progParamsData->currentFPS = 0;
+    progParamsData->isPaused = false;
 
     bool ifSquareSelectingActive = false;
     Coord squareSelectingStartCellCoords;
     int squareSelectingFreeze = 0;
-
-    char *stringFPS = malloc(progParamsData->textBufferSize);
 
     srand(time(NULL));
 
@@ -104,30 +101,12 @@ int main()
 
     while (!WindowShouldClose())
     {
-        time(&logData->rawTime);
-        logData->tm = localtime(&logData->rawTime);
+        updateGameRunningParams(progParamsData, logData);
 
         BeginDrawing();
 
-        fps = GetFPS();
-
         worldParamsData->entitiesAlive = 0;
         worldParamsData->entitiesSelected = 0;
-
-        if (squareSelectingFreeze > 0)
-        {
-           squareSelectingFreeze --;
-        }
-
-        if (IsKeyPressed(KEY_SPACE)) // Pause
-        {
-            isPaused = !isPaused;
-        }
-
-        if (!isPaused)
-        {
-            timer++; // Update timer
-        }
 
         for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // Update entities
             {
@@ -135,37 +114,14 @@ int main()
                 {
                     worldParamsData->entitiesAlive ++;
 
-                    if (!isPaused) {
-                        updateEntity(world, world->mapSize, &world->entities[x], timer, worldParamsData, logData);
+                    if (!progParamsData->isPaused) {
+                        updateEntity(world, world->mapSize, &world->entities[x], progParamsData->timer, worldParamsData, logData);
                     }
                 }
 
                 if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
                     worldParamsData->entitiesSelected ++;
                 } 
-        }
-
-        if (!isPaused && timer >= TIMER_RESET)
-        {
-            timer = 0;
-            
-            for (int u = 0; u < worldParamsData->startFoodOnMap; u ++) {
-                if ((rand() % 100) > 95) {
-                    world->items[u].number ++;
-
-                    char *si = malloc(sizeof(char)*12);
-                    sprintf(si, "%d", u);
-
-                    logToFile(logData, "Food with id |");
-                    rawLogToFile(logData, si);
-                    rawLogToFile(logData, "| restored\n");
-                }
-            }
-
-            sprintf(stringFPS, "%d", fps);
-            logToFile(logData, "Current FPS: ");
-            rawLogToFile(logData, stringFPS);
-            rawLogToFile(logData, "\n");
         }
 
         ClearBackground(BLACK); // Clear background
@@ -226,7 +182,7 @@ int main()
         Vector2 mp = GetMousePosition(); // Updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, timer, isPaused); // Update main UI 
+        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, progParamsData->timer, progParamsData->isPaused); // Update main UI 
         drawUILord(UICentral); // Draw main UI
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // Selecting cells
@@ -258,7 +214,7 @@ int main()
                 squareSelectingFreeze = 30;
             }
         } 
-        else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) // Stub for deselecting
+        else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) // STUB
         {
             world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
@@ -286,9 +242,10 @@ int main()
     deleteWorld(world, worldParamsData, logData);
     deleteUILord(UICentral);
 
-    free(stringFPS);
     free(windowName);
 
     free(sourceLogFilePath);
     fclose(logData->sourceLogFile);
+
+    undefineAllDatalords(progParamsData, worldParamsData, drawData, logData);
 }
