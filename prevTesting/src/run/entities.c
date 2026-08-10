@@ -234,10 +234,12 @@ void updateEntity(World *world, Coord mapSize, Entity *e, int timer, worldParams
         if (world->map[e->coords.x + mapSize.x * e->coords.y].isSelected)
         {
             e->drawingColor = RED;
+            worldParamsData->entitiesSelected ++;
         }
         else if (!e->isAlive)
         {
             e->drawingColor = GRAY;
+            worldParamsData->entitiesAlive ++;
         }
         else if (e->movingState == EATING)
         {

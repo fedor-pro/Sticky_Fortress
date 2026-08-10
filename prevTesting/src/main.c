@@ -108,23 +108,9 @@ int main()
         worldParamsData->entitiesAlive = 0;
         worldParamsData->entitiesSelected = 0;
 
-        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // Update entities
-            {
-                if (world->entities[x].isAlive == true)
-                {
-                    worldParamsData->entitiesAlive ++;
-
-                    if (!progParamsData->isPaused) {
-                        updateEntity(world, world->mapSize, &world->entities[x], progParamsData->timer, worldParamsData, logData);
-                    }
-                }
-
-                if (world->map[world->entities[x].coords.x + ms.x * world->entities[x].coords.y].isSelected) {
-                    worldParamsData->entitiesSelected ++;
-                } 
-        }
-
         ClearBackground(BLACK); // Clear background
+
+        updateGameObjects(world, progParamsData, worldParamsData, logData);
 
         for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
         {
