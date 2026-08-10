@@ -108,6 +108,10 @@ int main()
         worldParamsData->entitiesAlive = 0;
         worldParamsData->entitiesSelected = 0;
 
+        if (squareSelectingFreeze > 0) {
+            squareSelectingFreeze --;
+        }
+
         ClearBackground(BLACK); // Clear background
 
         updateGameObjects(world, progParamsData, worldParamsData, logData);
@@ -192,7 +196,28 @@ int main()
                     {
                         for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) 
                         {
-                            world->map[(ab/progParamsData->rectSize.x) + world->mapSize.x * (ord/progParamsData->rectSize.y)].isSelected = true;
+                            world->map[(ab/progParamsData->rectSize.x) + world->mapSize.x * (ord/progParamsData->rectSize.y)].isSelected = true; 
+
+                            if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_BASIC)
+                            {
+                                selectedCells[0]++;
+                            }
+                            else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_WATER)
+                            {
+                                selectedCells[1]++;
+                            }
+                            else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_MOUNTAINS)
+                            {
+                                selectedCells[2]++;
+                            }
+                            else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_ROCK)
+                            {
+                                selectedCells[3]++;
+                            }
+                            else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_DEEP_WATER)
+                            {
+                                selectedCells[4]++;
+                            }
                         }
                     }
                 }
