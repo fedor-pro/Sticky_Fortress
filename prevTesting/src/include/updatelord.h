@@ -7,6 +7,4 @@ void updateGameRunningParams(progParamsDataLord *progParamsData, logDataLord* lo
 
 void updateGameObjects(World *world, progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, logDataLord *logData);
 
-void updateGameStats(World *world);
-
 #endif

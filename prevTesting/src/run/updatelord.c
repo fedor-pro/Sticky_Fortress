@@ -1,6 +1,6 @@
 #include "updatelord.h"
 #include "logging.h"
-#include "entities.h"
+#include "dwarves.h"
 
 void updateGameRunningParams(progParamsDataLord *progParamsData, logDataLord *logData) { // Timer, fps, pause, time...
     time(&logData->rawTime);
@@ -19,12 +19,12 @@ void updateGameRunningParams(progParamsDataLord *progParamsData, logDataLord *lo
     }
 }
 
-void updateGameObjects(World *world, progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, logDataLord *logData) { // Entities, items...
-    for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // Update entities
+void updateGameObjects(World *world, progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, logDataLord *logData) { // Dwarves, items...
+    for (int x = 0; x < worldParamsData->startDwarvesNumber; x++) // Update dwarves
     {
-        if (world->entities[x].isAlive == true && !progParamsData->isPaused)
+        if (world->dwarves[x].isAlive == true && !progParamsData->isPaused)
         {
-            updateEntity(world, world->mapSize, &world->entities[x], progParamsData->timer, worldParamsData, logData);
+            updateDwarf(world, world->mapSize, &world->dwarves[x], progParamsData->timer, worldParamsData, logData);
         }
     } 
     
@@ -50,8 +50,4 @@ void updateGameObjects(World *world, progParamsDataLord *progParamsData, worldPa
         rawLogToFile(logData, progParamsData->stringCurrentFPS);
         rawLogToFile(logData, "\n");
     }
-}
-
-void updateGameStats(World *world) { // Selected/alive entites, items...
-
 }

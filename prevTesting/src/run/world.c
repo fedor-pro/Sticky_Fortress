@@ -63,43 +63,43 @@ void deselectAllWorldMap(World *world) {
     }
 }
 
-void createEntities(World *world, worldParamsDataLord *worldParamsData, progParamsDataLord *progParamsData, logDataLord *logData, drawDataLord *drawData)
+void createDwarves(World *world, worldParamsDataLord *worldParamsData, progParamsDataLord *progParamsData, logDataLord *logData, drawDataLord *drawData)
 {
-    for (int x = 0; x < worldParamsData->startEntitiesNumber; x++)
+    for (int x = 0; x < worldParamsData->startDwarvesNumber; x++)
     {
-        int entX = rand() % world->mapSize.x;
-        int entY = rand() % world->mapSize.y;
+        int dwX = rand() % world->mapSize.x;
+        int dwY = rand() % world->mapSize.y;
 
-        while (!world->map[entX + world->mapSize.x * entY].landType.canBeOccupied)
+        while (!world->map[dwX + world->mapSize.x * dwY].landType.canBeOccupied)
         {
-            entX = rand() % world->mapSize.x;
-            entY = rand() % world->mapSize.y;
+            dwX = rand() % world->mapSize.x;
+            dwY = rand() % world->mapSize.y;
         }
 
-        char *entityGameId = malloc(progParamsData->textBufferSize);
-        sprintf(entityGameId, "%d", x);
+        char *dwarfGameId = malloc(progParamsData->textBufferSize);
+        sprintf(dwarfGameId, "%d", x);
 
-        Entity ent = {entityGameId, "Dwarf", true, true, drawData->defaultHumanChar, entX, entY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 1000 + rand () % 50, 0, RED};
+        Dwarf dw = {dwarfGameId, "Dwarf", true, true, drawData->defaultHumanChar, dwX, dwY, UNTARGET_MOVING, -1, 0, 0, 0, 50 + rand () % 1000 + rand () % 50, 0, RED};
         //                              dwarvenness  is                                                      target target hunger die level sleepiness
         //                                           alive                                                  food id   cell coords    hunger   
 
-        if (x > 0 && x < worldParamsData->startEntitiesNumber - 1) {
+        if (x > 0 && x < worldParamsData->startDwarvesNumber - 1) {
 
             if (x == 1) {
                 rawLogToFile(logData, "...\n");
             }
         } else {
             logToFile(logData, "Created ");
-            rawLogToFile(logData, ent.gameName);
+            rawLogToFile(logData, dw.gameName);
             rawLogToFile(logData, " with id: |");
-            rawLogToFile(logData, ent.gameId);
+            rawLogToFile(logData, dw.gameId);
             rawLogToFile(logData,"|\n");
         }
 
         time(&logData->rawTime);
-        logData->tm = localtime(&logData->rawTime); // updating time
+        logData->tm = localtime(&logData->rawTime); // Updating time
 
-        spawnEntity(world, (Coord) {entX, entY}, ent, x);
+        spawnDwarf(world, (Coord) {dwX, dwY}, dw, x);
     }
 }
 
@@ -128,17 +128,17 @@ void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord
     fprintf(world->worldFile, "[WORLD_NAME]:%s\n", world->worldName);
     fflush(world->worldFile);
 
-    fprintf(world->worldFile, "[ENTITIES_ALIVE]:%d\n", worldParamsData->entitiesAlive);
+    fprintf(world->worldFile, "[DWARVES_ALIVE]:%d\n", worldParamsData->dwarvesAlive);
     fprintf(world->worldFile, "[FOOD_REMAINING]:%d\n", worldParamsData->foodExists);
     fflush(world->worldFile);
 
-    fprintf(world->worldFile, "\n==ENTITIES_LIST==\n");
+    fprintf(world->worldFile, "\n==DWARVES_LIST==\n");
 
-    for (int x = 0; x < worldParamsData->startEntitiesNumber; x++)
+    for (int x = 0; x < worldParamsData->startDwarvesNumber; x++)
     {
-        fprintf(world->worldFile, "{ENTITY}[ID]:%s|[GAME_NAME]:%s|[DWARVENNESS]:%d|[IS_ALIVE]:%d|[DRAWING_CHAR]:%s|[COORDS]:%d,%d|[HUNGER]:%f|[DIE_LEVEL_HUNGER]:%f|[SLEEPINESS]:%f\n", 
-            world->entities[x].gameId, world->entities[x].gameName, world->entities[x].dwarvenness, world->entities[x].isAlive, world->entities[x].charValue,
-            world->entities[x].coords.x, world->entities[x].coords.y, world->entities[x].hunger, world->entities[x].dieLevelHunger, world->entities[x].sleepiness);
+        fprintf(world->worldFile, "{DWARF}[ID]:%s|[GAME_NAME]:%s|[DWARVENNESS]:%d|[IS_ALIVE]:%d|[DRAWING_CHAR]:%s|[COORDS]:%d,%d|[HUNGER]:%f|[DIE_LEVEL_HUNGER]:%f|[SLEEPINESS]:%f\n", 
+            world->dwarves[x].gameId, world->dwarves[x].gameName, world->dwarves[x].dwarvenness, world->dwarves[x].isAlive, world->dwarves[x].charValue,
+            world->dwarves[x].coords.x, world->dwarves[x].coords.y, world->dwarves[x].hunger, world->dwarves[x].dieLevelHunger, world->dwarves[x].sleepiness);
 
         fflush(world->worldFile);
     }
@@ -159,17 +159,17 @@ void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord
         fprintf(world->worldFile, "\n");
     }
 
-    for (int i = 0; i < worldParamsData->startEntitiesNumber; i++)
+    for (int i = 0; i < worldParamsData->startDwarvesNumber; i++)
     {
-        if (world->entities[i].gameId != NULL)
+        if (world->dwarves[i].gameId != NULL)
         {
-            free(world->entities[i].gameId);
+            free(world->dwarves[i].gameId);
         }
     }
 
     free(world->map);
     free(world->worldLandscapes);
-    free(world->entities);
+    free(world->dwarves);
     free(world->items);
 
     fclose(world->worldFile);
@@ -181,7 +181,7 @@ World *initializeWorld(worldParamsDataLord *worldParamsData, progParamsDataLord 
     World *world = malloc(sizeof(World));
     world->worldName = worldParamsData->defaultName;
     world->mapSize = mapSize;
-    world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // creating map
+    world->map = malloc(sizeof(LandscapeCell) * (world->mapSize.x * world->mapSize.y)); // Creating map
 
     world->worldLandscapes = malloc(sizeof(LandscapeType)*10);
     initializeWorldLandscapes(world);
@@ -194,13 +194,13 @@ World *initializeWorld(worldParamsDataLord *worldParamsData, progParamsDataLord 
 
     generateWorldStructures(world, worldParamsData);
 
-    world->entities = malloc(sizeof(Entity) * (worldParamsData->startEntitiesNumber) * 1.5); // creating entities
+    world->dwarves = malloc(sizeof(Dwarf) * (worldParamsData->startDwarvesNumber) * 1.5); // Creating dwarves
 
-    createEntities(world, worldParamsData, progParamsData, logData, drawData);
+    createDwarves(world, worldParamsData, progParamsData, logData, drawData);
 
     rawLogToFile(logData, logsBarriers);
 
-    world->items = malloc(sizeof(LandscapeCell) * (worldParamsData->startFoodOnMap + 5)); // creating resources
+    world->items = malloc(sizeof(LandscapeCell) * (worldParamsData->startFoodOnMap + 5)); // Creating items
 
     createWorldFood(world, worldParamsData, drawData);
 

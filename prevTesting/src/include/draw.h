@@ -5,7 +5,7 @@
 
 void drawGuiPannel(GuiPannel guip);
 void drawGuiText(GuiText guitx);
-void drawEntity(Entity ent, progParamsDataLord *progParamsData);
+void drawDwarf(Dwarf dw, progParamsDataLord *progParamsData);
 void drawItem(Item i, progParamsDataLord *progParamsData);
 
 #endif

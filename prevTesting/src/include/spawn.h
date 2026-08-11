@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-void spawnEntity(World *world, Coord coords, Entity e, int x);
+void spawnDwarf(World *world, Coord coords, Dwarf dw, int x);
 
 #endif

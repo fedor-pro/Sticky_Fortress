@@ -37,7 +37,7 @@ typedef enum
     UNTARGET_MOVING,
     TARGETING,
     EATING
-} EntityMovingState;
+} DwarfMovingState;
 
 typedef struct
 {
@@ -89,7 +89,7 @@ typedef struct
 
     Coord coords;
 
-    EntityMovingState movingState;
+    DwarfMovingState movingState;
     int targetFoodId;
 
     Coord targetCellCoords;
@@ -99,7 +99,7 @@ typedef struct
     float sleepiness;
 
     Color drawingColor;
-} Entity;
+} Dwarf;
 
 typedef enum
 {
@@ -134,7 +134,7 @@ typedef struct
     Coord mapSize;
 
     Item *items;
-    Entity *entities;
+    Dwarf *dwarves;
 
     LandscapeType *worldLandscapes;
 } World;
@@ -149,12 +149,12 @@ typedef struct
 {
     char *defaultName;
 
-    int startEntitiesNumber;
+    int startDwarvesNumber;
     int startFoodOnMap;
     int structuresNumber;
 
-    int entitiesAlive;
-    int entitiesSelected;
+    int dwarvesAlive;
+    int dwarvesSelected;
     int foodExists;
 } worldParamsDataLord;
 

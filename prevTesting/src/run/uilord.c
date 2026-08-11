@@ -15,11 +15,11 @@ UILord *initializeUILord (progParamsDataLord *progParamsData, int default_font_s
     GuiText selectedCellsText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = selectedCellsInfo.startCoords.x + 15, .startCoords.y = selectedCellsInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = GOLD};
     GuiText worldSaveText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = selectedCellsInfo.startCoords.x + 15, .startCoords.y = selectedCellsText.startCoords.y  + 140, .fontSize = default_font_size-5, .fontColor = RED};
 
-    GuiPannel entitiesInfo = {.startCoords.x = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor =  UIPannelsBack};
-    entitiesInfo.startCoords.y = progParamsData->windowSize.y - entitiesInfo.canvSizeCoords.y;
+    GuiPannel dwarvesInfo = {.startCoords.x = 0, .canvSizeCoords.x = 300, .canvSizeCoords.y = 200, .backgroundColor =  UIPannelsBack};
+    dwarvesInfo.startCoords.y = progParamsData->windowSize.y - dwarvesInfo.canvSizeCoords.y;
 
-    GuiText entitiesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = GREEN};
-    GuiText entitiesSelectedText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = entitiesInfo.startCoords.x + 5, .startCoords.y = entitiesInfo.startCoords.y + 60, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText dwarvesNumberText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = dwarvesInfo.startCoords.x + 5, .startCoords.y = dwarvesInfo.startCoords.y + 25, .fontSize = default_font_size, .fontColor = GREEN};
+    GuiText dwarvesSelectedText = {.text = (char *)malloc(progParamsData->textBufferSize), .startCoords.x = dwarvesInfo.startCoords.x + 5, .startCoords.y = dwarvesInfo.startCoords.y + 60, .fontSize = default_font_size, .fontColor = GREEN};
 
     GuiPannel frameInfo = {.startCoords.x = progParamsData->windowSize.x - 200, .startCoords.y = progParamsData->windowSize.y- 200, .canvSizeCoords.x = 200, .canvSizeCoords.y = 200, .backgroundColor =  UIPannelsBack};
 
@@ -31,14 +31,14 @@ UILord *initializeUILord (progParamsDataLord *progParamsData, int default_font_s
 
     UIL->allGuiPannels[0] = mouseInfo;
     UIL->allGuiPannels[1] = selectedCellsInfo;
-    UIL->allGuiPannels[2] = entitiesInfo;
+    UIL->allGuiPannels[2] = dwarvesInfo;
     UIL->allGuiPannels[3] = frameInfo;
 
     UIL->allGuiText[0] = mouseCoordsText;
     UIL->allGuiText[1] = selectedCellsText;
-    UIL->allGuiText[2] = entitiesNumberText;
+    UIL->allGuiText[2] = dwarvesNumberText;
     UIL->allGuiText[3] = frameInfoText;
-    UIL->allGuiText[4] = entitiesSelectedText;
+    UIL->allGuiText[4] = dwarvesSelectedText;
     UIL->allGuiText[5] = worldSaveText;
 
     return UIL;
@@ -56,8 +56,8 @@ void updateUILord (UILord *UIL, Coord mousePosition, int *selectedCells, worldPa
     sprintf(UIL->allGuiText[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", selectedCells[0], selectedCells[1], selectedCells[2], selectedCells[3], selectedCells[4]);
     sprintf(UIL->allGuiText[5].text, "You cand find world map \nin prevTesting/worlds/");
 
-    sprintf(UIL->allGuiText[2].text, "Entities alive: %d / %d", worldParamsData->entitiesAlive, worldParamsData->startEntitiesNumber);
-    sprintf(UIL->allGuiText[4].text, "      selected: %d", worldParamsData->entitiesSelected);
+    sprintf(UIL->allGuiText[2].text, "Dwarves alive: %d / %d", worldParamsData->dwarvesAlive, worldParamsData->startDwarvesNumber);
+    sprintf(UIL->allGuiText[4].text, "      selected: %d", worldParamsData->dwarvesSelected);
 
     if (isPaused) {
         sprintf(UIL->allGuiText[3].text, "Frame (from 1 to 60) :\n %d\n Is paused :\n true\n\n You can find FPS\n in log files", timer);

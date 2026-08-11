@@ -24,12 +24,12 @@ worldParamsDataLord *defineWorldParamsDataLord () {
 
     worldParamsData->defaultName = "test_world";
 
-    worldParamsData->startEntitiesNumber = 100;
+    worldParamsData->startDwarvesNumber = 100;
     worldParamsData->startFoodOnMap = 15;
     worldParamsData->structuresNumber = 15;
 
-    worldParamsData->entitiesAlive = worldParamsData->startEntitiesNumber;
-    worldParamsData->entitiesSelected = 0;
+    worldParamsData->dwarvesAlive = worldParamsData->startDwarvesNumber;
+    worldParamsData->dwarvesSelected = 0;
     worldParamsData->foodExists = worldParamsData->startFoodOnMap;
 
     return worldParamsData;

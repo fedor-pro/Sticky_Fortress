@@ -1,7 +1,7 @@
 #include "spawn.h"
 
-void spawnEntity(World *world, Coord coords, Entity e, int x) {
+void spawnDwarf(World *world, Coord coords, Dwarf dw, int x) {
     world->map[coords.x+ world->mapSize.x * coords.y].isOccupied = true;
 
-    world->entities[x] = e;
+    world->dwarves[x] = dw;
 }

@@ -3,7 +3,7 @@
 #include <stdlib.h> // For rand() func
 #include <time.h>   // For timestamp and rand() initialize
 
-#include "entities.h"
+#include "dwarves.h"
 #include "logging.h"
 #include "uilord.h"
 #include "world.h"
@@ -105,8 +105,8 @@ int main()
 
         BeginDrawing();
 
-        worldParamsData->entitiesAlive = 0;
-        worldParamsData->entitiesSelected = 0;
+        worldParamsData->dwarvesAlive = 0;
+        worldParamsData->dwarvesSelected = 0;
 
         if (squareSelectingFreeze > 0) {
             squareSelectingFreeze --;
@@ -164,9 +164,9 @@ int main()
             }
         }
 
-        for (int x = 0; x < worldParamsData->startEntitiesNumber; x++) // Draw entities
+        for (int x = 0; x < worldParamsData->startDwarvesNumber; x++) // Draw dwarves
         {
-            drawEntity(world->entities[x], progParamsData);
+            drawDwarf(world->dwarves[x], progParamsData);
         }
 
         Vector2 mp = GetMousePosition(); // Updating info about mouse position
