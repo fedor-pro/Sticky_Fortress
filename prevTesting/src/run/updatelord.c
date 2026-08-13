@@ -33,7 +33,12 @@ void updateGameObjects(World *world, progParamsDataLord *progParamsData, worldPa
         progParamsData->timer = 0;
         
         for (int u = 0; u < worldParamsData->startFoodOnMap; u ++) {
-            if ((rand() % 100) == 50) {
+            if (world->items[u].number <= 0) {
+                worldParamsData->foodExists --;
+                world->items[u].isExist = false; // <-- This need to replace with removal from array
+            }
+
+            if ((rand() % 500) == 1) {
                 world->items[u].number ++;
 
                 char *si = malloc(sizeof(char)*12);

@@ -56,27 +56,15 @@ void moveDwarf(Direction direct, Dwarf *dw, Coord mapSize, LandscapeCell *map)
 
 void restoreHungerDwarf(World  *world, Dwarf *dw, worldParamsDataLord *worldParamsData, logDataLord *logData)
 {
-    char *foodGameId = malloc(sizeof(char)*12);
-    sprintf(foodGameId, "%d", dw->targetFoodId);
-    
-    world->items[dw->targetFoodId].number--;
+    if (world->items[dw->targetFoodId].number > 0)
+    {        
+        world->items[dw->targetFoodId].number--;
 
-    if (world->items[dw->targetFoodId].number <= 0)
-    {
-        worldParamsData->foodExists --;
-
-        logToFile(logData, "Food with id |");
-        rawLogToFile(logData, foodGameId);
-        rawLogToFile(logData, "| is over\n");
-        return;
-    }
-
-    dw->hunger -= 10 + rand() % 10;
-    if (dw->hunger < 0) {
-        dw->hunger = 0;
-    }
-
-    free(foodGameId);
+        dw->hunger -= 10 + rand() % 10;
+        if (dw->hunger < 0) {
+            dw->hunger = 0;
+        }
+    }   
 }
 
 bool findNearestFood(World *world, Dwarf *dw, worldParamsDataLord *worldParamsData)

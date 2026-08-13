@@ -116,40 +116,13 @@ int main()
 
         updateGameObjects(world, progParamsData, worldParamsData, logData);
 
-        for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
-        {
-            selectedCells[u] = 0;
-        }
-
-        for (int x = 0; x < world->mapSize.x; x++) // Drawing map and update info about selected cells
+        for (int x = 0; x < world->mapSize.x; x++) // Drawing map
         {
             for (int y = 0; y < world->mapSize.y; y++)
             {
                 if (world->map[x+world->mapSize.x*y].isSelected == 1) // If cell is selected
                 {
                     DrawRectangle(x * progParamsData->rectSize.x, y * progParamsData->rectSize.y, progParamsData->rectSize.x + 1, progParamsData->rectSize.y + 1, GOLD); 
-
-                    // Update selected landscape cells stats
-                    if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_BASIC)
-                    {
-                        selectedCells[0]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_WATER)
-                    {
-                        selectedCells[1]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_MOUNTAINS)
-                    {
-                        selectedCells[2]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_ROCK)
-                    {
-                        selectedCells[3]++;
-                    }
-                    else if (world->map[x+world->mapSize.x*y].landType.gameId == LAND_DEEP_WATER)
-                    {
-                        selectedCells[4]++;
-                    }
                 }
 
                 DrawRectangle(x * progParamsData->rectSize.x + 1, y * progParamsData->rectSize.y + 1, progParamsData->rectSize.x - 1, progParamsData->rectSize.y - 1, world->map[x+world->mapSize.x*y].landType.drawColor);
@@ -174,6 +147,11 @@ int main()
 
         updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, progParamsData->timer, progParamsData->isPaused); // Update main UI 
         drawUILord(UICentral); // Draw main UI
+
+        for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
+        {
+            selectedCells[u] = 0;
+        }
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // Selecting cells
         {
@@ -227,13 +205,17 @@ int main()
         } 
         else if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)) // STUB
         {
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+            if ((squareSelectingStartCellCoords.x/progParamsData->rectSize.x) < progParamsData->windowSize.x && (squareSelectingStartCellCoords.x/progParamsData->rectSize.x) > 0
+              &&(squareSelectingStartCellCoords.y/progParamsData->rectSize.y) < progParamsData->windowSize.y && (squareSelectingStartCellCoords.y/progParamsData->rectSize.y) > 0)
+            {
+                world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
-            world->map[(mousePosition.x/progParamsData->rectSize.x) - 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+                world->map[(mousePosition.x/progParamsData->rectSize.x) + 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
+                world->map[(mousePosition.x/progParamsData->rectSize.x) - 1 + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y)].isSelected = false;
 
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y + 1)].isSelected = false;
-            world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y - 1)].isSelected = false;
+                world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y + 1)].isSelected = false;
+                world->map[(mousePosition.x/progParamsData->rectSize.x) + world->mapSize.x * (mousePosition.y/progParamsData->rectSize.y - 1)].isSelected = false;
+            }
         } 
         else if (IsKeyDown(KEY_ESCAPE))
         {
