@@ -33,6 +33,7 @@ int main()
 
     bool ifSquareSelectingActive = false;
     Coord squareSelectingStartCellCoords;
+    Coord squareSelectingEndCellCoords;
     int squareSelectingFreeze = 0;
 
     srand(time(NULL));
@@ -170,9 +171,19 @@ int main()
                     // Select square from (c1.x; c1.y) to (c2.x; c2.y)
                     // Go from selecting start to selecting end (mouse position right now)
 
-                    for (int ab = squareSelectingStartCellCoords.x; ab < mousePosition.x; ab ++) 
+                    if (mousePosition.x < squareSelectingStartCellCoords.x) {
+                        squareSelectingEndCellCoords.x = squareSelectingStartCellCoords.x;
+                        squareSelectingStartCellCoords.x = mousePosition.x; 
+                    }
+
+                    if (mousePosition.y < squareSelectingStartCellCoords.y) {
+                        squareSelectingEndCellCoords.y = squareSelectingStartCellCoords.y;
+                        squareSelectingStartCellCoords.y = mousePosition.y;
+                    }
+
+                    for (int ab = squareSelectingStartCellCoords.x; ab < squareSelectingEndCellCoords.x; ab ++) 
                     {
-                        for (int ord = squareSelectingStartCellCoords.y; ord < mousePosition.y; ord ++) 
+                        for (int ord = squareSelectingStartCellCoords.y; ord < squareSelectingEndCellCoords.y; ord ++) 
                         {
                             world->map[(ab/progParamsData->rectSize.x) + world->mapSize.x * (ord/progParamsData->rectSize.y)].isSelected = true; 
 

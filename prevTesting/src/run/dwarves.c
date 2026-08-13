@@ -4,11 +4,12 @@
 #include <stdlib.h>
 #include "logging.h"
 
+// Aaaaaaaargh
+// TODO: Fix all
+
+
 void moveDwarf(Direction direct, Dwarf *dw, Coord mapSize, LandscapeCell *map)
 {
-    // Aaaaaaaargh
-    // TODO: Fix all
-
     switch (direct)
     {
     case RIGHT:
@@ -203,6 +204,7 @@ void updateDwarf(World *world, Coord mapSize, Dwarf *dw, int timer, worldParamsD
         }
 
         dw->drawingColor = GREEN;
+        worldParamsData->dwarvesAlive ++;
 
         if (world->map[dw->coords.x + mapSize.x * dw->coords.y].isSelected)
         {
@@ -212,7 +214,7 @@ void updateDwarf(World *world, Coord mapSize, Dwarf *dw, int timer, worldParamsD
         else if (!dw->isAlive)
         {
             dw->drawingColor = GRAY;
-            worldParamsData->dwarvesAlive ++;
+            worldParamsData->dwarvesAlive --;
         }
         else if (dw->movingState == EATING)
         {
