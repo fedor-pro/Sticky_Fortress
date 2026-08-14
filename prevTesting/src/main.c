@@ -190,11 +190,11 @@ int main()
                     // Select square from (c1.x; c1.y) to (c2.x; c2.y)
                     // Go from selecting start to selecting end
 
-                    squareSelectingEndCellCoords.x = max(squareSelectingStartCellCoords.x, mousePosition.x); 
-                    squareSelectingEndCellCoords.y = max(squareSelectingStartCellCoords.y, mousePosition.y); 
+                    squareSelectingEndCellCoords.x = (squareSelectingStartCellCoords.x > mousePosition.x) ? squareSelectingStartCellCoords.x : mousePosition.x;
+                    squareSelectingEndCellCoords.y = (squareSelectingStartCellCoords.y > mousePosition.y) ? squareSelectingStartCellCoords.y : mousePosition.y;
 
-                    squareSelectingStartCellCoords.x = min(squareSelectingStartCellCoords.x, mousePosition.x);
-                    squareSelectingStartCellCoords.y = min(squareSelectingStartCellCoords.y, mousePosition.y);
+                    squareSelectingStartCellCoords.x = (squareSelectingStartCellCoords.x < mousePosition.x) ? squareSelectingStartCellCoords.x : mousePosition.x;
+                    squareSelectingStartCellCoords.y = (squareSelectingStartCellCoords.y < mousePosition.y) ? squareSelectingStartCellCoords.y : mousePosition.y;;
 
                     for (int ab = squareSelectingStartCellCoords.x; ab < squareSelectingEndCellCoords.x; ab ++) 
                     {
