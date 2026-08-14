@@ -6,7 +6,7 @@
 
 void initializeWorldLandscapes(World *world);
 void createWorldMap(World *world);
-void deselectAllWorldMap(World *world);
+void deselectAllWorldMap(World *world, worldParamsDataLord *worldParamsData);
 void createDwarves(World *world, worldParamsDataLord *worldParamsData, progParamsDataLord *progParamsData, logDataLord *logData, drawDataLord *drawData);
 void createWorldFood(World *world, worldParamsDataLord *worldParamsData, drawDataLord *drawData);
 void deleteWorld(World *world, worldParamsDataLord *worldParamsData, logDataLord *logData);

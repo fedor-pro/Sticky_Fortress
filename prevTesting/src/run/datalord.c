@@ -32,6 +32,8 @@ worldParamsDataLord *defineWorldParamsDataLord () {
     worldParamsData->dwarvesSelected = 0;
     worldParamsData->foodExists = worldParamsData->startFoodOnMap;
 
+    worldParamsData->cellsSelected = malloc(sizeof(int)*5);
+
     return worldParamsData;
 }
 
@@ -59,6 +61,7 @@ logDataLord *defineLogDataLord () {
 
 void undefineAllDatalords (progParamsDataLord *progParamsData, worldParamsDataLord *worldParamsData, drawDataLord *drawData, logDataLord *logData) {
     free(progParamsData);
+    free(worldParamsData->cellsSelected);
     free(worldParamsData);
     free(drawData);
     free(logData);

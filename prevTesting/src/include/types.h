@@ -156,6 +156,8 @@ typedef struct
     int dwarvesAlive;
     int dwarvesSelected;
     int foodExists;
+
+    int *cellsSelected;
 } worldParamsDataLord;
 
 typedef struct

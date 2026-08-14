@@ -17,6 +17,22 @@
 
 #define LOGS_BARRIERS "---------------------------------------------------------------\n"
 
+int min(int x, int y) {
+    if (x < y) {
+        return x;
+    } else {
+        return y;
+    }
+}
+
+int max(int x, int y) {
+    if (x > y) {
+        return x;
+    } else {
+        return y;
+    }
+}
+
 int main()
 {
     SetTraceLogLevel(LOG_NONE); // For delete all raylib's sys logs
@@ -91,8 +107,6 @@ int main()
 
     logToFile(logData, "INITIALIZED WINDOW\n");
 
-    int *selectedCells = malloc(sizeof(int)*5);
-
     // Initialize main UI
     UILord *UICentral = initializeUILord(progParamsData, drawData->defaultFontSize);
 
@@ -146,13 +160,13 @@ int main()
         Vector2 mp = GetMousePosition(); // Updating info about mouse position
         Coord mousePosition = {(int) mp.x, (int) mp.y};
 
-        updateUILord(UICentral, mousePosition, selectedCells, worldParamsData, progParamsData->timer, progParamsData->isPaused); // Update main UI 
+        updateUILord(UICentral, mousePosition, worldParamsData, progParamsData); // Update main UI 
         drawUILord(UICentral); // Draw main UI
 
-        for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
-        {
-            selectedCells[u] = 0;
-        }
+        // for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
+        // {
+        //     selectedCells[u] = 0;
+        // }
 
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) // Selecting cells
         {
@@ -161,25 +175,26 @@ int main()
 
                 if (ifSquareSelectingActive) 
                 {
-                    deselectAllWorldMap(world);
+                    deselectAllWorldMap(world, worldParamsData);
 
                     squareSelectingStartCellCoords = mousePosition;
                     world->map[(squareSelectingStartCellCoords.x/progParamsData->rectSize.x) + world->mapSize.x * (squareSelectingStartCellCoords.y/progParamsData->rectSize.y)].isSelected = true;
                 } 
                 else 
                 {
+                    for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
+                    {
+                        worldParamsData->cellsSelected[u] = 0;
+                    }
+
                     // Select square from (c1.x; c1.y) to (c2.x; c2.y)
-                    // Go from selecting start to selecting end (mouse position right now)
+                    // Go from selecting start to selecting end
 
-                    if (mousePosition.x < squareSelectingStartCellCoords.x) {
-                        squareSelectingEndCellCoords.x = squareSelectingStartCellCoords.x;
-                        squareSelectingStartCellCoords.x = mousePosition.x; 
-                    }
+                    squareSelectingEndCellCoords.x = max(squareSelectingStartCellCoords.x, mousePosition.x); 
+                    squareSelectingEndCellCoords.y = max(squareSelectingStartCellCoords.y, mousePosition.y); 
 
-                    if (mousePosition.y < squareSelectingStartCellCoords.y) {
-                        squareSelectingEndCellCoords.y = squareSelectingStartCellCoords.y;
-                        squareSelectingStartCellCoords.y = mousePosition.y;
-                    }
+                    squareSelectingStartCellCoords.x = min(squareSelectingStartCellCoords.x, mousePosition.x);
+                    squareSelectingStartCellCoords.y = min(squareSelectingStartCellCoords.y, mousePosition.y);
 
                     for (int ab = squareSelectingStartCellCoords.x; ab < squareSelectingEndCellCoords.x; ab ++) 
                     {
@@ -189,23 +204,23 @@ int main()
 
                             if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_BASIC)
                             {
-                                selectedCells[0]++;
+                                ++worldParamsData->cellsSelected[0];
                             }
                             else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_WATER)
                             {
-                                selectedCells[1]++;
+                                worldParamsData->cellsSelected[1]++;
                             }
                             else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_MOUNTAINS)
                             {
-                                selectedCells[2]++;
+                                worldParamsData->cellsSelected[2]++;
                             }
                             else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_ROCK)
                             {
-                                selectedCells[3]++;
+                                worldParamsData->cellsSelected[3]++;
                             }
                             else if (world->map[(ab/progParamsData->rectSize.x)+world->mapSize.x*(ord/progParamsData->rectSize.y)].landType.gameId == LAND_DEEP_WATER)
                             {
-                                selectedCells[4]++;
+                                worldParamsData->cellsSelected[4]++;
                             }
                         }
                     }
@@ -231,7 +246,7 @@ int main()
         else if (IsKeyDown(KEY_ESCAPE))
         {
             ifSquareSelectingActive = !ifSquareSelectingActive;
-            deselectAllWorldMap(world);
+            deselectAllWorldMap(world, worldParamsData);
         }
 
         EndDrawing();

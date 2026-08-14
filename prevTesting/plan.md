@@ -85,8 +85,8 @@
    так что этот пункт отменяется, и остается только удаление еды)
 
 5) Улучшение моментов:
-   1. Улучшить выделение прямоугольником:
-      1. Искать (`минимальный x` между `squareSelectingStartCellCoords.x` и `mousePosition.x`; `максимальный y` между `squareSelectingStartCellCoords.y` и `mousePosition.y`) и затем как обычно рисовать прямоугольник с этих координат по (`максимальный x` между `squareSelectingStartCellCoords.x` и `mousePosition.x`; `минимальный y` между `squareSelectingStartCellCoords.y` и `mousePosition.y`)
+   1. Улучшить выделение прямоугольником: ✔
+      1. Искать (`минимальный x` между `squareSelectingStartCellCoords.x` и `mousePosition.x`; `минимальный y` между `squareSelectingStartCellCoords.y` и `mousePosition.y`) и затем как обычно рисовать прямоугольник с этих координат по (`максимальный x` между `squareSelectingStartCellCoords.x` и `mousePosition.x`; `максимальный y` между `squareSelectingStartCellCoords.y` и `mousePosition.y`)✔
 
    2. Улучшить генерацию:
       1. Сделать генерацию более алгоритмичной - убрать магические числа

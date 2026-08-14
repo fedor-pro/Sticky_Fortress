@@ -53,13 +53,18 @@ void createWorldMap(World *world)
     }
 }
 
-void deselectAllWorldMap(World *world) {
+void deselectAllWorldMap(World *world, worldParamsDataLord *worldParamsData) {
     for (int x = 0; x < world->mapSize.x; x++)
     {
         for (int y = 0; y < world->mapSize.y; y++)
         {
             world->map[x + world->mapSize.x * y].isSelected = false;
         }
+    }
+
+    for (int u = 0; u < 5; u++) // Reset selected landscape cells stats
+    {
+        worldParamsData->cellsSelected[u] = 0;
     }
 }
 
@@ -203,6 +208,9 @@ World *initializeWorld(worldParamsDataLord *worldParamsData, progParamsDataLord 
     world->items = malloc(sizeof(LandscapeCell) * (worldParamsData->startFoodOnMap + 5)); // Creating items
 
     createWorldFood(world, worldParamsData, drawData);
+
+    // deselectAllWorldMap(world, worldParamsData);
+    printf("%d\n", worldParamsData->cellsSelected[0]);
 
     return world;
 }
