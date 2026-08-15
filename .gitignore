@@ -8,3 +8,5 @@ prevTesting/logs/*
 
 prevTesting/worlds/*
 !prevTesting/worlds/.gitkeep
+
+.directory
