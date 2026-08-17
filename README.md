@@ -10,7 +10,7 @@
 
 At this time, you can't manage dwarves - they'll move, find food and die without your control. You can just select cells, watch for dwarfs' stats and set pause with `space` button. Press `Lmb` to start square selecting, move mouse to end square position and press `Lmb` again. For start new square selecting just click at any cell. For deselect a specific cell click `Rmb`.  
 
-![alt text](./prevTesting/images/gameWorking.png)
+![alt text](./prev_testing/images/game_working.png)
 
 ## Installation & running
 > At the moment program's `Makefile` works only on Linux.
