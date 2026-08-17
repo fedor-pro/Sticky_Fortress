@@ -3,6 +3,6 @@
 
 #include "types.h"
 
-void spawnDwarf(World *world, Coord coords, Dwarf dw, int x);
+void spawn_dwarf(world *wrl, coord coords, dwarf dw, int x);
 
 #endif
