@@ -3,7 +3,8 @@
 #include <stdlib.h>
 
 bool structures_overlay_check(world *wrl, landscape_structure structure, coord zone_start_coord, int zone_max_long_x, int zone_max_long_y, int l, int g) {
-    if (wrl->map[(zone_start_coord.x + l) + wrl->map_size.x * (zone_start_coord.y + g)].land_type.game_id != wrl->world_landscapes[0].game_id) { // Overlay check
+    if (wrl->map[cell_id_in_map((zone_start_coord.x + l), (zone_start_coord.y + g), wrl->map_size.x)].land_type.game_id != wrl->world_landscapes[0].game_id) { // Overlay check
+
         free(structure.incoming_cells_coords);
         return true;
     }
@@ -59,9 +60,9 @@ void generate_structure(world *wrl)
                 }
 
                 if ((zone_max_long_y/2) + (rand() % pond_border)/2 >= pond) {
-                    wrl->map[(zone_start_coord.x + l) + wrl->map_size.x * (zone_start_coord.y + g)].land_type = structure.second_landscape;
+                    wrl->map[cell_id_in_map((zone_start_coord.x + l), (zone_start_coord.y + g), wrl->map_size.x)].land_type = structure.second_landscape;
                 } else {
-                    wrl->map[(zone_start_coord.x + l) + wrl->map_size.x * (zone_start_coord.y + g)].land_type = structure.landscape;
+                    wrl->map[cell_id_in_map((zone_start_coord.x + l), (zone_start_coord.y + g), wrl->map_size.x)].land_type = structure.landscape;
                 } // So ugly generation
                 
                 j++;
@@ -78,9 +79,9 @@ void generate_structure(world *wrl)
                     }
 
                     if (((rand() % pond_border + pond/2))/2 >= pond) {
-                        wrl->map[(zone_start_coord.x + l) + wrl->map_size.x * (zone_start_coord.y + g)].land_type = structure.second_landscape;
+                        wrl->map[cell_id_in_map((zone_start_coord.x + l), (zone_start_coord.y + g), wrl->map_size.x)].land_type = structure.second_landscape;
                     } else {
-                        wrl->map[(zone_start_coord.x + l) + wrl->map_size.x * (zone_start_coord.y + g)].land_type = structure.landscape;
+                        wrl->map[cell_id_in_map((zone_start_coord.x + l), (zone_start_coord.y + g), wrl->map_size.x)].land_type = structure.landscape;
                     }
 
                     j++;

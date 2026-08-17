@@ -8,47 +8,47 @@
 // TODO: Fix all
 
 
-void move_dwarf(direction direct, dwarf *dw, coord map_size, landscape_cell *map)
+void move_dwarf(direction direct, dwarf *dw, world *wrl)
 {
     switch (direct)
     {
     case RIGHT:
-        if (dw->coords.x + 1 < map_size.x && map[(dw->coords.x + 1) + map_size.x * dw->coords.y].land_type.can_be_occupied)
+        if (dw->coords.x + 1 < wrl->map_size.x && wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].land_type.can_be_occupied)
         {
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = false;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = false;
             dw->coords.x++;
 
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = true;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = true;
         }
 
         break;
     case LEFT:
-        if (dw->coords.x - 1 >= 0 && map[(dw->coords.x - 1) + map_size.x  * dw->coords.y].land_type.can_be_occupied)
+        if (dw->coords.x - 1 >= 0 && wrl->map[cell_id_in_map(dw->coords.x - 1, dw->coords.y, wrl->map_size.x)].land_type.can_be_occupied)
         {
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = false;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = false;
             dw->coords.x--;
 
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = true;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = true;
         }
 
         break;
     case DOWN:
-        if (dw->coords.y + 1 < map_size.y && map[dw->coords.x + map_size.x * (dw->coords.y + 1)].land_type.can_be_occupied)
+        if (dw->coords.y + 1 < wrl->map_size.y && wrl->map[cell_id_in_map(dw->coords.x, dw->coords.y + 1, wrl->map_size.x)].land_type.can_be_occupied)
         {
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = false;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = false;
             dw->coords.y++;
 
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = true;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = true;
         }
 
         break;
     case UP:
-        if (dw->coords.y - 1 >= 0 && map[dw->coords.x + map_size.x * (dw->coords.y - 1)].land_type.can_be_occupied)
+        if (dw->coords.y - 1 >= 0 && wrl->map[cell_id_in_map(dw->coords.x, dw->coords.y - 1, wrl->map_size.x)].land_type.can_be_occupied)
         {
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = false;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = false;
             dw->coords.y--;
 
-            map[dw->coords.x + map_size.x * dw->coords.y].is_occupied = true;
+            wrl->map[cell_id_in_map(dw->coords.x + 1, dw->coords.y, wrl->map_size.x)].is_occupied = true;
         }
 
         break;
@@ -134,16 +134,16 @@ void update_dwarf(world *wrl, coord map_size, dwarf *dw, int timer, world_params
             {
                 switch (random_for_move) {
                     case 1:
-                        move_dwarf(RIGHT, dw, map_size, wrl->map);
+                        move_dwarf(RIGHT, dw, wrl);
                     break;
                     case 2:
-                        move_dwarf(LEFT, dw, map_size, wrl->map);
+                        move_dwarf(LEFT, dw, wrl);
                     break;
                     case 3:
-                        move_dwarf(DOWN, dw, map_size, wrl->map);
+                        move_dwarf(DOWN, dw, wrl);
                     break;
                     case 4:
-                        move_dwarf(UP, dw, map_size, wrl->map);
+                        move_dwarf(UP, dw, wrl);
                     break;
                 }
 
@@ -152,20 +152,20 @@ void update_dwarf(world *wrl, coord map_size, dwarf *dw, int timer, world_params
             {
                 if (dw->coords.x < dw->target_cell_coords.x)
                 {
-                    move_dwarf(RIGHT, dw, map_size, wrl->map);
+                    move_dwarf(RIGHT, dw, wrl);
                 }
                 else if (dw->coords.x > dw->target_cell_coords.x)
                 {
-                    move_dwarf(LEFT, dw, map_size, wrl->map);
+                    move_dwarf(LEFT, dw, wrl);
                 }
 
                 else if (dw->coords.y < dw->target_cell_coords.y)
                 {
-                    move_dwarf(DOWN, dw, map_size, wrl->map);
+                    move_dwarf(DOWN, dw, wrl);
                 }
                 else if (dw->coords.y > dw->target_cell_coords.y)
                 {
-                    move_dwarf(UP, dw, map_size, wrl->map);
+                    move_dwarf(UP, dw, wrl);
                 }
             }
             else if (dw->moving_state == EATING) // Eating
@@ -206,7 +206,7 @@ void update_dwarf(world *wrl, coord map_size, dwarf *dw, int timer, world_params
         dw->drawing_color = GREEN;
         world_params_data->dwarves_alive ++;
 
-        if (wrl->map[dw->coords.x + map_size.x * dw->coords.y].is_selected)
+        if (wrl->map[cell_id_in_map(dw->coords.x, dw->coords.y, wrl->map_size.x)].is_selected)
         {
             dw->drawing_color = RED;
             world_params_data->dwarves_selected ++;

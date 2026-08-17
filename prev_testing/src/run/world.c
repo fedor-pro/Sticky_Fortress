@@ -48,7 +48,7 @@ void create_world_map(world *wrl)
 
             ld.land_type = wrl->world_landscapes[0];
 
-            wrl->map[x + wrl->map_size.x * y] = ld;
+            wrl->map[cell_id_in_map(x, y, wrl->map_size.x)] = ld;
         }
     }
 }
@@ -58,7 +58,7 @@ void deselect_all_world_map(world *wrl, world_params_data_lord *world_params_dat
     {
         for (int y = 0; y < wrl->map_size.y; y++)
         {
-            wrl->map[x + wrl->map_size.x * y].is_selected = false;
+            wrl->map[cell_id_in_map(x, y, wrl->map_size.x)].is_selected = false;
         }
     }
 
@@ -75,7 +75,7 @@ void create_dwarves(world *wrl, world_params_data_lord *world_params_data, prog_
         int dw_x = rand() % wrl->map_size.x;
         int dw_y = rand() % wrl->map_size.y;
 
-        while (!wrl->map[dw_x+ wrl->map_size.x * dw_y].land_type.can_be_occupied)
+        while (!wrl->map[cell_id_in_map(dw_x, dw_y, wrl->map_size.x)].land_type.can_be_occupied)
         {
             dw_x = rand() % wrl->map_size.x;
             dw_y = rand() % wrl->map_size.y;
@@ -115,7 +115,7 @@ void create_world_food(world *wrl, world_params_data_lord *world_params_data, dr
         int res_x = rand() % wrl->map_size.x;
         int res_y = rand() % wrl->map_size.y;
 
-        while (!wrl->map[res_x + wrl->map_size.x * res_y].land_type.can_be_occupied)
+        while (!wrl->map[cell_id_in_map(res_x, res_y, wrl->map_size.x)].land_type.can_be_occupied)
         {
             res_x = rand() % wrl->map_size.x;
             res_y = rand() % wrl->map_size.y;
@@ -155,8 +155,8 @@ void delete_world(world *wrl, world_params_data_lord *world_params_data, log_dat
         for (int yy = 0; yy < wrl->map_size.y; yy++)
         { 
             fprintf(wrl->world_file, "{CELL}[COORDS]:%d,%d|[IS_SELECTED]:%d|[IS_OCCUPIED]:%d|[LANDSCAPE]:%d", 
-                wrl->map[xx + wrl->map_size.x * yy].l_coord.x, wrl->map[xx + wrl->map_size.x * yy].l_coord.y, 
-                wrl->map[xx + wrl->map_size.x * yy].is_selected, wrl->map[xx + wrl->map_size.x * yy].is_occupied, wrl->map[xx + wrl->map_size.x * yy].land_type);
+                wrl->map[cell_id_in_map(xx, yy, wrl->map_size.x)].l_coord.x, wrl->map[cell_id_in_map(xx, yy, wrl->map_size.x)].l_coord.y, 
+                wrl->map[cell_id_in_map(xx, yy, wrl->map_size.x)].is_selected, wrl->map[cell_id_in_map(xx, yy, wrl->map_size.x)].is_occupied, wrl->map[cell_id_in_map(xx, yy, wrl->map_size.x)].land_type);
             
             fflush(wrl->world_file);
         }

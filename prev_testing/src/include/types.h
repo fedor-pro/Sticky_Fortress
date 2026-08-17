@@ -3,6 +3,8 @@
 
 // ✗✗✗ RESTRICTED ✗✗✗ #define LL() printf("Check at %s : %d passed succesfully\n", __FILE__, __LINE__) ✗✗✗ RESTRICTED ✗✗✗
 
+#define cell_id_in_map(x, y, map_size_x) ((x) + ((map_size_x) * (y)))
+
 #include <stdio.h>
 #include <stdbool.h>
 #include <stdlib.h>

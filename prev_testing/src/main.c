@@ -17,22 +17,6 @@
 
 #define LOGS_BARRIERS "---------------------------------------------------------------\n"
 
-int min(int x, int y) {
-    if (x < y) {
-        return x;
-    } else {
-        return y;
-    }
-}
-
-int max(int x, int y) {
-    if (x > y) {
-        return x;
-    } else {
-        return y;
-    }
-}
-
 int main()
 {
     SetTraceLogLevel(LOG_NONE); // For delete all raylib's sys logs
@@ -135,12 +119,12 @@ int main()
         {
             for (int y = 0; y < wrl->map_size.y; y++)
             {
-                if (wrl->map[x+wrl->map_size.x*y].is_selected == 1) // If cell is selected
+                if (wrl->map[cell_id_in_map(x, y, wrl->map_size.x)].is_selected == 1) // If cell is selected
                 {
                     DrawRectangle(x * prog_params_data->rect_size.x, y * prog_params_data->rect_size.y, prog_params_data->rect_size.x + 1, prog_params_data->rect_size.y + 1, GOLD); 
                 }
 
-                DrawRectangle(x * prog_params_data->rect_size.x + 1, y * prog_params_data->rect_size.y + 1, prog_params_data->rect_size.x - 1, prog_params_data->rect_size.y - 1, wrl->map[x+wrl->map_size.x*y].land_type.draw_color);
+                DrawRectangle(x * prog_params_data->rect_size.x + 1, y * prog_params_data->rect_size.y + 1, prog_params_data->rect_size.x - 1, prog_params_data->rect_size.y - 1, wrl->map[cell_id_in_map(x, y, wrl->map_size.x)].land_type.draw_color);
             }
         }
 
@@ -178,7 +162,7 @@ int main()
                     deselect_all_world_map(wrl, world_params_data);
 
                     square_selecting_start_cell_coords = mouse_position;
-                    wrl->map[(square_selecting_start_cell_coords.x/prog_params_data->rect_size.x) + wrl->map_size.x * (square_selecting_start_cell_coords.y/prog_params_data->rect_size.y)].is_selected = true;
+                    wrl->map[cell_id_in_map((square_selecting_start_cell_coords.x/prog_params_data->rect_size.x), (square_selecting_start_cell_coords.y/prog_params_data->rect_size.y), wrl->map_size.x)].is_selected = true;
                 } 
                 else 
                 {
@@ -200,25 +184,25 @@ int main()
                     {
                         for (int ord = square_selecting_start_cell_coords.y; ord < square_selecting_end_cell_coords.y; ord ++) 
                         {
-                            wrl->map[(ab/prog_params_data->rect_size.x) + wrl->map_size.x * (ord/prog_params_data->rect_size.y)].is_selected = true; 
+                            wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].is_selected = true; 
 
-                            if (wrl->map[(ab/prog_params_data->rect_size.x)+wrl->map_size.x*(ord/prog_params_data->rect_size.y)].land_type.game_id == LAND_BASIC)
+                            if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_BASIC)
                             {
                                 ++world_params_data->cells_selected[0];
                             }
-                            else if (wrl->map[(ab/prog_params_data->rect_size.x)+wrl->map_size.x*(ord/prog_params_data->rect_size.y)].land_type.game_id == LAND_WATER)
+                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_WATER)
                             {
                                 world_params_data->cells_selected[1]++;
                             }
-                            else if (wrl->map[(ab/prog_params_data->rect_size.x)+wrl->map_size.x*(ord/prog_params_data->rect_size.y)].land_type.game_id == LAND_MOUNTAINS)
+                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_MOUNTAINS)
                             {
                                 world_params_data->cells_selected[2]++;
                             }
-                            else if (wrl->map[(ab/prog_params_data->rect_size.x)+wrl->map_size.x*(ord/prog_params_data->rect_size.y)].land_type.game_id == LAND_ROCK)
+                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_ROCK)
                             {
                                 world_params_data->cells_selected[3]++;
                             }
-                            else if (wrl->map[(ab/prog_params_data->rect_size.x)+wrl->map_size.x*(ord/prog_params_data->rect_size.y)].land_type.game_id == LAND_DEEP_WATER)
+                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_DEEP_WATER)
                             {
                                 world_params_data->cells_selected[4]++;
                             }
@@ -234,13 +218,13 @@ int main()
             if ((square_selecting_start_cell_coords.x/prog_params_data->rect_size.x) < prog_params_data->window_size.x && (square_selecting_start_cell_coords.x/prog_params_data->rect_size.x) > 0
               &&(square_selecting_start_cell_coords.y/prog_params_data->rect_size.y) < prog_params_data->window_size.y && (square_selecting_start_cell_coords.y/prog_params_data->rect_size.y) > 0)
             {
-                wrl->map[(mouse_position.x/prog_params_data->rect_size.x) + wrl->map_size.x * (mouse_position.y/prog_params_data->rect_size.y)].is_selected = false;
+                wrl->map[cell_id_in_map((mouse_position.x/prog_params_data->rect_size.x), (mouse_position.y/prog_params_data->rect_size.y), wrl->map_size.x)].is_selected = false;
 
-                wrl->map[(mouse_position.x/prog_params_data->rect_size.x) + 1 + wrl->map_size.x * (mouse_position.y/prog_params_data->rect_size.y)].is_selected = false;
-                wrl->map[(mouse_position.x/prog_params_data->rect_size.x) - 1 + wrl->map_size.x * (mouse_position.y/prog_params_data->rect_size.y)].is_selected = false;
+                wrl->map[cell_id_in_map((mouse_position.x/prog_params_data->rect_size.x) +1, (mouse_position.y/prog_params_data->rect_size.y), wrl->map_size.x)].is_selected = false;
+                wrl->map[cell_id_in_map((mouse_position.x/prog_params_data->rect_size.x) -1, (mouse_position.y/prog_params_data->rect_size.y), wrl->map_size.x)].is_selected = false;
 
-                wrl->map[(mouse_position.x/prog_params_data->rect_size.x) + wrl->map_size.x * (mouse_position.y/prog_params_data->rect_size.y + 1)].is_selected = false;
-                wrl->map[(mouse_position.x/prog_params_data->rect_size.x) + wrl->map_size.x * (mouse_position.y/prog_params_data->rect_size.y - 1)].is_selected = false;
+                wrl->map[cell_id_in_map((mouse_position.x/prog_params_data->rect_size.x), (mouse_position.y/prog_params_data->rect_size.y) +1, wrl->map_size.x)].is_selected = false;
+                wrl->map[cell_id_in_map((mouse_position.x/prog_params_data->rect_size.x), (mouse_position.y/prog_params_data->rect_size.y) -1, wrl->map_size.x)].is_selected = false;
             }
         } 
         else if (IsKeyDown(KEY_ESCAPE))
