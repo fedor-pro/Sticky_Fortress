@@ -36,7 +36,11 @@ void generate_structure(world *wrl)
     int zone_max_long_x = 3 + rand() % 20;
     int zone_max_long_y = 3 + rand() % 10;
 
+    printf("check_1\n");
+
     structure.incoming_cells_coords = malloc(sizeof(landscape_cell) * zone_max_long_y * zone_max_long_y);
+
+    printf("check_2\n");
 
     int j = 0;
 
@@ -91,14 +95,13 @@ void generate_structure(world *wrl)
             pond += pond_increment_step;
         }
     }
-
-    free(structure.incoming_cells_coords);
 }
 
 void generate_world_structures(world *wrl, world_params_data_lord *world_params_data)
 {
     for (int x = 0; x < world_params_data->structures_number; x++)
     {
+        printf("Generating %d\n", x);
         generate_structure(wrl);
     }
 

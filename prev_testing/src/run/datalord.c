@@ -26,7 +26,7 @@ world_params_data_lord *define_world_params_data_lord () {
 
     world_params_data->start_dwarves_number = 100;
     world_params_data->start_food_on_map = 15;
-    world_params_data->structures_number = 15;
+    world_params_data->structures_number = 10;
 
     world_params_data->dwarves_alive = world_params_data->start_dwarves_number;
     world_params_data->dwarves_selected = 0;

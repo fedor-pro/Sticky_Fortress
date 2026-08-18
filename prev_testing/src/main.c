@@ -79,7 +79,7 @@ int main()
     InitWindow(prog_params_data->window_size.x, prog_params_data->window_size.y, window_name);
     SetTargetFPS(TARGET_FPS);
 
-    SetExitKey(KEY_NULL); // If active, window willn't close on ESC button
+    SetExitKey(KEY_ESCAPE); // If active, window willn't close on ESC button
 
     Image window_icon = LoadImage("./images/windowIcon.png"); // Loading icon
     if (window_icon.format != PIXELFORMAT_UNCOMPRESSED_R8G8B8A8) // Formatting icon

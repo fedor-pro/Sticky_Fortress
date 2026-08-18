@@ -6,16 +6,16 @@
   <img src="https://img.shields.io/badge/license-IDK-yellow" alt="???"/>
 </p>
 
-Clone of dwarf fortress on C with using Raylib. In prototype stage.  
+Clone of dwarf fortress on C with using Raylib - fast, clear, easy to scale. 
 
 ![alt text](./prev_testing/images/game_working.png)
 
 ## Features
 
-- **Map generation** - at program's start procedurally generating world with grass, mountains, water and objects: dwarves and food
-- **Autonomous dwarves** - they random moving, finding food and diyng without your control
-- **Selecting and stats** - you can select any cells or objects and watch for world's stats
-- **Logging and world saving** - program writes main events with timestamps in log files. Before closing window data about world cells and objects writes in world file
+- **Map generation** - **procedurally generates** world with grass, mountains, water and objects: dwarves and food
+- **Autonomous dwarves** - they random moving, **finding food** and diyng without your control
+- **Selecting and stats** - you can select any cells or objects and watch for world's **stats**
+- **Logging and world saving** - program writes main events with **timestamps** in **log files**. Before closing window data about world **cells** and **objects** writes in **world file**
 
 ## Build
 > At the moment program's `Makefile` works only on Linux.
@@ -66,7 +66,8 @@ Press `Lmb` to start square selecting, move mouse to end square position and pre
 ├── prev_testing            # Main program files
 |   |
 |   └── Makefile
-|   └── plan.md             # Project development plan with completed and planned tasks and autor's wishlists (at the moment available only russian version of this document)
+|   └── plan.md             # Project development plan with completed and planned tasks and autor's 
+|   |                           wishlists (at the moment available only russian version of this document)
 |   |
 │   └── images/             # Service and example images
 │   └── logs/, worlds/      # Logging files and world saves
@@ -77,7 +78,8 @@ Press `Lmb` to start square selecting, move mouse to end square position and pre
 |       |
 |       └── include/, run/
 |                   |
-|                   └── datalord.h/c # Initialization and undefining datalords - containers for service data from all program
+|                   └── datalord.h/c # Initialization and undefining datalords - containers for
+|                   |                   service data from all program
 |                   └── updatelord.h/c # Updating manager
 |                   |
 |                   └── dwarves.h/c # Dwarves updating logic
@@ -85,7 +87,8 @@ Press `Lmb` to start square selecting, move mouse to end square position and pre
 |                   |
 |                   |
 |                   └── uilord.h/c # User interface manager
-|                   └── world.h/c # Main module, contains map, objects and landscapes. It managing creation, filling, saving to file and destruction of the world
+|                   └── world.h/c # Main module, contains map, objects and landscapes. It managing
+|                   |               creation, filling, saving to file and destruction of the world
 |                   |
 |                   └── logging.h/c # Functions for writing data in log file
 |                   └── draw.h/c # Helper rendering functions

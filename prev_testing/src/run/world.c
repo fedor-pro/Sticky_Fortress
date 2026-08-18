@@ -199,7 +199,10 @@ world *initialize_world(world_params_data_lord *world_params_data, prog_params_d
 
     generate_world_structures(wrl, world_params_data);
 
-    wrl->dwarves = malloc(sizeof(dwarf) * (world_params_data->start_dwarves_number) * 1.5); // Creating dwarves
+    log_to_file(log_data, "Путукфеув ыекгсегкуы\n");
+    raw_log_to_file(log_data, logs_barriers);
+
+    wrl->dwarves = malloc(sizeof(dwarf) * (world_params_data->start_dwarves_number * 1.5)); // Creating dwarves
 
     create_dwarves(wrl, world_params_data, prog_params_data, log_data, draw_data);
 
@@ -209,8 +212,7 @@ world *initialize_world(world_params_data_lord *world_params_data, prog_params_d
 
     create_world_food(wrl, world_params_data, draw_data);
 
-    // deselect_all_world_map(world, world_params_data);
-    printf("%d\n", world_params_data->cells_selected[0]);
+    deselect_all_world_map(wrl, world_params_data);
 
     return wrl;
 }
