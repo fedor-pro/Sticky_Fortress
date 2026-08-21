@@ -6,7 +6,7 @@ prog_params_data_lord *define_prog_params_data_lord () {
     prog_params_data_lord *prog_params_data = malloc(sizeof(prog_params_data_lord));
 
     prog_params_data->window_size = (coord) {1900, 1000};
-    prog_params_data->rect_size = (coord) {15, 15};
+    prog_params_data->rect_size = (coord) {20, 20};
     prog_params_data->text_buffer_size = 500;
 
     prog_params_data->timer = 0;

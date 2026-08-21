@@ -175,38 +175,43 @@ int main()
                     // Go from selecting start to selecting end
 
                     square_selecting_end_cell_coords.x = (square_selecting_start_cell_coords.x > mouse_position.x) ? square_selecting_start_cell_coords.x : mouse_position.x;
-                    square_selecting_end_cell_coords.y = (square_selecting_end_cell_coords.y > mouse_position.y) ? square_selecting_end_cell_coords.y : mouse_position.y;
+                    square_selecting_end_cell_coords.y = (square_selecting_start_cell_coords.y > mouse_position.y) ? square_selecting_start_cell_coords.y : mouse_position.y;
 
                     square_selecting_start_cell_coords.x = (square_selecting_start_cell_coords.x < mouse_position.x) ? square_selecting_start_cell_coords.x : mouse_position.x;
                     square_selecting_start_cell_coords.y = (square_selecting_start_cell_coords.y < mouse_position.y) ? square_selecting_start_cell_coords.y : mouse_position.y;
 
-                    for (int ab = square_selecting_start_cell_coords.x; ab < square_selecting_end_cell_coords.x; ab ++) 
+                    for (int ab = ((square_selecting_start_cell_coords.x + prog_params_data->rect_size.x - 1) / prog_params_data->rect_size.x) ; ab < ((square_selecting_end_cell_coords.x + prog_params_data->rect_size.x - 1) / prog_params_data->rect_size.x); ab ++) 
                     {
-                        for (int ord = square_selecting_start_cell_coords.y; ord < square_selecting_end_cell_coords.y; ord ++) 
+                        for (int ord = ((square_selecting_start_cell_coords.y + prog_params_data->rect_size.y - 1) / prog_params_data->rect_size.y); ord < ((square_selecting_end_cell_coords.y + prog_params_data->rect_size.y - 1) / prog_params_data->rect_size.y); ord ++) 
                         {
-                            wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].is_selected = true; 
+                            wrl->map[cell_id_in_map(ab, ord, wrl->map_size.x)].is_selected = true; 
 
-                            if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_BASIC)
+                            if (wrl->map[cell_id_in_map(ab, ord, wrl->map_size.x)].land_type.game_id == LAND_BASIC)
                             {
-                                ++world_params_data->cells_selected[0];
+                                world_params_data->cells_selected[0]++;
+                                printf("%d", world_params_data->cells_selected[0]);
                             }
-                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_WATER)
+                            else if (wrl->map[cell_id_in_map(ab, ord, wrl->map_size.x)].land_type.game_id == LAND_WATER)
                             {
                                 world_params_data->cells_selected[1]++;
                             }
-                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_MOUNTAINS)
+                            else if (wrl->map[cell_id_in_map(ab, ord, wrl->map_size.x)].land_type.game_id == LAND_MOUNTAINS)
                             {
                                 world_params_data->cells_selected[2]++;
                             }
-                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_ROCK)
+                            else if (wrl->map[cell_id_in_map(ab, ord, wrl->map_size.x)].land_type.game_id == LAND_ROCK)
                             {
                                 world_params_data->cells_selected[3]++;
                             }
-                            else if (wrl->map[cell_id_in_map((ab/prog_params_data->rect_size.x), (ord/prog_params_data->rect_size.y), wrl->map_size.x)].land_type.game_id == LAND_DEEP_WATER)
+                            else if (wrl->map[cell_id_in_map(ab, ord, wrl->map_size.x)].land_type.game_id == LAND_DEEP_WATER)
                             {
                                 world_params_data->cells_selected[4]++;
                             }
+
+                            printf("|\n");
                         }
+
+                        printf("||\n");
                     }
                 }
 
