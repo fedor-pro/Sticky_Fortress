@@ -42,9 +42,9 @@ Clone of dwarf fortress on C with using Raylib - fast, clear, easy to scale.
 
 4) Build & run project using `make`
     ```sh
-    make run
+    make crun
     ```
-    or:
+    or, if you want save executable file:
     ```sh
     make crun
     ```
@@ -55,9 +55,9 @@ Clone of dwarf fortress on C with using Raylib - fast, clear, easy to scale.
 
 ## Usage
 
-Program will start. Green `&` - dwarves, yellow `*` - food. Dwarves randomly going around the map, and when they get hungry after a while, they go to nearest food and restore their hunger.
+Program will start. Dwarves(green symbols `&`) randomly going around the map, and when they get hungry after a while, they go to nearest food(yellow symbols `*`) and restore their hunger.
 Press `Lmb` to start square selecting, move mouse to end square position and press `Lmb` again. For start new square selecting just click at any cell. For deselect a specific cell click `Rmb`, or
-`Esc` for deselect all map. You can also set pause with `space`.
+`Esc` for deselect all map. Press `space` for pause and `q` for exit from window.
 
 ## Project structure
 
