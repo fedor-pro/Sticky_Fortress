@@ -174,6 +174,13 @@ typedef struct
 
     int timer_reset;
     char *string_current_fps;
+
+    bool if_square_selecting_active;
+    coord square_selecting_start_cell_coords;
+    coord square_selecting_end_cell_coords;
+    int square_selecting_freeze;
+
+    coord mouse_position;
 } prog_params_data_lord;
 
 typedef struct

@@ -6,7 +6,7 @@ prog_params_data_lord *define_prog_params_data_lord () {
     prog_params_data_lord *prog_params_data = malloc(sizeof(prog_params_data_lord));
 
     prog_params_data->window_size = (coord) {1900, 1000};
-    prog_params_data->rect_size = (coord) {20, 20};
+    prog_params_data->rect_size = (coord) {15, 15};
     prog_params_data->text_buffer_size = 500;
 
     prog_params_data->timer = 0;
@@ -15,6 +15,13 @@ prog_params_data_lord *define_prog_params_data_lord () {
     prog_params_data->is_paused = false;
 
     prog_params_data->timer_reset = 60;
+
+    prog_params_data->if_square_selecting_active = false;
+    prog_params_data->square_selecting_start_cell_coords;
+    prog_params_data->square_selecting_end_cell_coords;
+    prog_params_data->square_selecting_freeze = 0;
+
+    prog_params_data->mouse_position = (coord) {0, 0};
 
     return prog_params_data;
 }

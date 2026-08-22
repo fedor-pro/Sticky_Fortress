@@ -50,8 +50,8 @@ void delete_ui_lord (ui_lord *uil) {
     free(uil);
 }
 
-void update_ui_lord (ui_lord *uil, coord mouse_position, world_params_data_lord *world_params_data, prog_params_data_lord *prog_params_data) {
-    sprintf(uil->all_gui_text[0].text, "X: %d Y: %d", mouse_position.x, mouse_position.y);
+void update_ui_lord (ui_lord *uil, world_params_data_lord *world_params_data, prog_params_data_lord *prog_params_data) {
+    sprintf(uil->all_gui_text[0].text, "X: %d Y: %d", prog_params_data->mouse_position.x, prog_params_data->mouse_position.y);
 
     sprintf(uil->all_gui_text[1].text, "Selected: \nbasic landscape: %d; \nwater: %d; \nmountains: %d; \nrocks: %d; deep water: %d", 
         world_params_data->cells_selected[0], world_params_data->cells_selected[1], world_params_data->cells_selected[2], world_params_data->cells_selected[3], world_params_data->cells_selected[4]);

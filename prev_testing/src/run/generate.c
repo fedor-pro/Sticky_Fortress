@@ -38,7 +38,7 @@ void generate_structure(world *wrl)
 
     printf("check_1\n");
 
-    structure.incoming_cells_coords = malloc(1000000); //sizeof(landscape_cell) * zone_max_long_y * zone_max_long_y
+    structure.incoming_cells_coords = malloc(sizeof(landscape_cell) * zone_max_long_y * zone_max_long_y * 10); // Multiplication by 10 - CRUTCH
 
     printf("check_2\n");
 

@@ -19,7 +19,7 @@ ifeq ($(strip $(UNAME_S)), Linux) # Linux linker flags
 endif
 
 .PHONY: all clean run crun # Reserve this names for directives
-.IGNORE: crun # If error, compilation results will be clean anyway
+.IGNORE: crun # If compilation error, compilation results will be clean anyway
  
 all: $(TARGET)
 
